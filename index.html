@@ -69,6 +69,7 @@ body{font-family:'Outfit',sans-serif;background:#f4f6f8;min-height:100vh;color:v
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--rads);cursor:pointer;font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;padding:12px 16px;transition:all .2s;white-space:nowrap;min-height:44px;}
 .btn-green{background:var(--g);color:#fff;box-shadow:0 4px 6px -1px rgba(5,150,105,.2);} .btn-green:hover{background:#047857;transform:translateY(-1px);}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 4px 6px -1px rgba(37,99,235,.2);} .btn-blue:hover{background:#1d4ed8;transform:translateY(-1px);}
 .btn-out{background:#fff;color:var(--r700);border:2px solid var(--r200);box-shadow:var(--sh);} .btn-out:hover{background:var(--r50);border-color:var(--r300);}
 .btn-red{background:#fef2f2;color:#dc2626;border:2px solid #fecaca;} .btn-red:hover{background:#fee2e2;}
 .btn-sm{padding:8px 12px;font-size:12px;min-height:36px;}
@@ -175,7 +176,7 @@ input::placeholder {color:var(--r400); font-weight:500;}
 .cand-name.ok{color:var(--g);}
 .tr-section td{background:var(--r100);font-size:10px;font-weight:900;color:var(--r500);padding:6px 10px;text-transform:uppercase;letter-spacing:.07em;}
 
-/* ════════ AUTHENTICATION LOCK SCREEN (NEW) ════════ */
+/* ════════ AUTHENTICATION LOCK SCREEN ════════ */
 #auth-screen {
     position: fixed; inset: 0; background: var(--r50); z-index: 99999;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -186,6 +187,7 @@ input::placeholder {color:var(--r400); font-weight:500;}
 #auth-pin {
     text-align: center; font-size: 36px; letter-spacing: 20px; border-radius: 16px;
     border: 2px solid var(--r200); padding: 15px; width: 220px; margin-bottom: 30px; font-weight: 900; color:var(--g);
+    box-shadow: var(--shm);
 }
 
 /* GPAY SUCCESS ANIMATION */
@@ -215,7 +217,7 @@ input::placeholder {color:var(--r400); font-weight:500;}
 .empty{text-align:center;padding:60px 20px;color:var(--r400); background:#fff; border-radius:var(--rad); border:2px dashed var(--r200);}
 .empty-ico{font-size:40px;margin-bottom:12px;}
 .empty-txt{font-weight:800;font-size:16px; color:var(--r600);}
-.spinner{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:15px;background:var(--r50);}
+.spinner{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:15px;background:var(--r50); position:fixed; z-index:999999; width:100%; top:0; left:0;}
 .spin{width:40px;height:40px;border:4px solid var(--r200);border-top-color:var(--g);border-radius:50%;animation:sp .75s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
 
@@ -230,6 +232,11 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 </style>
 </head>
 <body>
+
+<div class="spinner" id="loading">
+  <div class="spin"></div>
+  <div style="font-size:14px;color:var(--r500);font-weight:800;">Authenticating…</div>
+</div>
 
 <div id="auth-screen">
     <div class="lock-icon">🔒</div>
@@ -362,13 +369,34 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
   <div class="pg" id="pg-settings">
     <div class="seclbl" style="font-size: 14px; margin-bottom: 15px; color: var(--gd);">Security Settings</div>
     
-    <div class="card" style="flex-direction:column; align-items:flex-start; padding:20px;">
-        <div style="font-weight:900; font-size:18px; color:var(--r800); margin-bottom:5px;">Biometric Authentication</div>
+    <div class="card" style="flex-direction:column; align-items:flex-start; padding:20px; margin-bottom:20px;">
+        <div style="font-weight:900; font-size:18px; color:var(--r800); margin-bottom:5px;">Biometric Login</div>
         <div style="font-size:13px; color:var(--r500); margin-bottom:20px; line-height:1.4;">
-            Securely lock the app and enable quick login using your device's Fingerprint or Face ID instead of entering the PIN (0788).
+            Securely lock the app and enable quick login using your device's Fingerprint or Face ID instead of entering the PIN.
         </div>
         <button class="btn btn-green" onclick="enrollBiometric()" style="width:100%; font-size:16px;">
             <span style="font-size:20px;">👆</span> Add Fingerprint / Face
+        </button>
+    </div>
+
+    <div class="card" style="flex-direction:column; align-items:flex-start; padding:20px;">
+        <div style="font-weight:900; font-size:18px; color:var(--r800); margin-bottom:5px;">Change App PIN</div>
+        <div style="font-size:13px; color:var(--r500); margin-bottom:15px; line-height:1.4;">
+            Update the master PIN used to unlock this application. This will change the PIN for all users.
+        </div>
+        
+        <div class="fld" style="width:100%;">
+            <input type="password" id="set-old-pin" placeholder="Current PIN" inputmode="numeric" maxlength="4">
+        </div>
+        <div class="fld" style="width:100%;">
+            <input type="password" id="set-new-pin" placeholder="New PIN (4 Digits)" inputmode="numeric" maxlength="4">
+        </div>
+        <div class="fld" style="width:100%;">
+            <input type="password" id="set-confirm-pin" placeholder="Confirm New PIN" inputmode="numeric" maxlength="4">
+        </div>
+        
+        <button class="btn btn-blue" onclick="updateAppPin()" style="width:100%; font-size:16px; margin-top:5px;">
+            Update PIN
         </button>
     </div>
   </div>
@@ -495,11 +523,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-/* ══════════════════ AUTHENTICATION & BIOMETRICS (NEW) ══════════════════ */
-const CORRECT_PIN = "0788";
+/* ══════════════════ AUTHENTICATION & SETTINGS ══════════════════ */
+let APP_PIN = "0788"; // Default Fallback
+
+async function initializeSecurity() {
+    try {
+        // Fetch current PIN from DB
+        const setDocRef = await getDoc(doc(db, 'config', 'settings'));
+        if(setDocRef.exists() && setDocRef.data().pin) {
+            APP_PIN = setDocRef.data().pin;
+        }
+        
+        // Check if Biometrics are set up
+        checkBiometricAvailable();
+    } catch(e) {
+        console.error("Security Init Error:", e);
+    } finally {
+        document.getElementById('loading').style.display='none';
+    }
+}
 
 document.getElementById('auth-pin').addEventListener('input', function(e) {
-    if(this.value === CORRECT_PIN) {
+    if(this.value === APP_PIN) {
         this.value = '';
         unlockApp();
     }
@@ -515,7 +560,30 @@ function unlockApp() {
     }, 300);
 }
 
-// Check if biometrics exist in Firestore to show the login button
+// Change PIN Functionality
+window.updateAppPin = async function() {
+    const oldP = document.getElementById('set-old-pin').value;
+    const newP = document.getElementById('set-new-pin').value;
+    const confP = document.getElementById('set-confirm-pin').value;
+
+    if(!oldP || !newP || !confP) return toast("Please fill all fields", "r");
+    if(oldP !== APP_PIN) return toast("Current PIN is incorrect!", "r");
+    if(newP !== confP) return toast("New PINs do not match!", "r");
+    if(newP.length < 4) return toast("PIN must be 4 digits", "r");
+
+    try {
+        await setDoc(doc(db, 'config', 'settings'), { pin: newP }, { merge: true });
+        APP_PIN = newP; // Update locally
+        document.getElementById('set-old-pin').value = '';
+        document.getElementById('set-new-pin').value = '';
+        document.getElementById('set-confirm-pin').value = '';
+        toast("App PIN Updated Successfully! ✅", "g");
+    } catch(e) {
+        toast("Failed to update PIN", "r");
+    }
+};
+
+/* Biometrics Logic */
 async function checkBiometricAvailable() {
     if (window.PublicKeyCredential) {
         try {
@@ -529,8 +597,6 @@ async function checkBiometricAvailable() {
         } catch(e) { console.error("Bio check err:", e); }
     }
 }
-// Run check immediately on load
-checkBiometricAvailable();
 
 window.enrollBiometric = async function() {
     if (!window.PublicKeyCredential) {
@@ -552,18 +618,14 @@ window.enrollBiometric = async function() {
             attestation: "none"
         };
         
-        // Hostname check fix for localhost/file protocols
         if(window.location.hostname) publicKey.rp.id = window.location.hostname;
 
         const credential = await navigator.credentials.create({ publicKey });
-        
-        // Store as array in firestore since ArrayBuffer isn't supported directly
         const rawIdArray = Array.from(new Uint8Array(credential.rawId));
         
-        setSyncState('ing');
         await setDoc(doc(db, 'config', 'auth'), { allowedCredentials: [rawIdArray] }, { merge: true });
         
-        toast("Fingerprint/Face Added Successfully!", "g");
+        toast("Fingerprint/Face Added Successfully! ✅", "g");
         checkBiometricAvailable();
     } catch(e) {
         console.error(e);
@@ -575,7 +637,7 @@ window.authWithBiometrics = async function() {
     try {
         const authDoc = await getDoc(doc(db, 'config', 'auth'));
         if(!authDoc.exists() || !authDoc.data().allowedCredentials) {
-            return toast("No biometrics registered in database.", "r");
+            return toast("No biometrics registered.", "r");
         }
         
         const allowCreds = authDoc.data().allowedCredentials.map(arr => ({
@@ -698,7 +760,6 @@ function updateDynamicFilters() {
     if(p.section) sSet.add(toTitle(p.section));
   });
 
-  // Sort sections according to specific order
   SECTIONS = Array.from(sSet).sort((a, b) => {
       let idxA = ORDERED_SECTIONS.findIndex(s => s.toLowerCase() === a.toLowerCase());
       let idxB = ORDERED_SECTIONS.findIndex(s => s.toLowerCase() === b.toLowerCase());
@@ -813,7 +874,7 @@ window.saveStudent=async function(){
     await setDoc(doc(db,'students',id),obj);
     closeModal('modal-student');
     toast('Student saved','g');
-  }catch(e){setSyncState('err');toast('Save failed: '+e.message,'r');}
+  }catch(e){setSyncState('err');toast('Save failed','r');}
 };
 
 window.deleteStudent=async function(id){
@@ -965,7 +1026,7 @@ window.renderRegister=function(){
 
   const area=document.getElementById('reg-area');
   if(!progs.length){
-    area.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">No programs for this section</div></div>`;
+    area.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">No programs found</div></div>`;
     return;
   }
 
@@ -1468,8 +1529,8 @@ function startListeners(){
   },e=>{setSyncState('err');});
 }
 
-// Remove the default auto-start to enforce App Lock
-document.getElementById('loading').style.display='none';
+/* ══════════════════ INITIALIZE APP SECURITY ══════════════════ */
+initializeSecurity();
 
 </script>
 </body>
