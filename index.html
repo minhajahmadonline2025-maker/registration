@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MASLAC Arts Fest '26</title>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g:#059669;--gd:#065f46;--gl:#d1fae5;--gm:#34d399;
+  --blue:#2563eb;--purple:#7c3aed;--orange:#ea580c;--teal:#16a34a;
+  --r50:#f9fafb;--r100:#f3f4f6;--r200:#e5e7eb;--r300:#d1d5db;--r400:#9ca3af;--r500:#6b7280;--r700:#374151;--r800:#1f2937;
+  --rad:12px;--rads:8px;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.05);
+  --shm:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.04);
+  --shl:0 10px 25px -5px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);
+}
+body{font-family:'Outfit',sans-serif;background:var(--r50);min-height:100vh;color:var(--r800);font-size:14px;}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#064e3b 0%,#059669 60%,#10b981 100%);padding:13px 14px 9px;position:sticky;top:0;z-index:100;box-shadow:var(--shm);}
+.hdr-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.hdr-left{}
+.hdr-title{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1;}
+.hdr-sub{font-size:11px;color:#6ee7b7;margin-top:2px;font-weight:500;}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.hdr-stats{font-size:11px;color:#a7f3d0;font-weight:700;text-align:right;line-height:1.5;}
+.sync-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;}
+.sync-ok{background:rgba(6,78,39,.55);color:#6ee7b7;border:1px solid #059669;}
+.sync-ing{background:rgba(120,53,15,.4);color:#fcd34d;border:1px solid #d97706;}
+.sync-err{background:rgba(127,29,29,.4);color:#fca5a5;border:1px solid #ef4444;}
+.sync-dot{width:7px;height:7px;border-radius:50%;}
+.sd-ok{background:#6ee7b7;animation:pulse 2s infinite;}
+.sd-ing{background:#fcd34d;animation:pulse .8s infinite;}
+.sd-err{background:#f87171;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.house-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+.hbadge{padding:2px 9px;border-radius:99px;font-size:10px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,.25);}
+
+/* TABS */
+.tabs{background:#fff;border-bottom:1px solid var(--r200);display:flex;position:sticky;top:70px;z-index:90;}
+.tab{flex:1;padding:10px 4px;font-size:12px;font-weight:800;border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--r500);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Outfit',sans-serif;}
+.tab.on{border-bottom-color:var(--g);color:var(--g);background:#f0fdf4;}
+
+/* CONTENT */
+.pg{padding:13px;padding-bottom:50px;display:none;}
+.pg.on{display:block;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;border:none;border-radius:var(--rads);cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;padding:7px 12px;transition:all .15s;white-space:nowrap;}
+.btn-green{background:var(--g);color:#fff;} .btn-green:hover{background:#047857;}
+.btn-out{background:#fff;color:var(--r700);border:1.5px solid var(--r200);} .btn-out:hover{background:var(--r50);}
+.btn-red{background:#fff;color:#dc2626;border:1.5px solid #fecaca;} .btn-red:hover{background:#fef2f2;}
+.btn-sm{padding:5px 9px;font-size:11px;}
+
+/* BAR */
+.abar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
+.cnt-lbl{margin-left:auto;font-size:11px;color:var(--r400);font-weight:700;}
+
+/* FILTERS */
+.frow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.frow>*{flex:1;min-width:120px;}
+input,select,textarea{font-family:'Outfit',sans-serif;font-size:13px;border:1.5px solid var(--r200);border-radius:var(--rads);padding:7px 10px;width:100%;outline:none;background:#fff;color:var(--r800);transition:border-color .15s;}
+input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 3px rgba(52,211,153,.13);}
+
+/* STUDENT / PROGRAM CARDS */
+.card{background:#fff;border:1.5px solid var(--r100);border-radius:var(--rad);padding:10px 12px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh);margin-bottom:6px; transition: border-left 0.2s ease;}
+.chest{border-radius:7px;padding:4px 8px;font-size:12px;font-weight:900;color:#fff;min-width:50px;text-align:center;}
+.cinfo{flex:1;min-width:0;}
+.cname{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cmeta{font-size:11px;color:var(--r400);margin-top:1px;}
+.cacts{display:flex;gap:3px;flex-shrink:0;}
+.ibtn{width:29px;height:29px;border:none;border-radius:6px;background:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .13s;}
+.ibtn:hover{background:var(--r100);}
+.pcode{background:#eef2ff;color:#4338ca;border-radius:7px;padding:4px 9px;font-size:11px;font-weight:800;min-width:58px;text-align:center;}
+.ptyp{font-size:10px;font-weight:800;padding:2px 6px;border-radius:5px;}
+.ptyp-i{background:#dbeafe;color:#1d4ed8;} .ptyp-g{background:#ede9fe;color:#5b21b6;}
+
+/* SECTION HEADING */
+.seclbl{font-size:10px;font-weight:900;color:var(--r400);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 7px;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:300;display:none;align-items:center;justify-content:center;padding:14px;}
+.overlay.show{display:flex;}
+.modal{background:#fff;border-radius:18px;box-shadow:var(--shl);width:100%;max-width:400px;display:flex;flex-direction:column;max-height:90vh;}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:15px 17px 12px;border-bottom:1px solid var(--r100);}
+.mtitle{font-size:14px;font-weight:900;color:var(--r800);}
+.mclose{background:none;border:none;cursor:pointer;font-size:18px;color:var(--r400);line-height:1;padding:2px;}
+.mclose:hover{color:var(--r700);}
+.mbody{overflow-y:auto;flex:1;padding:15px 17px;}
+.mfoot{padding:13px 17px;border-top:1px solid var(--r100);display:flex;gap:7px;}
+.mfoot button{flex:1;padding:9px;border-radius:var(--rads);font-weight:800;font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer;border:none;transition:background .15s;}
+.mcancl{background:var(--r100);color:var(--r600);}
+.mcancl:hover{background:var(--r200);}
+.msave{background:var(--g);color:#fff;}
+.msave:hover{background:#047857;}
+.fld{margin-bottom:12px;}
+.flbl{font-size:10px;font-weight:900;color:var(--r500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:block;}
+.csv-fmt{background:var(--r50);border:1px solid var(--r200);border-radius:var(--rads);padding:9px 11px;font-size:11px;font-family:monospace;color:var(--r500);margin-bottom:11px;word-break:break-all;line-height:1.5;}
+
+/* ═══════════════════════════════════════
+   CANDIDATES TABLE
+═══════════════════════════════════════ */
+.reg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1.5px solid var(--r200);border-radius:var(--rad);background:#fff;box-shadow:var(--sh);}
+.reg-table{border-collapse:collapse;font-size:11px;white-space:nowrap;}
+.reg-table th,.reg-table td{border:1px solid var(--r200);padding:0;}
+
+.col-code{position:sticky;left:0;z-index:5;min-width:64px;width:64px;background:#fff;}
+.col-name{position:sticky;left:64px;z-index:5;min-width:130px;width:130px;background:#fff;}
+
+.th-house{text-align:center;font-size:10px;font-weight:900;color:#fff;padding:5px 6px;letter-spacing:.04em;}
+.th-cand{text-align:center;font-size:9px;font-weight:800;color:var(--r600);padding:4px 3px;min-width:90px;width:90px;border-top:none;background:var(--r50);}
+.th-code-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:center;}
+.th-name-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:left;}
+
+.td-code{font-size:10px;font-weight:900;color:#4338ca;text-align:center;padding:5px 4px;background:#fafaf9;}
+.td-name{font-size:11px;font-weight:700;color:var(--r700);padding:5px 7px;text-align:left;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
+.td-cand{padding:3px 4px;text-align:center;vertical-align:middle;min-width:90px;width:90px;}
+
+.cand-cell{display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px;}
+.cand-chest{width:70px;border:1.5px solid var(--r200);border-radius:5px;padding:3px 5px;font-size:10px;font-weight:800;text-align:center;font-family:'Outfit',sans-serif;text-transform:uppercase;transition:border-color .13s;}
+.cand-chest:focus{border-color:var(--gm);outline:none;box-shadow:0 0 0 2px rgba(52,211,153,.15);}
+.cand-chest.filled{border-color:var(--g);background:#f0fdf4;color:#065f46;}
+.cand-chest.err{border-color:#f87171;background:#fef2f2;color:#dc2626;}
+.cand-name{font-size:9px;font-weight:700;color:var(--r500);max-width:80px;overflow:hidden;text-overflow:ellipsis;height:12px;line-height:12px;}
+.cand-name.ok{color:var(--g);}
+.cand-name.no{color:#f87171;}
+
+.reg-table tbody tr:nth-child(even) .td-code,
+.reg-table tbody tr:nth-child(even) .td-name{background:#fafff8;}
+.tr-section td{background:var(--r100);font-size:10px;font-weight:900;color:var(--r500);padding:4px 8px;text-transform:uppercase;letter-spacing:.07em;}
+
+/* ═══════════════════════════════════════
+   GPAY SUCCESS ANIMATION (NEW)
+═══════════════════════════════════════ */
+.success-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+.success-overlay.show { opacity:1; pointer-events:all; }
+.checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: #10b981; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+.checkmark { width: 120px; height: 120px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 0 auto 20px; box-shadow: inset 0px 0px 0px #10b981; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
+.checkmark__check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
+@keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+@keyframes fill { 100% { box-shadow: inset 0px 0px 0px 60px #10b981; } }
+
+.success-details { text-align: center; opacity: 0; animation: slideUp 0.5s ease 0.5s forwards; display:flex; flex-direction:column; align-items:center;}
+.success-title { font-size: 14px; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.success-name { font-size: 32px; font-weight: 900; color: #1f2937; line-height:1.2;}
+.success-meta { font-size: 20px; font-weight: 700; color: #6b7280; margin-top: 5px; }
+.success-prog { font-size: 18px; font-weight: 800; color: #065f46; margin-top: 20px; background: #d1fae5; padding: 10px 25px; border-radius: 99px; display: inline-block; border: 2px solid #34d399;}
+
+@keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+/* TOAST */
+.toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:5px;align-items:center;pointer-events:none;}
+.toast{padding:8px 18px;border-radius:99px;font-size:12px;font-weight:800;color:#fff;box-shadow:var(--shl);animation:tup .22s ease;white-space:nowrap;}
+.tg{background:#059669;}.tb{background:#2563eb;}.tr{background:#dc2626;}
+@keyframes tup{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* EMPTY / SPINNER */
+.empty{text-align:center;padding:50px 16px;color:var(--r400);}
+.empty-ico{font-size:34px;margin-bottom:8px;}
+.empty-txt{font-weight:700;font-size:13px;}
+.empty-sub{font-size:11px;margin-top:3px;}
+.spinner{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:12px;background:var(--r50);}
+.spin{width:34px;height:34px;border:3px solid var(--r200);border-top-color:var(--g);border-radius:50%;animation:sp .75s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.reg-toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+
+/* Custom styles for Scan Input & Camera */
+#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 12px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%;}
+#scan-input::placeholder { color: #9ca3af; font-weight: 500; font-size: 15px;}
+#reader { width: 100%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: var(--shm); display: none; margin: 15px 0; border: none !important;}
+#reader video { border-radius: 12px; }
+#btn-start-scan { width: 100%; max-width: 400px; justify-content: center; font-size: 14px; padding: 12px; margin-bottom: 5px;}
+.cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 20px;}
+</style>
+</head>
+<body>
+
+<div class="spinner" id="loading">
+  <div class="spin"></div>
+  <div style="font-size:13px;color:var(--r400);font-weight:700;">Connecting to Firestore…</div>
+</div>
+
+<div id="app" style="display:none;">
+
+  <div class="hdr">
+    <div class="hdr-row">
+      <div class="hdr-left">
+        <div class="hdr-title">MASLAC ARTS FEST '26</div>
+        <div class="hdr-sub">Sports Management System</div>
+      </div>
+      <div class="hdr-right">
+        <div class="hdr-stats" id="hdr-stats">0 Students · 0 Programs</div>
+        <div class="sync-pill sync-ok" id="sync-pill">
+          <span class="sync-dot sd-ok" id="sync-dot"></span>
+          <span id="sync-txt">Live</span>
+        </div>
+      </div>
+    </div>
+    <div class="house-badges" id="house-badges"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" onclick="switchTab('students')">👥 Students</button>
+    <button class="tab"    onclick="switchTab('programs')">🏅 Programs</button>
+    <button class="tab"    onclick="switchTab('register')">📋 Candidates</button>
+    <button class="tab"    onclick="switchTab('checkin')">⚡ Registration</button>
+  </div>
+
+  <div class="pg on" id="pg-students">
+    <div class="abar">
+      <button class="btn btn-green" onclick="openStudentModal()">＋ Add Student</button>
+      <button class="btn btn-out"   onclick="openStudentCSV()">⬆ Import CSV</button>
+      <button class="btn btn-out"   onclick="exportStudentsCSV()">⬇ Export CSV</button>
+      <button class="btn btn-out"   onclick="downloadSampleStudents()">📄 Sample CSV</button>
+      <button class="btn btn-red"   onclick="clearStudents()">🗑 Clear All</button>
+      <span class="cnt-lbl" id="stu-count"></span>
+    </div>
+    <div class="frow">
+      <input type="text" id="stu-search" placeholder="🔍 Search name / chest no…" oninput="renderStudents()">
+      <select id="stu-sec" onchange="renderStudents()"><option value="">All Sections</option></select>
+      <select id="stu-house" onchange="renderStudents()"><option value="">All Houses</option></select>
+    </div>
+    <div id="stu-list"></div>
+  </div>
+
+  <div class="pg" id="pg-programs">
+    <div class="abar">
+      <button class="btn btn-green" onclick="openProgramModal()">＋ Add Program</button>
+      <button class="btn btn-out"   onclick="openProgramCSV()">⬆ Import CSV</button>
+      <button class="btn btn-out"   onclick="exportProgramsCSV()">⬇ Export CSV</button>
+      <button class="btn btn-out"   onclick="downloadSamplePrograms()">📄 Sample CSV</button>
+      <button class="btn btn-red"   onclick="clearPrograms()">🗑 Clear All</button>
+      <span class="cnt-lbl" id="prog-count"></span>
+    </div>
+    <div class="frow">
+      <select id="prog-sec" onchange="renderPrograms()"><option value="">All Sections</option></select>
+    </div>
+    <div id="prog-list"></div>
+  </div>
+
+  <div class="pg" id="pg-register">
+    <div class="reg-toolbar">
+      <select id="reg-sec" onchange="renderRegister()"><option value="">All Sections</option></select>
+      <button class="btn btn-out" onclick="exportRegCSV()">⬇ Export Candidates</button>
+      <button class="btn btn-out" onclick="downloadSampleReg()">📄 Sample CSV</button>
+      <button class="btn btn-out" onclick="openRegCSV()">⬆ Import Candidates</button>
+      <button class="btn btn-red btn-sm" onclick="clearRegs()">🗑 Clear All</button>
+    </div>
+    <div id="reg-area"></div>
+  </div>
+
+  <div class="pg" id="pg-checkin">
+    <div class="frow">
+      <select id="chk-prog" onchange="renderCheckin()">
+        <option value="">Loading Programs...</option>
+      </select>
+    </div>
+    
+    <div class="cam-container">
+      <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">📷 Start Camera Scanner</button>
+      <div id="reader"></div>
+    </div>
+
+    <div class="frow" style="margin-bottom: 20px;">
+      <input type="text" id="scan-input" placeholder="Type or Scan Chest No. Here..." oninput="handleScanner(this)" autocomplete="off">
+    </div>
+    
+    <div id="checkin-list"></div>
+  </div>
+
+</div><div class="success-overlay" id="success-modal">
+  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+  </svg>
+  <div class="success-details">
+    <div class="success-title">Successfully Registered</div>
+    <div class="success-name" id="sm-name">STUDENT NAME</div>
+    <div class="success-meta" id="sm-chest-house">CHEST NO · HOUSE</div>
+    <div class="success-prog" id="sm-prog">CODE - PROGRAM</div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<datalist id="class-list"></datalist>
+<datalist id="section-list"></datalist>
+<datalist id="house-list"></datalist>
+
+<div class="overlay" id="modal-student">
+  <div class="modal">
+    <div class="mhdr">
+      <span class="mtitle" id="stu-modal-title">Add Student</span>
+      <button class="mclose" onclick="closeModal('modal-student')">✕</button>
+    </div>
+    <div class="mbody">
+      <input type="hidden" id="stu-id">
+      <div class="fld"><label class="flbl">Chest No</label><input type="text" id="stu-chest" placeholder="e.g. D102"></div>
+      <div class="fld"><label class="flbl">Full Name</label><input type="text" id="stu-name" placeholder="Student name"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="fld"><label class="flbl">Class</label>
+          <input type="text" id="stu-class-input" list="class-list" placeholder="Class (e.g. 10)">
+        </div>
+        <div class="fld"><label class="flbl">Section</label>
+          <input type="text" id="stu-section-input" list="section-list" placeholder="Section">
+        </div>
+      </div>
+      <div class="fld"><label class="flbl">House (Leader)</label>
+         <input type="text" id="stu-house-input" list="house-list" placeholder="Enter or select house...">
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="mcancl" onclick="closeModal('modal-student')">Cancel</button>
+      <button class="msave" onclick="saveStudent()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="modal-program">
+  <div class="modal">
+    <div class="mhdr">
+      <span class="mtitle" id="prog-modal-title">Add Program</span>
+      <button class="mclose" onclick="closeModal('modal-program')">✕</button>
+    </div>
+    <div class="mbody">
+      <input type="hidden" id="prog-id">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="fld"><label class="flbl">Program Code</label><input type="text" id="prog-code" placeholder="ATH001"></div>
+        <div class="fld"><label class="flbl">Section</label>
+           <input type="text" id="prog-section-input" list="section-list" placeholder="Section">
+        </div>
+      </div>
+      <div class="fld"><label class="flbl">Program Name</label><input type="text" id="prog-name" placeholder="LONG JUMP"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="fld"><label class="flbl">Type</label>
+          <select id="prog-type">
+            <option value="individual">Individual</option>
+            <option value="group">Group</option>
+          </select>
+        </div>
+        <div class="fld"><label class="flbl">Candidate Limit / House</label><input type="number" id="prog-limit" min="1" value="3"></div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="mcancl" onclick="closeModal('modal-program')">Cancel</button>
+      <button class="msave" onclick="saveProgram()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="modal-csv">
+  <div class="modal">
+    <div class="mhdr">
+      <span class="mtitle" id="csv-modal-title">Import CSV</span>
+      <button class="mclose" onclick="closeModal('modal-csv')">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="csv-fmt" id="csv-fmt-line"></div>
+      <div class="fld"><label class="flbl">Upload .csv File</label>
+        <input type="file" id="csv-file" accept=".csv,.txt" onchange="onCSVFile(event)">
+      </div>
+      <div class="fld"><label class="flbl">Or Paste CSV here</label>
+        <textarea id="csv-text" rows="6" placeholder="Paste rows here…"></textarea>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="mcancl" onclick="closeModal('modal-csv')">Cancel</button>
+      <button class="msave" onclick="doCSVImport()">Import</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, doc, setDoc,
+         deleteDoc, onSnapshot, writeBatch,
+         serverTimestamp, getDocs }             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDwRDCGHQEuZ09zkHm-TUVJHH2r2Mx15c8",
+  authDomain:"fest26-69c8b.firebaseapp.com",
+  projectId:"fest26-69c8b",
+  storageBucket:"fest26-69c8b.firebasestorage.app",
+  messagingSenderId:"255981759475",
+  appId:"1:255981759475:web:9501380e6b654b30960086",
+  measurementId:"G-4HTG6YJRJF"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ─── FULLY DYNAMIC DATA ─── */
+let SECTIONS = [];
+let CLASSES  = [];
+let HOUSES   = [];
+
+const COLORS = ['#2563eb', '#7c3aed', '#ea580c', '#16a34a', '#dc2626', '#059669', '#db2777', '#d97706', '#4f46e5', '#0891b2'];
+function getHouseColor(houseName) {
+  const idx = HOUSES.indexOf(toTitle(houseName));
+  if (idx === -1) return '#6b7280';
+  return COLORS[idx % COLORS.length];
+}
+
+function toTitle(str) {
+  if(!str) return '';
+  return String(str).trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+}
+
+/* ─── state ─── */
+let students = {};   
+let programs = {};   
+let regs = {};       
+
+function uid(){ return Math.random().toString(36).slice(2,9)+Date.now().toString(36); }
+
+function setSyncState(s){
+  const pill=document.getElementById('sync-pill');
+  const dot=document.getElementById('sync-dot');
+  const txt=document.getElementById('sync-txt');
+  pill.className='sync-pill '+(s==='ok'?'sync-ok':s==='ing'?'sync-ing':'sync-err');
+  dot.className='sync-dot '+(s==='ok'?'sd-ok':s==='ing'?'sd-ing':'sd-err');
+  txt.textContent=s==='ok'?'Live':s==='ing'?'Saving…':'Error';
+}
+
+function toast(msg,type='g'){
+  const d=document.createElement('div');
+  d.className=`toast t${type}`;d.textContent=msg;
+  document.getElementById('toasts').appendChild(d);
+  setTimeout(()=>d.remove(),2800);
+}
+window.toast=toast;
+
+let currentTab='students';
+window.switchTab=function(tab){
+  // Turn off camera if switching away from checkin tab
+  if (isScanning && tab !== 'checkin') {
+      window.toggleCamera(); 
+  }
+
+  const tabsList = ['students','programs','register','checkin'];
+  document.querySelectorAll('.tab').forEach((b,i)=>{
+    b.classList.toggle('on', tabsList[i]===tab);
+  });
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pg-'+tab).classList.add('on');
+  currentTab=tab;
+  
+  if(tab==='register') renderRegister();
+  if(tab==='checkin') {
+      renderCheckin();
+  }
+};
+
+window.closeModal=id=>document.getElementById(id).classList.remove('show');
+function openModal(id){document.getElementById(id).classList.add('show');}
+
+function updateHeader(){
+  const ns=Object.keys(students).length, np=Object.keys(programs).length;
+  document.getElementById('hdr-stats').textContent=`${ns} Students · ${np} Programs`;
+  const bc=document.getElementById('house-badges');
+  bc.innerHTML=HOUSES.map((h)=>`<span class="hbadge" style="background-color:${getHouseColor(h)}88;border-color:${getHouseColor(h)}">${h}</span>`).join('');
+}
+
+function updateDynamicFilters() {
+  let sSet = new Set();
+  let hSet = new Set();
+  let cSet = new Set();
+
+  Object.values(students).forEach(s => {
+    if(s.section) sSet.add(toTitle(s.section));
+    if(s.house) hSet.add(toTitle(s.house));
+    if(s.class) cSet.add(String(s.class).trim());
+  });
+  Object.values(programs).forEach(p => {
+    if(p.section) sSet.add(toTitle(p.section));
+  });
+
+  SECTIONS = Array.from(sSet).sort();
+  HOUSES = Array.from(hSet).sort();
+  CLASSES = Array.from(cSet).sort((a,b)=> {
+      const numA = parseInt(a); const numB = parseInt(b);
+      if(!isNaN(numA) && !isNaN(numB)) return numA - numB;
+      return a.localeCompare(b);
+  });
+
+  populateDataLists();
+  populateSelects();
+}
+
+function populateDataLists() {
+    const secHtml = SECTIONS.map(s => `<option value="${s}">`).join('');
+    const houseHtml = HOUSES.map(h => `<option value="${h}">`).join('');
+    const classHtml = CLASSES.map(c => `<option value="${c}">`).join('');
+
+    const dSec = document.getElementById('section-list');
+    if(dSec) dSec.innerHTML = secHtml;
+
+    const dHouse = document.getElementById('house-list');
+    if(dHouse) dHouse.innerHTML = houseHtml;
+
+    const dClass = document.getElementById('class-list');
+    if(dClass) dClass.innerHTML = classHtml;
+}
+
+function populateSelects(){
+  ['stu-sec','prog-sec','reg-sec'].forEach(id=>{
+    const el=document.getElementById(id); if(!el)return;
+    const cur=el.value;
+    el.innerHTML='<option value="">All Sections</option>'+SECTIONS.map(s=>`<option value="${s}">${s}</option>`).join('');
+    if([...el.options].some(o=>o.value===cur)) el.value=cur;
+  });
+  
+  const sh=document.getElementById('stu-house');
+  if(sh) {
+      const curH=sh.value;
+      sh.innerHTML='<option value="">All Houses</option>'+HOUSES.map(h=>`<option value="${h}">${h}</option>`).join('');
+      if([...sh.options].some(o=>o.value===curH)) sh.value=curH;
+  }
+}
+
+function populateCheckinPrograms() {
+  const chkProg = document.getElementById('chk-prog');
+  if(!chkProg) return;
+  const cur = chkProg.value;
+  const progs = Object.values(programs).sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
+  chkProg.innerHTML = '<option value="">Select Program to Start Scanning...</option>' + 
+      progs.map(p => `<option value="${p.id}">${String(p.code||'')} - ${String(p.name||'')}</option>`).join('');
+  if([...chkProg.options].some(o=>o.value===cur)) chkProg.value=cur;
+}
+
+
+/* ══════════════════ STUDENTS ══════════════════ */
+window.renderStudents=function(){
+  const search=String(document.getElementById('stu-search').value||'').toLowerCase().trim();
+  const sec=String(document.getElementById('stu-sec').value||'').toLowerCase().trim();
+  const house=String(document.getElementById('stu-house').value||'').toLowerCase().trim();
+  
+  let arr=Object.values(students);
+  if(search) arr=arr.filter(s=>String(s.name||'').toLowerCase().includes(search)||String(s.chestNo||'').toLowerCase().includes(search));
+  if(sec)    arr=arr.filter(s=>toTitle(s.section).toLowerCase() === sec);
+  if(house)  arr=arr.filter(s=>toTitle(s.house).toLowerCase() === house);
+  
+  arr.sort((a,b)=>String(a.chestNo||'').localeCompare(String(b.chestNo||'')));
+  document.getElementById('stu-count').textContent=`${arr.length} / ${Object.keys(students).length} students`;
+  const list=document.getElementById('stu-list');
+  if(!arr.length){list.innerHTML=`<div class="empty"><div class="empty-ico">👤</div><div class="empty-txt">No students found</div></div>`;return;}
+  
+  list.innerHTML=arr.map(s=>{
+    const hColor = getHouseColor(s.house);
+    return `
+    <div class="card">
+      <div class="chest" style="background:${hColor}">${String(s.chestNo||'')}</div>
+      <div class="cinfo">
+        <div class="cname">${String(s.name||'')}</div>
+        <div class="cmeta">Class ${String(s.class||'')} · ${toTitle(s.section)} · <span style="color:${hColor};font-weight:700">${toTitle(s.house)}</span></div>
+      </div>
+      <div class="cacts">
+        <button class="ibtn" onclick="editStudent('${s.id}')">✏️</button>
+        <button class="ibtn" onclick="deleteStudent('${s.id}')">🗑️</button>
+      </div>
+    </div>`
+  }).join('');
+};
+
+window.openStudentModal=function(id=null){
+  document.getElementById('stu-modal-title').textContent=id?'Edit Student':'Add Student';
+  const s=id?students[id]:null;
+  document.getElementById('stu-id').value=id||'';
+  document.getElementById('stu-chest').value=s?s.chestNo:'';
+  document.getElementById('stu-name').value=s?s.name:'';
+  document.getElementById('stu-class-input').value=s?String(s.class):'';
+  document.getElementById('stu-section-input').value=s?toTitle(s.section):'';
+  document.getElementById('stu-house-input').value=s?toTitle(s.house):'';
+  openModal('modal-student');
+};
+window.editStudent=id=>openStudentModal(id);
+
+window.saveStudent=async function(){
+  const id=document.getElementById('stu-id').value||uid();
+  const chestNo=document.getElementById('stu-chest').value.trim().toUpperCase();
+  const name=document.getElementById('stu-name').value.trim().toUpperCase();
+  const cls = document.getElementById('stu-class-input').value.trim();
+  const sec = toTitle(document.getElementById('stu-section-input').value);
+  const house = toTitle(document.getElementById('stu-house-input').value);
+
+  if(!chestNo||!name){toast('Chest No and Name required','r');return;}
+  if(!house){toast('House is required','r');return;}
+
+  const obj={id,chestNo,name,class:cls,section:sec,house:house,createdAt:serverTimestamp()};
+  setSyncState('ing');
+  try{
+    await setDoc(doc(db,'students',id),obj);
+    closeModal('modal-student');
+    toast('Student saved','g');
+  }catch(e){setSyncState('err');toast('Save failed: '+e.message,'r');}
+};
+
+window.deleteStudent=async function(id){
+  if(!confirm('Delete this student?'))return;
+  setSyncState('ing');
+  try{await deleteDoc(doc(db,'students',id));toast('Deleted','g');}
+  catch(e){setSyncState('err');toast('Delete failed','r');}
+};
+
+window.clearStudents=async function(){
+  if(!confirm(`Delete ALL ${Object.keys(students).length} students? This cannot be undone.`))return;
+  setSyncState('ing');
+  try{
+    const batch=writeBatch(db);
+    Object.keys(students).forEach(id=>batch.delete(doc(db,'students',id)));
+    await batch.commit();toast('All students cleared','r');
+  }catch(e){setSyncState('err');toast('Failed','r');}
+};
+
+window.exportStudentsCSV=function(){
+  const rows=['ChestNo,Name,Class,Section,House',
+    ...Object.values(students).map(s=>`${s.chestNo},${s.name},${s.class},${s.section},${s.house}`)];
+  dlCSV(rows.join('\n'),'students.csv');
+};
+window.downloadSampleStudents=function(){
+  dlCSV('ChestNo,Name,Class,Section,House\nD102,AHMAD MUBASHAR,10,Thanawiyya,Thasleem\nD103,MOHAMMED NAFIH BA,10,Thanawiyya,Mujthaba','students_sample.csv');
+};
+
+let csvMode='';
+window.openStudentCSV=function(){
+  csvMode='students';
+  document.getElementById('csv-modal-title').textContent='Import Students CSV';
+  document.getElementById('csv-fmt-line').textContent='Format: ChestNo, Name, Class, Section, House';
+  document.getElementById('csv-text').value='';
+  document.getElementById('csv-file').value='';
+  openModal('modal-csv');
+};
+
+/* ══════════════════ PROGRAMS ══════════════════ */
+window.renderPrograms=function(){
+  const secFilter=String(document.getElementById('prog-sec').value||'').toLowerCase().trim();
+  let arr=Object.values(programs);
+  
+  if(secFilter) arr=arr.filter(p=>toTitle(p.section).toLowerCase() === secFilter);
+  arr.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
+  document.getElementById('prog-count').textContent=`${arr.length} / ${Object.keys(programs).length} programs`;
+  
+  const grouped={};
+  arr.forEach(p=>{
+    const pSec = toTitle(p.section || 'Other');
+    if(!grouped[pSec]) grouped[pSec]=[];
+    grouped[pSec].push(p);
+  });
+  
+  const list=document.getElementById('prog-list');
+  if(!arr.length){list.innerHTML=`<div class="empty"><div class="empty-ico">🏅</div><div class="empty-txt">No programs</div><div class="empty-sub">Add or import programs</div></div>`;return;}
+  
+  let html = '';
+  const sectionsToRender = [...new Set([...SECTIONS, ...Object.keys(grouped)])];
+  
+  sectionsToRender.forEach(secName => {
+    if(grouped[secName] && grouped[secName].length > 0) {
+      html += `
+        <div class="seclbl">${secName} Section — ${grouped[secName].length} programs</div>
+        ${grouped[secName].map(p=>{
+          const safeType = String(p.type||'individual').trim();
+          const ptypChar = safeType.charAt(0).toLowerCase() || 'i';
+          return `
+          <div class="card">
+            <div class="pcode">${String(p.code||'')}</div>
+            <div class="cinfo">
+              <div class="cname">${String(p.name||'')}</div>
+              <div class="cmeta"><span class="ptyp ptyp-${ptypChar}">${safeType}</span> · Limit <b>${p.candidateLimit||3}</b> per house</div>
+            </div>
+            <div class="cacts">
+              <button class="ibtn" onclick="editProgram('${p.id}')">✏️</button>
+              <button class="ibtn" onclick="deleteProgram('${p.id}')">🗑️</button>
+            </div>
+          </div>`
+        }).join('')}`;
+    }
+  });
+  list.innerHTML = html;
+};
+
+window.openProgramModal=function(id=null){
+  document.getElementById('prog-modal-title').textContent=id?'Edit Program':'Add Program';
+  const p=id?programs[id]:null;
+  document.getElementById('prog-id').value=id||'';
+  document.getElementById('prog-code').value=p?p.code:'';
+  document.getElementById('prog-name').value=p?p.name:'';
+  document.getElementById('prog-section-input').value=p?toTitle(p.section):'';
+  document.getElementById('prog-type').value=p?p.type:'individual';
+  document.getElementById('prog-limit').value=p?p.candidateLimit:3;
+  openModal('modal-program');
+};
+window.editProgram=id=>openProgramModal(id);
+
+window.saveProgram=async function(){
+  const id=document.getElementById('prog-id').value||uid();
+  const code=document.getElementById('prog-code').value.trim().toUpperCase();
+  const name=document.getElementById('prog-name').value.trim().toUpperCase();
+  const sec=toTitle(document.getElementById('prog-section-input').value);
+  
+  if(!code||!name){toast('Code and Name required','r');return;}
+  const obj={id,code,name,
+    section:sec,
+    type:document.getElementById('prog-type').value,
+    candidateLimit:parseInt(document.getElementById('prog-limit').value)||1};
+  setSyncState('ing');
+  try{
+    await setDoc(doc(db,'programs',id),obj);
+    closeModal('modal-program');
+    toast('Program saved','g');
+  }catch(e){setSyncState('err');toast('Save failed','r');}
+};
+
+window.deleteProgram=async function(id){
+  if(!confirm('Delete program?'))return;
+  setSyncState('ing');
+  try{await deleteDoc(doc(db,'programs',id));toast('Deleted','g');}
+  catch(e){setSyncState('err');toast('Failed','r');}
+};
+
+window.clearPrograms=async function(){
+  if(!confirm(`Delete ALL ${Object.keys(programs).length} programs?`))return;
+  setSyncState('ing');
+  try{
+    const batch=writeBatch(db);
+    Object.keys(programs).forEach(id=>batch.delete(doc(db,'programs',id)));
+    await batch.commit();toast('All programs cleared','r');
+  }catch(e){setSyncState('err');toast('Failed','r');}
+};
+
+window.exportProgramsCSV=function(){
+  const rows=['Code,Name,Section,Type,CandidateLimit',
+    ...Object.values(programs).map(p=>`${p.code},${p.name},${p.section},${p.type},${p.candidateLimit}`)];
+  dlCSV(rows.join('\n'),'programs.csv');
+};
+window.downloadSamplePrograms=function(){
+  dlCSV('Code,Name,Section,Type,CandidateLimit\nATH001,LONG JUMP,Thanawiyya,individual,3\nATH013,RELAY,Thanawiyya,group,4','programs_sample.csv');
+};
+window.openProgramCSV=function(){
+  csvMode='programs';
+  document.getElementById('csv-modal-title').textContent='Import Programs CSV';
+  document.getElementById('csv-fmt-line').textContent='Format: Code, Name, Section, Type, CandidateLimit';
+  document.getElementById('csv-text').value='';
+  document.getElementById('csv-file').value='';
+  openModal('modal-csv');
+};
+
+/* ══════════════════ CANDIDATES TABLE ══════════════════ */
+
+function regKey(pid,house,slot){return `${pid}__${house}__${slot}`;}
+
+window.renderRegister=function(){
+  const secFilter=String(document.getElementById('reg-sec').value||'').toLowerCase().trim();
+  let progs=Object.values(programs);
+  if(secFilter) progs=progs.filter(p=>toTitle(p.section).toLowerCase() === secFilter);
+  progs.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
+
+  const area=document.getElementById('reg-area');
+  if(!progs.length){
+    area.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">No programs for this section</div><div class="empty-sub">Add programs in the Programs tab first.</div></div>`;
+    return;
+  }
+
+  let houseHeaderCols = '';
+  let candHeaderCols  = '';
+
+  HOUSES.forEach(house=>{
+    const maxL = Math.max(...progs.map(p=>p.candidateLimit||1));
+    const hColor = getHouseColor(house);
+    houseHeaderCols += `<th class="th-house" colspan="${maxL}" style="background:${hColor};border-color:${hColor}">${house}</th>`;
+    for(let s=0;s<maxL;s++){
+      candHeaderCols += `<th class="th-cand" style="color:${hColor}">C${s+1}</th>`;
+    }
+  });
+
+  const bySection={};
+  progs.forEach(p=>{
+    const pSec = toTitle(p.section || 'Other');
+    if(!bySection[pSec]) bySection[pSec]=[];
+    bySection[pSec].push(p);
+  });
+
+  const maxLimit = Math.max(...progs.map(p=>p.candidateLimit||1));
+
+  let rows='';
+  const sectionsToRender = [...new Set([...SECTIONS, ...Object.keys(bySection)])];
+
+  sectionsToRender.forEach(sec => {
+    const secProgs = bySection[sec];
+    if(secProgs && secProgs.length > 0) {
+      if(Object.keys(bySection).length>1){
+        rows+=`<tr class="tr-section"><td colspan="${2+HOUSES.length*maxLimit}">${sec} Section</td></tr>`;
+      }
+      secProgs.forEach(p=>{
+        let tds='';
+        HOUSES.forEach(house=>{
+          for(let slot=0;slot<maxLimit;slot++){
+            if(slot < (p.candidateLimit||1)){
+              const key=regKey(p.id,house,slot);
+              const reg=regs[key];
+              const chestVal=reg?String(reg.chestNo||''):'';
+              const nameVal=reg?String(reg.name||''):'';
+              const nameClass=reg?'cand-name ok':'cand-name';
+              tds+=`<td class="td-cand">
+                <div class="cand-cell">
+                  <input class="cand-chest${reg?' filled':''}" type="text" maxlength="8"
+                    placeholder="Chest"
+                    value="${chestVal}"
+                    data-pid="${p.id}" data-house="${house}" data-slot="${slot}"
+                    oninput="onChestInput(this)"
+                    onblur="onChestBlur(this)"
+                    style="border-color:${reg?'var(--g)':'var(--r200)'}">
+                  <span class="${nameClass}" id="cname-${p.id}-${house}-${slot}">${nameVal}</span>
+                </div>
+              </td>`;
+            } else {
+              tds+=`<td style="background:#f9fafb;border:1px solid var(--r200)"></td>`;
+            }
+          }
+        });
+        rows+=`<tr>
+          <td class="td-code col-code">${String(p.code||'')}</td>
+          <td class="td-name col-name">${String(p.name||'')}</td>
+          ${tds}
+        </tr>`;
+      });
+    }
+  });
+
+  area.innerHTML=`
+    <div class="reg-wrap">
+      <table class="reg-table">
+        <thead>
+          <tr>
+            <th class="th-code-hdr col-code" rowspan="2">Code</th>
+            <th class="th-name-hdr col-name" rowspan="2">Program</th>
+            ${houseHeaderCols}
+          </tr>
+          <tr>${candHeaderCols}</tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+};
+
+window.onChestInput=function(el){
+  const val=el.value.trim().toUpperCase();
+  el.value=val;
+  const pid=el.dataset.pid, house=el.dataset.house, slot=parseInt(el.dataset.slot);
+  const nameEl=document.getElementById(`cname-${pid}-${house}-${slot}`);
+  if(!val){
+    el.className='cand-chest'; el.style.borderColor='var(--r200)';
+    if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}
+    return;
+  }
+  const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===val);
+  if(stu){
+    el.className='cand-chest filled'; el.style.borderColor='var(--g)';
+    if(nameEl){nameEl.textContent=String(stu.name||'');nameEl.className='cand-name ok';}
+  } else {
+    el.className='cand-chest err'; el.style.borderColor='#f87171';
+    if(nameEl){nameEl.textContent='Not found';nameEl.className='cand-name no';}
+  }
+};
+
+window.onChestBlur=async function(el){
+  const val=el.value.trim().toUpperCase();
+  const pid=el.dataset.pid, house=el.dataset.house, slot=parseInt(el.dataset.slot);
+  const key=regKey(pid,house,slot);
+  const nameEl=document.getElementById(`cname-${pid}-${house}-${slot}`);
+
+  if(!val){
+    if(regs[key]){
+      setSyncState('ing');
+      try{await deleteDoc(doc(db,'registrations',key));toast('Slot cleared','b');}
+      catch(e){setSyncState('err');toast('Failed','r');}
+    }
+    return;
+  }
+
+  const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===val);
+  if(!stu){toast('Chest No not found in students','r');return;}
+
+  const alreadyKey=Object.keys(regs).find(k=>{
+    if(k===key)return false;
+    const [kpid]=k.split('__');
+    return kpid===pid && regs[k].studentId===stu.id;
+  });
+  if(alreadyKey){
+    const [,kh,ks]=alreadyKey.split('__');
+    toast(`${stu.name} already in ${kh} C${parseInt(ks)+1} for this program`,'r');
+    el.value=''; el.className='cand-chest'; el.style.borderColor='var(--r200)';
+    if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}
+    return;
+  }
+
+  const prog=programs[pid];
+  setSyncState('ing');
+  try{
+    await setDoc(doc(db,'registrations',key),{
+      programId:pid, house, slot, studentId:stu.id,
+      chestNo:stu.chestNo, name:stu.name,
+      programCode:prog?prog.code:'', programName:prog?prog.name:'',
+      isRegistered: false, 
+      registeredAt:serverTimestamp()
+    });
+    toast(`${stu.name} → ${house} C${slot+1}`,'g');
+  }catch(e){setSyncState('err');toast('Save failed','r');}
+};
+
+window.exportRegCSV=function(){
+  const rows=['ProgramCode,ChestNo,Slot,House,StudentName,IsRegistered'];
+  Object.entries(regs).forEach(([key,r])=>{
+    const [pid,house,slot]=key.split('__');
+    const p=programs[pid];
+    rows.push(`${p?p.code:''},${r.chestNo},${parseInt(slot)+1},${house},${r.name},${r.isRegistered||false}`);
+  });
+  dlCSV(rows.join('\n'),'candidates.csv');
+};
+
+window.downloadSampleReg=function(){
+  dlCSV('ProgramCode,ChestNo,Slot\nATH001,D102,1\nATH001,D104,2','candidates_sample.csv');
+};
+
+window.openRegCSV=function(){
+  csvMode='registrations';
+  document.getElementById('csv-modal-title').textContent='Import Candidates CSV';
+  document.getElementById('csv-fmt-line').textContent='Format: ProgramCode, ChestNo, Slot (1-based)\n(House and Name will be fetched automatically)';
+  document.getElementById('csv-text').value='';
+  document.getElementById('csv-file').value='';
+  openModal('modal-csv');
+};
+
+window.clearRegs=async function(){
+  if(!confirm(`Clear ALL ${Object.keys(regs).length} candidates?`))return;
+  setSyncState('ing');
+  try{
+    const batch=writeBatch(db);
+    Object.keys(regs).forEach(k=>batch.delete(doc(db,'registrations',k)));
+    await batch.commit();toast('All candidates cleared','r');
+  }catch(e){setSyncState('err');toast('Failed','r');}
+};
+
+/* ══════════════════ REGISTRATION (CHECK-IN & SCANNER) ══════════════════ */
+window.renderCheckin = function() {
+    const pid = document.getElementById('chk-prog').value;
+    const list = document.getElementById('checkin-list');
+    
+    if(!pid) { list.innerHTML = `<div class="empty"><div class="empty-ico">⚡</div><div class="empty-txt">Select a Program</div><div class="empty-sub">Choose a program above to start scanning Chest Numbers.</div></div>`; return; }
+
+    const programRegs = Object.values(regs).filter(r => r.programId === pid);
+    
+    if(programRegs.length === 0) {
+        list.innerHTML = `<div class="empty"><div class="empty-ico">📭</div><div class="empty-txt">No Candidates Found</div><div class="empty-sub">Please add candidates to this program in the "Candidates" tab first.</div></div>`; return;
+    }
+
+    programRegs.sort((a,b) => {
+        if(toTitle(a.house) === toTitle(b.house)) return a.slot - b.slot;
+        return String(a.house||'').localeCompare(String(b.house||''));
+    });
+
+    list.innerHTML = programRegs.map(r => {
+        const hColor = getHouseColor(r.house);
+        return `
+        <div class="card" style="border-left: 6px solid ${r.isRegistered ? '#10b981' : '#ef4444'}">
+            <div class="chest" style="background:${hColor}">${String(r.chestNo||'')}</div>
+            <div class="cinfo">
+                <div class="cname">${String(r.name||'')}</div>
+                <div class="cmeta">${toTitle(r.house)} · Slot ${r.slot + 1}</div>
+            </div>
+            <div style="font-size:10px; font-weight:900; padding:4px 8px; border-radius:5px; background:${r.isRegistered ? '#d1fae5' : '#fee2e2'}; color:${r.isRegistered ? '#065f46' : '#991b1b'};">
+                ${r.isRegistered ? '✅ REGISTERED' : '❌ NOT REGISTERED'}
+            </div>
+        </div>
+    `}).join('');
+};
+
+/* CAMERA SCANNER LOGIC */
+let html5QrCode;
+let isScanning = false;
+let scanCooldown = false; 
+
+window.toggleCamera = function() {
+    const reader = document.getElementById('reader');
+    const btn = document.getElementById('btn-start-scan');
+    const pid = document.getElementById('chk-prog').value;
+
+    if(!pid) { toast("Select a program first!", "r"); return; }
+
+    if (isScanning) {
+        html5QrCode.stop().then(() => {
+            isScanning = false;
+            reader.style.display = 'none';
+            btn.innerHTML = "📷 Start Camera Scanner";
+            btn.className = "btn btn-green";
+        }).catch(err => {
+            console.error("Failed to stop scanner", err);
+        });
+    } else {
+        if (!html5QrCode) {
+            html5QrCode = new Html5Qrcode("reader");
+        }
+        reader.style.display = 'block';
+        btn.innerHTML = "🛑 Stop Camera";
+        btn.className = "btn btn-red";
+
+        html5QrCode.start(
+            { facingMode: "environment" }, // Uses back camera
+            {
+                fps: 10,
+                qrbox: { width: 250, height: 250 }
+            },
+            (decodedText, decodedResult) => {
+                if(scanCooldown) return; 
+                
+                const inputEl = document.getElementById('scan-input');
+                inputEl.value = decodedText;
+                
+                window.handleScanner(inputEl, true); 
+            },
+            (errorMessage) => {
+                // Ignore parse errors while finding QR
+            }
+        ).then(() => {
+            isScanning = true;
+        }).catch((err) => {
+            reader.style.display = 'none';
+            btn.innerHTML = "📷 Start Camera Scanner";
+            btn.className = "btn btn-green";
+            toast("Camera access denied or error", "r");
+        });
+    }
+};
+
+/* SCANNER & INPUT FIELD LOGIC */
+window.handleScanner = async function(el, fromCamera = false) {
+    const val = el.value.trim().toUpperCase();
+    if(!val) return;
+
+    const pid = document.getElementById('chk-prog').value;
+    if(!pid) { toast("Select program first!", "r"); el.value = ""; return; }
+
+    const targetKey = Object.keys(regs).find(k => regs[k].programId === pid && String(regs[k].chestNo||'').toUpperCase() === val);
+
+    if(targetKey) {
+        const regData = regs[targetKey];
+        
+        if(!regData.isRegistered) {
+            scanCooldown = true; // Lock scanner
+            if(isScanning) html5QrCode.pause(); // Pause camera feed
+
+            setSyncState('ing');
+            try {
+                await setDoc(doc(db, 'registrations', targetKey), { isRegistered: true }, { merge: true });
+                
+                // Show GPay Style Success Animation
+                document.getElementById('sm-name').textContent = String(regData.name||'');
+                document.getElementById('sm-chest-house').textContent = `${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
+                document.getElementById('sm-prog').textContent = `${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
+                
+                const smModal = document.getElementById('success-modal');
+                smModal.classList.add('show');
+                
+                // Auto-hide and reset after 2 seconds
+                setTimeout(() => {
+                    smModal.classList.remove('show');
+                    el.value = "";
+                    if(!fromCamera) el.focus();
+                    scanCooldown = false; // Unlock scanner
+                    if(isScanning) html5QrCode.resume();
+                }, 2000);
+
+            } catch(e) { 
+                setSyncState('err'); 
+                toast('Error saving!', 'r'); 
+                el.value = ""; 
+                scanCooldown = false; 
+                if(isScanning) html5QrCode.resume(); 
+            }
+        } else {
+            if(scanCooldown) return; // Prevent multiple toasts
+            toast(`${val} is Already Registered!`, 'b');
+            el.value = "";
+            if(fromCamera) {
+                scanCooldown = true;
+                setTimeout(() => { scanCooldown = false; }, 2000); // Wait 2s before rescanning
+            }
+        }
+    } else {
+        if(val.length >= 3) { 
+             if(scanCooldown) return;
+             toast(`${val} Not Found in this Program!`, "r");
+             el.value = "";
+             if(fromCamera) {
+                scanCooldown = true;
+                setTimeout(() => { scanCooldown = false; }, 2000); 
+             }
+        }
+    }
+};
+
+/* ══ CSV import/export helpers ══ */
+window.onCSVFile=function(e){
+  const file=e.target.files[0]; if(!file)return;
+  const r=new FileReader(); r.onload=ev=>document.getElementById('csv-text').value=ev.target.result; r.readAsText(file);
+};
+
+window.doCSVImport=async function(){
+  const text=document.getElementById('csv-text').value.trim();
+  if(!text){toast('Paste or upload a CSV first','r');return;}
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(lines.length<2){toast('CSV needs a header row + data rows','r');return;}
+  const header=lines[0].split(',').map(h=>h.trim().toLowerCase());
+  const rows=lines.slice(1).map(l=>l.split(',').map(c=>c.trim()));
+
+  setSyncState('ing');
+  closeModal('modal-csv');
+
+  try{
+    const batch=writeBatch(db);
+    let count=0;
+
+    if(csvMode==='students'){
+      rows.forEach(r=>{
+        const [chestNo,name,cls,section,house]=r;
+        if(!chestNo||!name)return;
+        const id=uid();
+        batch.set(doc(db,'students',id),{id,
+          chestNo:String(chestNo).toUpperCase(),name:String(name).toUpperCase(),
+          class:String(cls||'10').trim(),section:toTitle(section||'Thanawiyya'),house:toTitle(house||'Thasleem')});
+        count++;
+      });
+
+    } else if(csvMode==='programs'){
+      rows.forEach(r=>{
+        const [code,name,section,type,limitStr]=r;
+        if(!code||!name)return;
+        const id=uid();
+        batch.set(doc(db,'programs',id),{id,
+          code:String(code||'').toUpperCase().trim(),name:String(name||'').toUpperCase().trim(),
+          section:toTitle(section||'Thanawiyya'),
+          type:String(type||'individual').toLowerCase().trim(),
+          candidateLimit:parseInt(limitStr)||3});
+        count++;
+      });
+
+    } else if(csvMode==='registrations'){
+      rows.forEach(r=>{
+        const [progCode,chestNo,slotStr]=r;
+        if(!progCode||!chestNo||!slotStr)return;
+        
+        const prog=Object.values(programs).find(p=>String(p.code||'').toUpperCase()===String(progCode).trim().toUpperCase());
+        if(!prog){console.warn('Program not found:',progCode);return;}
+        
+        const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===String(chestNo).trim().toUpperCase());
+        if(!stu){console.warn('Student not found:',chestNo);return;}
+        
+        const slot=parseInt(slotStr)-1;
+        const house=toTitle(stu.house); 
+        const key=regKey(prog.id,house,slot);
+        
+        batch.set(doc(db,'registrations',key),{
+          programId:prog.id,house,slot,studentId:stu.id,
+          chestNo:stu.chestNo,name:stu.name,
+          programCode:prog.code,programName:prog.name,
+          isRegistered: false, 
+          registeredAt:serverTimestamp()});
+        count++;
+      });
+    }
+
+    await batch.commit();
+    toast(`${count} rows imported!`,'g');
+  }catch(e){setSyncState('err');toast('Import failed: '+e.message,'r');}
+};
+
+function dlCSV(content,filename){
+  const a=Object.assign(document.createElement('a'),{
+    href:URL.createObjectURL(new Blob([content],{type:'text/csv'})),download:filename});
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ══════════════════ FIRESTORE LISTENERS ══════════════════ */
+function startListeners(){
+  onSnapshot(collection(db,'students'),snap=>{
+    students={};
+    snap.forEach(d=>{students[d.id]={...d.data(),id:d.id};});
+    updateDynamicFilters();
+    setSyncState('ok');updateHeader();renderStudents();
+    if(currentTab==='register') renderRegister();
+  },e=>{setSyncState('err');console.error('students',e);});
+
+  onSnapshot(collection(db,'programs'),snap=>{
+    programs={};
+    snap.forEach(d=>{programs[d.id]={...d.data(),id:d.id};});
+    updateDynamicFilters();
+    setSyncState('ok');updateHeader();renderPrograms();
+    populateCheckinPrograms();
+    if(currentTab==='register') renderRegister();
+    if(currentTab==='checkin') renderCheckin();
+  },e=>{setSyncState('err');console.error('programs',e);});
+
+  onSnapshot(collection(db,'registrations'),snap=>{
+    regs={};
+    snap.forEach(d=>{regs[d.id]=d.data();});
+    setSyncState('ok');
+    if(currentTab==='register') renderRegister();
+    if(currentTab==='checkin') renderCheckin();
+  },e=>{setSyncState('err');console.error('registrations',e);});
+}
+
+/* ══════════════════ INIT ══════════════════ */
+startListeners();
+setTimeout(()=>{
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='block';
+},1200);
+
+</script>
+</body>
+</html>
