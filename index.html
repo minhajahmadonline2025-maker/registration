@@ -2,182 +2,250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title>MASLAC Arts Fest '26</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;margin:0;padding:0; -webkit-tap-highlight-color: transparent;}
 :root{
   --g:#059669;--gd:#065f46;--gl:#d1fae5;--gm:#34d399;
   --blue:#2563eb;--purple:#7c3aed;--orange:#ea580c;--teal:#16a34a;
   --r50:#f9fafb;--r100:#f3f4f6;--r200:#e5e7eb;--r300:#d1d5db;--r400:#9ca3af;--r500:#6b7280;--r700:#374151;--r800:#1f2937;
-  --rad:12px;--rads:8px;
-  --sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.05);
-  --shm:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.04);
-  --shl:0 10px 25px -5px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);
+  --rad:16px;--rads:10px;
+  --sh:0 2px 4px rgba(0,0,0,.04),0 4px 6px rgba(0,0,0,.02);
+  --shm:0 10px 15px -3px rgba(0,0,0,.08),0 4px 6px rgba(0,0,0,.04);
+  --shl:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px rgba(0,0,0,.04);
 }
-body{font-family:'Outfit',sans-serif;background:var(--r50);min-height:100vh;color:var(--r800);font-size:14px;}
+body{font-family:'Outfit',sans-serif;background:#f4f6f8;min-height:100vh;color:var(--r800);font-size:15px;}
 
-/* HEADER */
-.hdr{background:linear-gradient(135deg,#064e3b 0%,#059669 60%,#10b981 100%);padding:13px 14px 9px;position:sticky;top:0;z-index:100;box-shadow:var(--shm);}
+/* HEADER - MOBILE OPTIMIZED */
+.hdr{background:linear-gradient(135deg,#064e3b 0%,#059669 60%,#10b981 100%);padding:16px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:var(--shm);}
 .hdr-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
-.hdr-left{}
-.hdr-title{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1;}
-.hdr-sub{font-size:11px;color:#6ee7b7;margin-top:2px;font-weight:500;}
-.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
-.hdr-stats{font-size:11px;color:#a7f3d0;font-weight:700;text-align:right;line-height:1.5;}
-.sync-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;}
-.sync-ok{background:rgba(6,78,39,.55);color:#6ee7b7;border:1px solid #059669;}
-.sync-ing{background:rgba(120,53,15,.4);color:#fcd34d;border:1px solid #d97706;}
-.sync-err{background:rgba(127,29,29,.4);color:#fca5a5;border:1px solid #ef4444;}
-.sync-dot{width:7px;height:7px;border-radius:50%;}
+.hdr-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1.1;}
+.hdr-sub{font-size:12px;color:#a7f3d0;margin-top:4px;font-weight:600;letter-spacing: .5px;}
+.hdr-stats{font-size:11px;color:#d1fae5;font-weight:700;text-align:right;line-height:1.5; margin-bottom: 4px;}
+.sync-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;}
+.sync-ok{background:rgba(6,78,39,.55);color:#6ee7b7;border:1.5px solid rgba(16,185,129,.4);}
+.sync-ing{background:rgba(120,53,15,.4);color:#fcd34d;border:1.5px solid rgba(245,158,11,.4);}
+.sync-err{background:rgba(127,29,29,.4);color:#fca5a5;border:1.5px solid rgba(239,68,68,.4);}
+.sync-dot{width:8px;height:8px;border-radius:50%;}
 .sd-ok{background:#6ee7b7;animation:pulse 2s infinite;}
 .sd-ing{background:#fcd34d;animation:pulse .8s infinite;}
 .sd-err{background:#f87171;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-.house-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
-.hbadge{padding:2px 9px;border-radius:99px;font-size:10px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,.25);}
 
-/* TABS */
-.tabs{background:#fff;border-bottom:1px solid var(--r200);display:flex;position:sticky;top:70px;z-index:90;}
-.tab{flex:1;padding:10px 4px;font-size:12px;font-weight:800;border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--r500);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Outfit',sans-serif;}
+.house-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.hbadge{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,.3);}
+
+/* TABS - MOBILE SCROLLABLE */
+.tabs{background:#fff;border-bottom:1px solid var(--r200);display:flex;position:sticky;top:85px;z-index:90;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex: 0 0 auto; padding:15px 16px;font-size:14px;font-weight:800;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;color:var(--r500);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Outfit',sans-serif;}
 .tab.on{border-bottom-color:var(--g);color:var(--g);background:#f0fdf4;}
 
 /* CONTENT */
-.pg{padding:13px;padding-bottom:50px;display:none;}
+.pg{padding:16px;padding-bottom:80px;display:none;}
 .pg.on{display:block;}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:5px;border:none;border-radius:var(--rads);cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;padding:7px 12px;transition:all .15s;white-space:nowrap;}
-.btn-green{background:var(--g);color:#fff;} .btn-green:hover{background:#047857;}
-.btn-out{background:#fff;color:var(--r700);border:1.5px solid var(--r200);} .btn-out:hover{background:var(--r50);}
-.btn-red{background:#fff;color:#dc2626;border:1.5px solid #fecaca;} .btn-red:hover{background:#fef2f2;}
-.btn-sm{padding:5px 9px;font-size:11px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--rads);cursor:pointer;font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;padding:12px 16px;transition:all .2s;white-space:nowrap;min-height:44px;}
+.btn-green{background:var(--g);color:#fff;box-shadow:0 4px 6px -1px rgba(5,150,105,.2);} .btn-green:hover{background:#047857;transform:translateY(-1px);}
+.btn-out{background:#fff;color:var(--r700);border:2px solid var(--r200);box-shadow:var(--sh);} .btn-out:hover{background:var(--r50);border-color:var(--r300);}
+.btn-red{background:#fef2f2;color:#dc2626;border:2px solid #fecaca;} .btn-red:hover{background:#fee2e2;}
+.btn-sm{padding:8px 12px;font-size:12px;min-height:36px;}
 
-/* BAR */
-.abar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
-.cnt-lbl{margin-left:auto;font-size:11px;color:var(--r400);font-weight:700;}
+/* BAR & FILTERS */
+.abar{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap;align-items:center;}
+.cnt-lbl{margin-left:auto;font-size:12px;color:var(--r500);font-weight:800;background:var(--r200);padding:4px 10px;border-radius:99px;}
+.frow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;}
+.frow>*{flex:1;min-width:140px;}
 
-/* FILTERS */
-.frow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.frow>*{flex:1;min-width:120px;}
-input,select,textarea{font-family:'Outfit',sans-serif;font-size:13px;border:1.5px solid var(--r200);border-radius:var(--rads);padding:7px 10px;width:100%;outline:none;background:#fff;color:var(--r800);transition:border-color .15s;}
-input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 3px rgba(52,211,153,.13);}
+/* INPUTS - MOBILE SIZED */
+input,select,textarea{font-family:'Outfit',sans-serif;font-size:16px;border:2px solid var(--r200);border-radius:var(--rads);padding:10px 14px;width:100%;outline:none;background:#fff;color:var(--r800);transition:all .2s;min-height:48px;box-shadow:var(--sh);}
+input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 4px rgba(52,211,153,.15);}
+input::placeholder {color:var(--r400); font-weight:500;}
 
 /* STUDENT / PROGRAM CARDS */
-.card{background:#fff;border:1.5px solid var(--r100);border-radius:var(--rad);padding:10px 12px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh);margin-bottom:6px; transition: border-left 0.2s ease;}
-.chest{border-radius:7px;padding:4px 8px;font-size:12px;font-weight:900;color:#fff;min-width:50px;text-align:center;}
+.card{background:#fff;border:none;border-radius:var(--rad);padding:14px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);margin-bottom:10px; transition: transform 0.2s;}
+.chest{border-radius:10px;padding:6px 10px;font-size:14px;font-weight:900;color:#fff;min-width:60px;text-align:center;}
 .cinfo{flex:1;min-width:0;}
-.cname{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cmeta{font-size:11px;color:var(--r400);margin-top:1px;}
-.cacts{display:flex;gap:3px;flex-shrink:0;}
-.ibtn{width:29px;height:29px;border:none;border-radius:6px;background:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .13s;}
-.ibtn:hover{background:var(--r100);}
-.pcode{background:#eef2ff;color:#4338ca;border-radius:7px;padding:4px 9px;font-size:11px;font-weight:800;min-width:58px;text-align:center;}
-.ptyp{font-size:10px;font-weight:800;padding:2px 6px;border-radius:5px;}
+.cname{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--r800);}
+.cmeta{font-size:12px;color:var(--r500);margin-top:4px;font-weight:600;}
+.cacts{display:flex;gap:6px;flex-shrink:0;}
+.ibtn{width:36px;height:36px;border:none;border-radius:8px;background:var(--r100);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.ibtn:hover{background:var(--r200);}
+.pcode{background:#eef2ff;color:#4338ca;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:900;min-width:65px;text-align:center;}
+.ptyp{font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;}
 .ptyp-i{background:#dbeafe;color:#1d4ed8;} .ptyp-g{background:#ede9fe;color:#5b21b6;}
 
 /* SECTION HEADING */
-.seclbl{font-size:10px;font-weight:900;color:var(--r400);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 7px;}
+.seclbl{font-size:12px;font-weight:900;color:var(--r500);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px;}
 
-/* BOX SELECTION GRID (NEW) */
-.grid-boxes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.box-btn { background: #fff; border: 2px solid var(--r200); border-radius: var(--rad); padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: var(--sh); display: flex; flex-direction: column; align-items: center; justify-content: center;}
-.box-btn:hover { border-color: var(--g); transform: translateY(-3px); box-shadow: var(--shm); background: #f0fdf4;}
-.box-title { font-size: 16px; font-weight: 800; color: var(--r800); }
-.box-sub { font-size: 12px; color: var(--r500); margin-top: 6px; font-weight: 600;}
+/* ════════ FULL WIDTH VERTICAL BOXES FOR SECTIONS/PROGRAMS ════════ */
+.list-boxes { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-bottom: 25px; }
+.full-box-btn { 
+    background: linear-gradient(to right, #ffffff, #f9fafb);
+    border: 2px solid var(--r200); 
+    border-radius: var(--rad); 
+    padding: 20px 16px; 
+    cursor: pointer; 
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: var(--sh); 
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.full-box-btn:active { transform: scale(0.98); background: #f0fdf4; border-color: var(--gm);}
+.full-box-btn::after {content:'›'; font-size:24px; color:var(--r300); font-weight:400; transition:color 0.2s;}
+.full-box-btn:hover::after {color:var(--g);}
+.box-text-wrap { display: flex; flex-direction: column; align-items: flex-start; text-align: left;}
+.box-title { font-size: 18px; font-weight: 900; color: var(--r800); letter-spacing:-.3px;}
+.box-sub { font-size: 13px; color: var(--r500); margin-top: 6px; font-weight: 700; background: var(--r100); padding: 4px 10px; border-radius: 20px;}
+
+.prog-box-btn {
+    background: #fff;
+    border: 2px solid var(--r200);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    box-shadow: var(--sh);
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    width: 100%;
+}
+.prog-box-btn:active { transform: scale(0.98); border-color:var(--blue); background:#eff6ff;}
+.prog-box-btn .p-code { font-size: 18px; font-weight: 900; color: var(--blue); width: 80px; flex-shrink: 0;}
+.prog-box-btn .p-name { font-size: 15px; font-weight: 700; color: var(--r800); line-height: 1.3;}
 
 /* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:300;display:none;align-items:center;justify-content:center;padding:14px;}
-.overlay.show{display:flex;}
-.modal{background:#fff;border-radius:18px;box-shadow:var(--shl);width:100%;max-width:400px;display:flex;flex-direction:column;max-height:90vh;}
-.mhdr{display:flex;align-items:center;justify-content:space-between;padding:15px 17px 12px;border-bottom:1px solid var(--r100);}
-.mtitle{font-size:14px;font-weight:900;color:var(--r800);}
-.mclose{background:none;border:none;cursor:pointer;font-size:18px;color:var(--r400);line-height:1;padding:2px;}
-.mclose:hover{color:var(--r700);}
-.mbody{overflow-y:auto;flex:1;padding:15px 17px;}
-.mfoot{padding:13px 17px;border-top:1px solid var(--r100);display:flex;gap:7px;}
-.mfoot button{flex:1;padding:9px;border-radius:var(--rads);font-weight:800;font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer;border:none;transition:background .15s;}
-.mcancl{background:var(--r100);color:var(--r600);}
-.mcancl:hover{background:var(--r200);}
-.msave{background:var(--g);color:#fff;}
-.msave:hover{background:#047857;}
-.fld{margin-bottom:12px;}
-.flbl{font-size:10px;font-weight:900;color:var(--r500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:block;}
-.csv-fmt{background:var(--r50);border:1px solid var(--r200);border-radius:var(--rads);padding:9px 11px;font-size:11px;font-family:monospace;color:var(--r500);margin-bottom:11px;word-break:break-all;line-height:1.5;}
+.overlay{position:fixed;inset:0;background:rgba(17,24,39,.7);z-index:300;display:none;align-items:flex-end;justify-content:center;padding:0; backdrop-filter: blur(3px);}
+.overlay.show{display:flex; animation: fadeIn 0.2s ease;}
+.modal{background:#fff;border-radius:24px 24px 0 0;box-shadow:var(--shl);width:100%;max-width:500px;display:flex;flex-direction:column;max-height:85vh; animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+@keyframes slideUpModal { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* CANDIDATES TABLE */
-.reg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1.5px solid var(--r200);border-radius:var(--rad);background:#fff;box-shadow:var(--sh);}
-.reg-table{border-collapse:collapse;font-size:11px;white-space:nowrap;}
-.reg-table th,.reg-table td{border:1px solid var(--r200);padding:0;}
-.col-code{position:sticky;left:0;z-index:5;min-width:64px;width:64px;background:#fff;}
-.col-name{position:sticky;left:64px;z-index:5;min-width:130px;width:130px;background:#fff;}
-.th-house{text-align:center;font-size:10px;font-weight:900;color:#fff;padding:5px 6px;letter-spacing:.04em;}
-.th-cand{text-align:center;font-size:9px;font-weight:800;color:var(--r600);padding:4px 3px;min-width:90px;width:90px;border-top:none;background:var(--r50);}
-.th-code-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:center;}
-.th-name-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:left;}
-.td-code{font-size:10px;font-weight:900;color:#4338ca;text-align:center;padding:5px 4px;background:#fafaf9;}
-.td-name{font-size:11px;font-weight:700;color:var(--r700);padding:5px 7px;text-align:left;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
-.td-cand{padding:3px 4px;text-align:center;vertical-align:middle;min-width:90px;width:90px;}
-.cand-cell{display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px;}
-.cand-chest{width:70px;border:1.5px solid var(--r200);border-radius:5px;padding:3px 5px;font-size:10px;font-weight:800;text-align:center;font-family:'Outfit',sans-serif;text-transform:uppercase;transition:border-color .13s;}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 15px;border-bottom:1px solid var(--r100);}
+.mtitle{font-size:18px;font-weight:900;color:var(--r800);}
+.mclose{background:var(--r100);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--r600);display:flex;align-items:center;justify-content:center;}
+.mbody{overflow-y:auto;flex:1;padding:20px;}
+.mfoot{padding:16px 20px;border-top:1px solid var(--r100);display:flex;gap:10px;background:#f9fafb;}
+.mfoot button{flex:1;padding:14px;border-radius:12px;font-weight:800;font-size:15px;font-family:'Outfit',sans-serif;}
+.mcancl{background:#fff;color:var(--r700);border:2px solid var(--r200);}
+.msave{background:var(--g);color:#fff;border:2px solid var(--g);box-shadow:0 4px 10px rgba(5,150,105,.3);}
+.fld{margin-bottom:16px;}
+.flbl{font-size:11px;font-weight:900;color:var(--r500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:block;}
+
+/* ════════ CANDIDATES TABLE - SMOOTH SCROLL & MOBILE FRIENDLY ════════ */
+.reg-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+    border: 2px solid var(--r200);
+    border-radius: var(--rad);
+    background: #fff;
+    box-shadow: var(--sh);
+    width: 100%;
+    display: block;
+    position: relative;
+    padding-bottom: 5px;
+}
+.reg-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+    white-space: nowrap;
+    width: max-content; /* This ensures the table stretches beyond the screen for scrolling */
+    min-width: 100%;
+}
+.reg-table th, .reg-table td {
+    border-bottom: 1px solid var(--r200);
+    border-right: 1px solid var(--r200);
+    padding: 0;
+}
+.col-code { position: sticky; left: 0; z-index: 10; min-width: 55px; width: 55px; background: #fff; }
+
+/* Scroll Shadow Indicator on the Name Column */
+.col-name { 
+    position: sticky; 
+    left: 55px; 
+    z-index: 10; 
+    min-width: 110px; 
+    max-width: 110px; 
+    background: #fff; 
+    box-shadow: 4px 0 8px -2px rgba(0,0,0,0.08); /* Gives a shadow indicating scrollable content */
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+.reg-table thead .col-code, .reg-table thead .col-name { z-index: 15; background: #f0fdf4; }
+
+.th-house{text-align:center;font-size:11px;font-weight:900;color:#fff;padding:8px;letter-spacing:.05em;}
+.th-cand{text-align:center;font-size:10px;font-weight:800;color:var(--r600);padding:6px;min-width:90px;background:var(--r50);}
+.th-code-hdr, .th-name-hdr{background:#f0fdf4;font-size:11px;font-weight:900;color:var(--gd);padding:10px;text-align:left;}
+.td-code{font-size:11px;font-weight:900;color:#4338ca;text-align:center;padding:8px;background:#fafaf9;}
+.td-name{font-size:12px;font-weight:800;color:var(--r800);padding:8px;text-align:left;overflow:hidden; text-overflow:ellipsis;}
+.td-cand{padding:4px;text-align:center;vertical-align:middle;}
+.cand-cell{display:flex;flex-direction:column;gap:4px;align-items:center;padding:6px;}
+.cand-chest{width:75px;border:2px solid var(--r200);border-radius:8px;padding:6px;font-size:12px;font-weight:800;text-align:center;font-family:'Outfit';text-transform:uppercase;min-height:36px;box-shadow:none;}
 .cand-chest:focus{border-color:var(--gm);outline:none;box-shadow:0 0 0 2px rgba(52,211,153,.15);}
 .cand-chest.filled{border-color:var(--g);background:#f0fdf4;color:#065f46;}
 .cand-chest.err{border-color:#f87171;background:#fef2f2;color:#dc2626;}
-.cand-name{font-size:9px;font-weight:700;color:var(--r500);max-width:80px;overflow:hidden;text-overflow:ellipsis;height:12px;line-height:12px;}
+.cand-name{font-size:10px;font-weight:700;color:var(--r500);max-width:85px;overflow:hidden;text-overflow:ellipsis;}
 .cand-name.ok{color:var(--g);}
-.cand-name.no{color:#f87171;}
+.cand-name.no{color:#dc2626;}
 .reg-table tbody tr:nth-child(even) .td-code, .reg-table tbody tr:nth-child(even) .td-name{background:#fafff8;}
-.tr-section td{background:var(--r100);font-size:10px;font-weight:900;color:var(--r500);padding:4px 8px;text-transform:uppercase;letter-spacing:.07em;}
+.tr-section td{background:var(--r100);font-size:10px;font-weight:900;color:var(--r500);padding:6px 10px;text-transform:uppercase;letter-spacing:.07em;}
 
 /* GPAY SUCCESS ANIMATION */
 .success-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
 .success-overlay.show { opacity:1; pointer-events:all; }
 .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: #10b981; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-.checkmark { width: 120px; height: 120px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 0 auto 20px; box-shadow: inset 0px 0px 0px #10b981; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
+.checkmark { width: 130px; height: 130px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 0 auto 25px; box-shadow: inset 0px 0px 0px #10b981; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
 .checkmark__check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
 @keyframes stroke { 100% { stroke-dashoffset: 0; } }
 @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
-@keyframes fill { 100% { box-shadow: inset 0px 0px 0px 60px #10b981; } }
-.success-details { text-align: center; opacity: 0; animation: slideUp 0.5s ease 0.5s forwards; display:flex; flex-direction:column; align-items:center;}
-.success-title { font-size: 14px; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-.success-name { font-size: 32px; font-weight: 900; color: #1f2937; line-height:1.2;}
-.success-meta { font-size: 20px; font-weight: 700; color: #6b7280; margin-top: 5px; }
-.success-prog { font-size: 18px; font-weight: 800; color: #065f46; margin-top: 20px; background: #d1fae5; padding: 10px 25px; border-radius: 99px; display: inline-block; border: 2px solid #34d399;}
+@keyframes fill { 100% { box-shadow: inset 0px 0px 0px 65px #10b981; } }
+
+.success-details { text-align: center; opacity: 0; animation: slideUp 0.5s ease 0.5s forwards; display:flex; flex-direction:column; align-items:center; padding: 0 20px;}
+.success-title { font-size: 16px; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+.success-name { font-size: 36px; font-weight: 900; color: #1f2937; line-height:1.1; margin-bottom: 8px;}
+.success-meta { font-size: 22px; font-weight: 800; color: #6b7280; }
+.success-prog { font-size: 18px; font-weight: 800; color: #065f46; margin-top: 25px; background: #d1fae5; padding: 12px 30px; border-radius: 99px; display: inline-block; border: 2px solid #34d399; width:100%;}
 @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
 
 /* TOAST */
-.toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:5px;align-items:center;pointer-events:none;}
-.toast{padding:8px 18px;border-radius:99px;font-size:12px;font-weight:800;color:#fff;box-shadow:var(--shl);animation:tup .22s ease;white-space:nowrap;}
-.tg{background:#059669;}.tb{background:#2563eb;}.tr{background:#dc2626;}
-@keyframes tup{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.toasts{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none; width:90%; max-width:400px;}
+.toast{padding:12px 20px;border-radius:12px;font-size:14px;font-weight:800;color:#fff;box-shadow:var(--shl);animation:tup .3s cubic-bezier(0.16, 1, 0.3, 1);width:100%;text-align:center;}
+.tg{background:#10b981;}.tb{background:#3b82f6;}.tr{background:#ef4444;}
+@keyframes tup{from{opacity:0;transform:translateY(-15px) scale(0.95);}to{opacity:1;transform:translateY(0) scale(1);}}
 
 /* EMPTY / SPINNER */
-.empty{text-align:center;padding:50px 16px;color:var(--r400);}
-.empty-ico{font-size:34px;margin-bottom:8px;}
-.empty-txt{font-weight:700;font-size:13px;}
-.empty-sub{font-size:11px;margin-top:3px;}
-.spinner{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:12px;background:var(--r50);}
-.spin{width:34px;height:34px;border:3px solid var(--r200);border-top-color:var(--g);border-radius:50%;animation:sp .75s linear infinite;}
+.empty{text-align:center;padding:60px 20px;color:var(--r400); background:#fff; border-radius:var(--rad); border:2px dashed var(--r200);}
+.empty-ico{font-size:40px;margin-bottom:12px;}
+.empty-txt{font-weight:800;font-size:16px; color:var(--r600);}
+.empty-sub{font-size:13px;margin-top:6px; font-weight:500;}
+.spinner{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:15px;background:var(--r50);}
+.spin{width:40px;height:40px;border:4px solid var(--r200);border-top-color:var(--g);border-radius:50%;animation:sp .75s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
-.reg-toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
 
 /* Custom styles for Scan Input & Camera */
-#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 12px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius:var(--rads);}
-#scan-input::placeholder { color: #9ca3af; font-weight: 500; font-size: 15px;}
-#reader { width: 100%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: var(--shm); display: none; margin: 15px 0; border: none !important;}
-#reader video { border-radius: 12px; }
-#btn-start-scan { width: 100%; max-width: 400px; justify-content: center; font-size: 14px; padding: 12px; margin-bottom: 5px;}
-.cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 20px;}
+#scan-input { font-size: 20px; font-weight: 900; text-align: center; padding: 15px; border: 3px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius:12px; letter-spacing: 1px;}
+#scan-input::placeholder { color: #9ca3af; font-weight: 600; font-size: 16px; letter-spacing: normal;}
+#reader { width: 100%; border-radius: 16px; overflow: hidden; box-shadow: var(--shm); display: none; margin: 15px 0; border: none !important;}
+#reader video { border-radius: 16px; width: 100% !important; object-fit: cover;}
+#btn-start-scan { width: 100%; justify-content: center; font-size: 16px; padding: 15px; margin-bottom: 5px; border-radius: 12px; box-shadow:var(--shm);}
+.cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 25px;}
 </style>
 </head>
 <body>
 
 <div class="spinner" id="loading">
   <div class="spin"></div>
-  <div style="font-size:13px;color:var(--r400);font-weight:700;">Connecting to Firestore…</div>
+  <div style="font-size:14px;color:var(--r500);font-weight:800;">Connecting to Database…</div>
 </div>
 
 <div id="app" style="display:none;">
@@ -209,14 +277,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
   <div class="pg on" id="pg-students">
     <div class="abar">
       <button class="btn btn-green" onclick="openStudentModal()">＋ Add Student</button>
-      <button class="btn btn-out"   onclick="openStudentCSV()">⬆ Import CSV</button>
-      <button class="btn btn-out"   onclick="exportStudentsCSV()">⬇ Export CSV</button>
-      <button class="btn btn-out"   onclick="downloadSampleStudents()">📄 Sample CSV</button>
-      <button class="btn btn-red"   onclick="clearStudents()">🗑 Clear All</button>
+      <button class="btn btn-out"   onclick="openStudentCSV()">⬆ Import</button>
       <span class="cnt-lbl" id="stu-count"></span>
     </div>
     <div class="frow">
-      <input type="text" id="stu-search" placeholder="🔍 Search name / chest no…" oninput="renderStudents()">
+      <input type="text" id="stu-search" placeholder="🔍 Search name or chest no…" oninput="renderStudents()">
       <select id="stu-sec" onchange="renderStudents()"><option value="">All Sections</option></select>
       <select id="stu-house" onchange="renderStudents()"><option value="">All Houses</option></select>
     </div>
@@ -226,10 +291,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
   <div class="pg" id="pg-programs">
     <div class="abar">
       <button class="btn btn-green" onclick="openProgramModal()">＋ Add Program</button>
-      <button class="btn btn-out"   onclick="openProgramCSV()">⬆ Import CSV</button>
-      <button class="btn btn-out"   onclick="exportProgramsCSV()">⬇ Export CSV</button>
-      <button class="btn btn-out"   onclick="downloadSamplePrograms()">📄 Sample CSV</button>
-      <button class="btn btn-red"   onclick="clearPrograms()">🗑 Clear All</button>
+      <button class="btn btn-out"   onclick="openProgramCSV()">⬆ Import</button>
       <span class="cnt-lbl" id="prog-count"></span>
     </div>
     <div class="frow">
@@ -239,12 +301,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
   </div>
 
   <div class="pg" id="pg-register">
-    <div class="reg-toolbar">
-      <select id="reg-sec" onchange="renderRegister()"><option value="">All Sections</option></select>
-      <button class="btn btn-out" onclick="exportRegCSV()">⬇ Export Candidates</button>
-      <button class="btn btn-out" onclick="downloadSampleReg()">📄 Sample CSV</button>
-      <button class="btn btn-out" onclick="openRegCSV()">⬆ Import Candidates</button>
-      <button class="btn btn-red btn-sm" onclick="clearRegs()">🗑 Clear All</button>
+    <div class="abar">
+        <select id="reg-sec" onchange="renderRegister()" style="flex:1;"><option value="">All Sections</option></select>
+        <button class="btn btn-out btn-sm" onclick="openRegCSV()">⬆ Import</button>
+        <button class="btn btn-out btn-sm" onclick="exportRegCSV()">⬇ Export</button>
     </div>
     <div id="reg-area"></div>
   </div>
@@ -253,22 +313,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
     
     <div id="chk-step-sec">
         <div class="seclbl" style="font-size: 14px; margin-bottom: 15px; color: var(--gd);">1. Select Section</div>
-        <div class="grid-boxes" id="chk-sec-boxes"></div>
+        <div class="list-boxes" id="chk-sec-boxes"></div>
     </div>
 
     <div id="chk-step-prog" style="display:none;">
-        <div class="abar" style="margin-bottom: 15px;">
-            <button class="btn btn-out" onclick="chkGoBack('sec')">🔙 Back to Sections</button>
-            <span class="cnt-lbl" id="chk-lbl-secname" style="font-size: 13px; color: var(--blue);">Section Name</span>
+        <div class="abar" style="margin-bottom: 20px;">
+            <button class="btn btn-out" style="padding: 10px; min-height:40px; border-radius:99px;" onclick="chkGoBack('sec')">← Back</button>
+            <span class="cnt-lbl" id="chk-lbl-secname" style="font-size: 14px; color: var(--g); background: var(--gl);">Section Name</span>
         </div>
         <div class="seclbl" style="font-size: 14px; margin-bottom: 15px; color: var(--gd);">2. Select Program</div>
-        <div class="grid-boxes" id="chk-prog-boxes"></div>
+        <div class="list-boxes" id="chk-prog-boxes"></div>
     </div>
 
     <div id="chk-step-scan" style="display:none;">
-        <div class="abar" style="margin-bottom: 15px;">
-            <button class="btn btn-out" onclick="chkGoBack('prog')">🔙 Back to Programs</button>
-            <span class="cnt-lbl" id="chk-lbl-progname" style="font-size: 13px; color: var(--blue);">Program Name</span>
+        <div class="abar" style="margin-bottom: 20px;">
+            <button class="btn btn-out" style="padding: 10px; min-height:40px; border-radius:99px;" onclick="chkGoBack('prog')">← Back</button>
+            <span class="cnt-lbl" id="chk-lbl-progname" style="font-size: 14px; color: var(--g); background: var(--gl); max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Program Name</span>
         </div>
         
         <input type="hidden" id="chk-prog-hidden">
@@ -278,10 +338,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
           <div id="reader"></div>
         </div>
 
-        <div class="frow" style="margin-bottom: 20px;">
-          <input type="text" id="scan-input" placeholder="Type or Scan Chest No. Here..." oninput="handleScanner(this)" autocomplete="off">
+        <div class="frow" style="margin-bottom: 25px;">
+          <input type="text" id="scan-input" placeholder="Type or Scan Chest No..." oninput="handleScanner(this)" autocomplete="off">
         </div>
         
+        <div class="seclbl" style="font-size: 13px; margin-bottom: 10px;">Candidates List</div>
         <div id="checkin-list"></div>
     </div>
 
@@ -318,16 +379,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
       <input type="hidden" id="stu-id">
       <div class="fld"><label class="flbl">Chest No</label><input type="text" id="stu-chest" placeholder="e.g. D102"></div>
       <div class="fld"><label class="flbl">Full Name</label><input type="text" id="stu-name" placeholder="Student name"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="fld"><label class="flbl">Class</label>
-          <input type="text" id="stu-class-input" list="class-list" placeholder="Class (e.g. 10)">
+          <input type="text" id="stu-class-input" list="class-list" placeholder="Class">
         </div>
         <div class="fld"><label class="flbl">Section</label>
           <input type="text" id="stu-section-input" list="section-list" placeholder="Section">
         </div>
       </div>
-      <div class="fld"><label class="flbl">House (Leader)</label>
-         <input type="text" id="stu-house-input" list="house-list" placeholder="Enter or select house...">
+      <div class="fld"><label class="flbl">House</label>
+         <input type="text" id="stu-house-input" list="house-list" placeholder="Enter house...">
       </div>
     </div>
     <div class="mfoot">
@@ -345,21 +406,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
     </div>
     <div class="mbody">
       <input type="hidden" id="prog-id">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div class="fld"><label class="flbl">Program Code</label><input type="text" id="prog-code" placeholder="ATH001"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fld"><label class="flbl">Code</label><input type="text" id="prog-code" placeholder="ATH001"></div>
         <div class="fld"><label class="flbl">Section</label>
            <input type="text" id="prog-section-input" list="section-list" placeholder="Section">
         </div>
       </div>
-      <div class="fld"><label class="flbl">Program Name</label><input type="text" id="prog-name" placeholder="LONG JUMP"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="fld"><label class="flbl">Program Name</label><input type="text" id="prog-name" placeholder="Event Name"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="fld"><label class="flbl">Type</label>
           <select id="prog-type">
             <option value="individual">Individual</option>
             <option value="group">Group</option>
           </select>
         </div>
-        <div class="fld"><label class="flbl">Candidate Limit / House</label><input type="number" id="prog-limit" min="1" value="3"></div>
+        <div class="fld"><label class="flbl">Limit / House</label><input type="number" id="prog-limit" min="1" value="3"></div>
       </div>
     </div>
     <div class="mfoot">
@@ -376,12 +437,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
       <button class="mclose" onclick="closeModal('modal-csv')">✕</button>
     </div>
     <div class="mbody">
-      <div class="csv-fmt" id="csv-fmt-line"></div>
       <div class="fld"><label class="flbl">Upload .csv File</label>
         <input type="file" id="csv-file" accept=".csv,.txt" onchange="onCSVFile(event)">
       </div>
-      <div class="fld"><label class="flbl">Or Paste CSV here</label>
-        <textarea id="csv-text" rows="6" placeholder="Paste rows here…"></textarea>
+      <div class="fld"><label class="flbl">Or Paste Data</label>
+        <textarea id="csv-text" rows="8" placeholder="Paste CSV rows here…"></textarea>
       </div>
     </div>
     <div class="mfoot">
@@ -395,7 +455,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, doc, setDoc,
          deleteDoc, onSnapshot, writeBatch,
-         serverTimestamp, getDocs }             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+         serverTimestamp }             from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyDwRDCGHQEuZ09zkHm-TUVJHH2r2Mx15c8",
@@ -409,6 +469,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+
+/* ─── EXPLICIT SECTION ORDER ─── */
+const ORDERED_SECTIONS = ["Bidaya", "Ula", "Thaniya", "Thanawiyya", "Aliyah", "Kulliyah", "Kulliyah (General)"];
 
 /* ─── FULLY DYNAMIC DATA ─── */
 let SECTIONS = [];
@@ -447,7 +510,7 @@ function toast(msg,type='g'){
   const d=document.createElement('div');
   d.className=`toast t${type}`;d.textContent=msg;
   document.getElementById('toasts').appendChild(d);
-  setTimeout(()=>d.remove(),2800);
+  setTimeout(()=>d.remove(),3000);
 }
 window.toast=toast;
 
@@ -467,12 +530,10 @@ window.switchTab=function(tab){
   
   if(tab==='register') renderRegister();
   if(tab==='checkin') {
-      // Show section select if no program is currently selected
       if (!document.getElementById('chk-prog-hidden').value && document.getElementById('chk-step-scan').style.display !== 'block') {
           renderCheckinSections();
       } else if(document.getElementById('chk-step-scan').style.display === 'block') {
           renderCheckin();
-          setTimeout(()=> document.getElementById('scan-input').focus(), 100);
       }
   }
 };
@@ -484,7 +545,7 @@ function updateHeader(){
   const ns=Object.keys(students).length, np=Object.keys(programs).length;
   document.getElementById('hdr-stats').textContent=`${ns} Students · ${np} Programs`;
   const bc=document.getElementById('house-badges');
-  bc.innerHTML=HOUSES.map((h)=>`<span class="hbadge" style="background-color:${getHouseColor(h)}88;border-color:${getHouseColor(h)}">${h}</span>`).join('');
+  bc.innerHTML=HOUSES.map((h)=>`<span class="hbadge" style="background-color:${getHouseColor(h)}e6;border-color:${getHouseColor(h)}">${h}</span>`).join('');
 }
 
 function updateDynamicFilters() {
@@ -501,7 +562,16 @@ function updateDynamicFilters() {
     if(p.section) sSet.add(toTitle(p.section));
   });
 
-  SECTIONS = Array.from(sSet).sort();
+  // Sort sections according to specific order
+  SECTIONS = Array.from(sSet).sort((a, b) => {
+      let idxA = ORDERED_SECTIONS.findIndex(s => s.toLowerCase() === a.toLowerCase());
+      let idxB = ORDERED_SECTIONS.findIndex(s => s.toLowerCase() === b.toLowerCase());
+      if(idxA === -1) idxA = 999;
+      if(idxB === -1) idxB = 999;
+      if(idxA === idxB) return a.localeCompare(b);
+      return idxA - idxB;
+  });
+  
   HOUSES = Array.from(hSet).sort();
   CLASSES = Array.from(cSet).sort((a,b)=> {
       const numA = parseInt(a); const numB = parseInt(b);
@@ -512,25 +582,20 @@ function updateDynamicFilters() {
   populateDataLists();
   populateSelects();
   
-  // Re-render checkin section if it's currently on the section step
   if(currentTab === 'checkin' && document.getElementById('chk-step-sec').style.display === 'block') {
       renderCheckinSections();
   }
 }
 
 function populateDataLists() {
-    const secHtml = SECTIONS.map(s => `<option value="${s}">`).join('');
-    const houseHtml = HOUSES.map(h => `<option value="${h}">`).join('');
-    const classHtml = CLASSES.map(c => `<option value="${c}">`).join('');
-
     const dSec = document.getElementById('section-list');
-    if(dSec) dSec.innerHTML = secHtml;
+    if(dSec) dSec.innerHTML = SECTIONS.map(s => `<option value="${s}">`).join('');
 
     const dHouse = document.getElementById('house-list');
-    if(dHouse) dHouse.innerHTML = houseHtml;
+    if(dHouse) dHouse.innerHTML = HOUSES.map(h => `<option value="${h}">`).join('');
 
     const dClass = document.getElementById('class-list');
-    if(dClass) dClass.innerHTML = classHtml;
+    if(dClass) dClass.innerHTML = CLASSES.map(c => `<option value="${c}">`).join('');
 }
 
 function populateSelects(){
@@ -549,7 +614,6 @@ function populateSelects(){
   }
 }
 
-
 /* ══════════════════ STUDENTS ══════════════════ */
 window.renderStudents=function(){
   const search=String(document.getElementById('stu-search').value||'').toLowerCase().trim();
@@ -562,7 +626,7 @@ window.renderStudents=function(){
   if(house)  arr=arr.filter(s=>toTitle(s.house).toLowerCase() === house);
   
   arr.sort((a,b)=>String(a.chestNo||'').localeCompare(String(b.chestNo||'')));
-  document.getElementById('stu-count').textContent=`${arr.length} / ${Object.keys(students).length} students`;
+  document.getElementById('stu-count').textContent=`${arr.length} Students`;
   const list=document.getElementById('stu-list');
   if(!arr.length){list.innerHTML=`<div class="empty"><div class="empty-ico">👤</div><div class="empty-txt">No students found</div></div>`;return;}
   
@@ -613,7 +677,7 @@ window.saveStudent=async function(){
     await setDoc(doc(db,'students',id),obj);
     closeModal('modal-student');
     toast('Student saved','g');
-  }catch(e){setSyncState('err');toast('Save failed: '+e.message,'r');}
+  }catch(e){setSyncState('err');toast('Save failed','r');}
 };
 
 window.deleteStudent=async function(id){
@@ -624,7 +688,7 @@ window.deleteStudent=async function(id){
 };
 
 window.clearStudents=async function(){
-  if(!confirm(`Delete ALL ${Object.keys(students).length} students? This cannot be undone.`))return;
+  if(!confirm(`Delete ALL students? This cannot be undone.`))return;
   setSyncState('ing');
   try{
     const batch=writeBatch(db);
@@ -638,15 +702,10 @@ window.exportStudentsCSV=function(){
     ...Object.values(students).map(s=>`${s.chestNo},${s.name},${s.class},${s.section},${s.house}`)];
   dlCSV(rows.join('\n'),'students.csv');
 };
-window.downloadSampleStudents=function(){
-  dlCSV('ChestNo,Name,Class,Section,House\nD102,AHMAD MUBASHAR,10,Thanawiyya,Thasleem\nD103,MOHAMMED NAFIH BA,10,Thanawiyya,Mujthaba','students_sample.csv');
-};
 
 let csvMode='';
 window.openStudentCSV=function(){
   csvMode='students';
-  document.getElementById('csv-modal-title').textContent='Import Students CSV';
-  document.getElementById('csv-fmt-line').textContent='Format: ChestNo, Name, Class, Section, House';
   document.getElementById('csv-text').value='';
   document.getElementById('csv-file').value='';
   openModal('modal-csv');
@@ -659,7 +718,7 @@ window.renderPrograms=function(){
   
   if(secFilter) arr=arr.filter(p=>toTitle(p.section).toLowerCase() === secFilter);
   arr.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
-  document.getElementById('prog-count').textContent=`${arr.length} / ${Object.keys(programs).length} programs`;
+  document.getElementById('prog-count').textContent=`${arr.length} Programs`;
   
   const grouped={};
   arr.forEach(p=>{
@@ -669,15 +728,13 @@ window.renderPrograms=function(){
   });
   
   const list=document.getElementById('prog-list');
-  if(!arr.length){list.innerHTML=`<div class="empty"><div class="empty-ico">🏅</div><div class="empty-txt">No programs</div><div class="empty-sub">Add or import programs</div></div>`;return;}
+  if(!arr.length){list.innerHTML=`<div class="empty"><div class="empty-ico">🏅</div><div class="empty-txt">No programs</div></div>`;return;}
   
   let html = '';
-  const sectionsToRender = [...new Set([...SECTIONS, ...Object.keys(grouped)])];
-  
-  sectionsToRender.forEach(secName => {
+  SECTIONS.forEach(secName => {
     if(grouped[secName] && grouped[secName].length > 0) {
       html += `
-        <div class="seclbl">${secName} Section — ${grouped[secName].length} programs</div>
+        <div class="seclbl">${secName} Section — ${grouped[secName].length} Events</div>
         ${grouped[secName].map(p=>{
           const safeType = String(p.type||'individual').trim();
           const ptypChar = safeType.charAt(0).toLowerCase() || 'i';
@@ -686,7 +743,7 @@ window.renderPrograms=function(){
             <div class="pcode">${String(p.code||'')}</div>
             <div class="cinfo">
               <div class="cname">${String(p.name||'')}</div>
-              <div class="cmeta"><span class="ptyp ptyp-${ptypChar}">${safeType}</span> · Limit <b>${p.candidateLimit||3}</b> per house</div>
+              <div class="cmeta"><span class="ptyp ptyp-${ptypChar}">${safeType}</span> · Limit <b>${p.candidateLimit||3}</b>/house</div>
             </div>
             <div class="cacts">
               <button class="ibtn" onclick="editProgram('${p.id}')">✏️</button>
@@ -739,7 +796,7 @@ window.deleteProgram=async function(id){
 };
 
 window.clearPrograms=async function(){
-  if(!confirm(`Delete ALL ${Object.keys(programs).length} programs?`))return;
+  if(!confirm(`Delete ALL programs?`))return;
   setSyncState('ing');
   try{
     const batch=writeBatch(db);
@@ -753,20 +810,14 @@ window.exportProgramsCSV=function(){
     ...Object.values(programs).map(p=>`${p.code},${p.name},${p.section},${p.type},${p.candidateLimit}`)];
   dlCSV(rows.join('\n'),'programs.csv');
 };
-window.downloadSamplePrograms=function(){
-  dlCSV('Code,Name,Section,Type,CandidateLimit\nATH001,LONG JUMP,Thanawiyya,individual,3\nATH013,RELAY,Thanawiyya,group,4','programs_sample.csv');
-};
 window.openProgramCSV=function(){
   csvMode='programs';
-  document.getElementById('csv-modal-title').textContent='Import Programs CSV';
-  document.getElementById('csv-fmt-line').textContent='Format: Code, Name, Section, Type, CandidateLimit';
   document.getElementById('csv-text').value='';
   document.getElementById('csv-file').value='';
   openModal('modal-csv');
 };
 
 /* ══════════════════ CANDIDATES TABLE ══════════════════ */
-
 function regKey(pid,house,slot){return `${pid}__${house}__${slot}`;}
 
 window.renderRegister=function(){
@@ -777,7 +828,7 @@ window.renderRegister=function(){
 
   const area=document.getElementById('reg-area');
   if(!progs.length){
-    area.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">No programs for this section</div><div class="empty-sub">Add programs in the Programs tab first.</div></div>`;
+    area.innerHTML=`<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">No programs found</div></div>`;
     return;
   }
 
@@ -803,9 +854,7 @@ window.renderRegister=function(){
   const maxLimit = Math.max(...progs.map(p=>p.candidateLimit||1));
 
   let rows='';
-  const sectionsToRender = [...new Set([...SECTIONS, ...Object.keys(bySection)])];
-
-  sectionsToRender.forEach(sec => {
+  SECTIONS.forEach(sec => {
     const secProgs = bySection[sec];
     if(secProgs && secProgs.length > 0) {
       if(Object.keys(bySection).length>1){
@@ -828,8 +877,7 @@ window.renderRegister=function(){
                     value="${chestVal}"
                     data-pid="${p.id}" data-house="${house}" data-slot="${slot}"
                     oninput="onChestInput(this)"
-                    onblur="onChestBlur(this)"
-                    style="border-color:${reg?'var(--g)':'var(--r200)'}">
+                    onblur="onChestBlur(this)">
                   <span class="${nameClass}" id="cname-${p.id}-${house}-${slot}">${nameVal}</span>
                 </div>
               </td>`;
@@ -839,8 +887,8 @@ window.renderRegister=function(){
           }
         });
         rows+=`<tr>
-          <td class="td-code col-code">${String(p.code||'')}</td>
-          <td class="td-name col-name">${String(p.name||'')}</td>
+          <td class="td-code col-code" title="${String(p.code||'')}">${String(p.code||'')}</td>
+          <td class="td-name col-name" title="${String(p.name||'')}">${String(p.name||'')}</td>
           ${tds}
         </tr>`;
       });
@@ -869,16 +917,16 @@ window.onChestInput=function(el){
   const pid=el.dataset.pid, house=el.dataset.house, slot=parseInt(el.dataset.slot);
   const nameEl=document.getElementById(`cname-${pid}-${house}-${slot}`);
   if(!val){
-    el.className='cand-chest'; el.style.borderColor='var(--r200)';
+    el.className='cand-chest';
     if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}
     return;
   }
   const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===val);
   if(stu){
-    el.className='cand-chest filled'; el.style.borderColor='var(--g)';
+    el.className='cand-chest filled';
     if(nameEl){nameEl.textContent=String(stu.name||'');nameEl.className='cand-name ok';}
   } else {
-    el.className='cand-chest err'; el.style.borderColor='#f87171';
+    el.className='cand-chest err';
     if(nameEl){nameEl.textContent='Not found';nameEl.className='cand-name no';}
   }
 };
@@ -909,7 +957,7 @@ window.onChestBlur=async function(el){
   if(alreadyKey){
     const [,kh,ks]=alreadyKey.split('__');
     toast(`${stu.name} already in ${kh} C${parseInt(ks)+1} for this program`,'r');
-    el.value=''; el.className='cand-chest'; el.style.borderColor='var(--r200)';
+    el.value=''; el.className='cand-chest';
     if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}
     return;
   }
@@ -937,22 +985,14 @@ window.exportRegCSV=function(){
   });
   dlCSV(rows.join('\n'),'candidates.csv');
 };
-
-window.downloadSampleReg=function(){
-  dlCSV('ProgramCode,ChestNo,Slot\nATH001,D102,1\nATH001,D104,2','candidates_sample.csv');
-};
-
 window.openRegCSV=function(){
   csvMode='registrations';
-  document.getElementById('csv-modal-title').textContent='Import Candidates CSV';
-  document.getElementById('csv-fmt-line').textContent='Format: ProgramCode, ChestNo, Slot (1-based)\n(House and Name will be fetched automatically)';
   document.getElementById('csv-text').value='';
   document.getElementById('csv-file').value='';
   openModal('modal-csv');
 };
-
 window.clearRegs=async function(){
-  if(!confirm(`Clear ALL ${Object.keys(regs).length} candidates?`))return;
+  if(!confirm(`Clear ALL candidates?`))return;
   setSyncState('ing');
   try{
     const batch=writeBatch(db);
@@ -962,8 +1002,6 @@ window.clearRegs=async function(){
 };
 
 /* ══════════════════ REGISTRATION VISUAL SELECTION & SCANNER ══════════════════ */
-
-/* STEP 1: Render Section Boxes */
 window.renderCheckinSections = function() {
     document.getElementById('chk-step-sec').style.display = 'block';
     document.getElementById('chk-step-prog').style.display = 'none';
@@ -976,19 +1014,20 @@ window.renderCheckinSections = function() {
     const activeSections = SECTIONS.filter(s => Object.values(programs).some(p => toTitle(p.section) === s));
     
     if(!activeSections.length) {
-        container.innerHTML = `<div class="empty" style="grid-column: 1 / -1;"><div class="empty-ico">📭</div><div class="empty-txt">No Sections Found</div><div class="empty-sub">Please add programs first.</div></div>`;
+        container.innerHTML = `<div class="empty"><div class="empty-ico">📭</div><div class="empty-txt">No Sections Found</div></div>`;
         return;
     }
 
     container.innerHTML = activeSections.map(s => `
-        <div class="box-btn" onclick="chkSelectSec('${s}')">
-            <div class="box-title">${s}</div>
-            <div class="box-sub">${Object.values(programs).filter(p=>toTitle(p.section)===s).length} Programs</div>
+        <div class="full-box-btn" onclick="chkSelectSec('${s}')">
+            <div class="box-text-wrap">
+                <div class="box-title">${s}</div>
+                <div class="box-sub">${Object.values(programs).filter(p=>toTitle(p.section)===s).length} Programs</div>
+            </div>
         </div>
     `).join('');
 };
 
-/* STEP 2: Render Program Boxes for a Section */
 window.chkSelectSec = function(sec) {
     document.getElementById('chk-step-sec').style.display = 'none';
     document.getElementById('chk-step-prog').style.display = 'block';
@@ -1005,14 +1044,13 @@ window.chkSelectSec = function(sec) {
                       .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
     
     container.innerHTML = secProgs.map(p => `
-        <div class="box-btn" onclick="chkSelectProg('${p.id}', '${String(p.code||'')} - ${String(p.name||'').replace(/'/g,"\\'")}')">
-            <div class="box-title" style="color:var(--blue); font-size:18px;">${String(p.code||'')}</div>
-            <div class="box-title" style="margin-top:5px; font-size:14px;">${String(p.name||'')}</div>
+        <div class="prog-box-btn" onclick="chkSelectProg('${p.id}', '${String(p.code||'')} - ${String(p.name||'').replace(/'/g,"\\'")}')">
+            <div class="p-code">${String(p.code||'')}</div>
+            <div class="p-name">${String(p.name||'')}</div>
         </div>
     `).join('');
 };
 
-/* STEP 3: Open Scanner & List */
 window.chkSelectProg = function(pid, pName) {
     document.getElementById('chk-step-prog').style.display = 'none';
     document.getElementById('chk-step-scan').style.display = 'block';
@@ -1021,10 +1059,8 @@ window.chkSelectProg = function(pid, pName) {
     document.getElementById('chk-prog-hidden').value = pid;
     
     renderCheckin();
-    setTimeout(() => document.getElementById('scan-input').focus(), 100);
 };
 
-/* Go Back Logic */
 window.chkGoBack = function(to) {
     if(to === 'sec') {
         renderCheckinSections();
@@ -1045,7 +1081,7 @@ window.renderCheckin = function() {
     const programRegs = Object.values(regs).filter(r => r.programId === pid);
     
     if(programRegs.length === 0) {
-        list.innerHTML = `<div class="empty"><div class="empty-ico">📭</div><div class="empty-txt">No Candidates Found</div><div class="empty-sub">Please add candidates to this program in the "Candidates" tab first.</div></div>`; return;
+        list.innerHTML = `<div class="empty"><div class="empty-ico">📭</div><div class="empty-txt">No Candidates Found</div></div>`; return;
     }
 
     programRegs.sort((a,b) => {
@@ -1062,8 +1098,8 @@ window.renderCheckin = function() {
                 <div class="cname">${String(r.name||'')}</div>
                 <div class="cmeta">${toTitle(r.house)} · Slot ${r.slot + 1}</div>
             </div>
-            <div style="font-size:10px; font-weight:900; padding:4px 8px; border-radius:5px; background:${r.isRegistered ? '#d1fae5' : '#fee2e2'}; color:${r.isRegistered ? '#065f46' : '#991b1b'};">
-                ${r.isRegistered ? '✅ REGISTERED' : '❌ NOT REGISTERED'}
+            <div style="font-size:11px; font-weight:900; padding:5px 10px; border-radius:8px; background:${r.isRegistered ? '#d1fae5' : '#fee2e2'}; color:${r.isRegistered ? '#065f46' : '#991b1b'};">
+                ${r.isRegistered ? '✅ REGISTERED' : '❌ PENDING'}
             </div>
         </div>
     `}).join('');
@@ -1106,27 +1142,23 @@ window.toggleCamera = function() {
             },
             (decodedText, decodedResult) => {
                 if(scanCooldown) return; 
-                
                 const inputEl = document.getElementById('scan-input');
                 inputEl.value = decodedText;
-                
                 window.handleScanner(inputEl, true); 
             },
-            (errorMessage) => {
-                // Ignore parse errors while finding QR
-            }
+            (errorMessage) => { }
         ).then(() => {
             isScanning = true;
         }).catch((err) => {
             reader.style.display = 'none';
             btn.innerHTML = "📷 Start Camera Scanner";
             btn.className = "btn btn-green";
-            toast("Camera access denied or error", "r");
+            toast("Camera access denied", "r");
         });
     }
 };
 
-/* SCANNER & INPUT FIELD LOGIC */
+/* SCANNER LOGIC */
 window.handleScanner = async function(el, fromCamera = false) {
     let rawVal = el.value.trim();
     if(!rawVal) return;
@@ -1194,7 +1226,7 @@ window.handleScanner = async function(el, fromCamera = false) {
     }
 };
 
-/* ══ CSV import/export helpers ══ */
+/* ══ CSV helpers ══ */
 window.onCSVFile=function(e){
   const file=e.target.files[0]; if(!file)return;
   const r=new FileReader(); r.onload=ev=>document.getElementById('csv-text').value=ev.target.result; r.readAsText(file);
@@ -1205,7 +1237,6 @@ window.doCSVImport=async function(){
   if(!text){toast('Paste or upload a CSV first','r');return;}
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   if(lines.length<2){toast('CSV needs a header row + data rows','r');return;}
-  const header=lines[0].split(',').map(h=>h.trim().toLowerCase());
   const rows=lines.slice(1).map(l=>l.split(',').map(c=>c.trim()));
 
   setSyncState('ing');
@@ -1225,7 +1256,6 @@ window.doCSVImport=async function(){
           class:String(cls||'10').trim(),section:toTitle(section||'Thanawiyya'),house:toTitle(house||'Thasleem')});
         count++;
       });
-
     } else if(csvMode==='programs'){
       rows.forEach(r=>{
         const [code,name,section,type,limitStr]=r;
@@ -1238,17 +1268,16 @@ window.doCSVImport=async function(){
           candidateLimit:parseInt(limitStr)||3});
         count++;
       });
-
     } else if(csvMode==='registrations'){
       rows.forEach(r=>{
         const [progCode,chestNo,slotStr]=r;
         if(!progCode||!chestNo||!slotStr)return;
         
         const prog=Object.values(programs).find(p=>String(p.code||'').toUpperCase()===String(progCode).trim().toUpperCase());
-        if(!prog){console.warn('Program not found:',progCode);return;}
+        if(!prog){return;}
         
         const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===String(chestNo).trim().toUpperCase());
-        if(!stu){console.warn('Student not found:',chestNo);return;}
+        if(!stu){return;}
         
         const slot=parseInt(slotStr)-1;
         const house=toTitle(stu.house); 
@@ -1266,7 +1295,7 @@ window.doCSVImport=async function(){
 
     await batch.commit();
     toast(`${count} rows imported!`,'g');
-  }catch(e){setSyncState('err');toast('Import failed: '+e.message,'r');}
+  }catch(e){setSyncState('err');toast('Import failed','r');}
 };
 
 function dlCSV(content,filename){
@@ -1283,7 +1312,7 @@ function startListeners(){
     updateDynamicFilters();
     setSyncState('ok');updateHeader();renderStudents();
     if(currentTab==='register') renderRegister();
-  },e=>{setSyncState('err');console.error('students',e);});
+  },e=>{setSyncState('err');});
 
   onSnapshot(collection(db,'programs'),snap=>{
     programs={};
@@ -1291,7 +1320,7 @@ function startListeners(){
     updateDynamicFilters();
     setSyncState('ok');updateHeader();renderPrograms();
     if(currentTab==='register') renderRegister();
-  },e=>{setSyncState('err');console.error('programs',e);});
+  },e=>{setSyncState('err');});
 
   onSnapshot(collection(db,'registrations'),snap=>{
     regs={};
@@ -1299,7 +1328,7 @@ function startListeners(){
     setSyncState('ok');
     if(currentTab==='register') renderRegister();
     if(currentTab==='checkin' && document.getElementById('chk-step-scan').style.display === 'block') renderCheckin();
-  },e=>{setSyncState('err');console.error('registrations',e);});
+  },e=>{setSyncState('err');});
 }
 
 /* ══════════════════ INIT ══════════════════ */
@@ -1307,7 +1336,6 @@ startListeners();
 setTimeout(()=>{
   document.getElementById('loading').style.display='none';
   document.getElementById('app').style.display='block';
-  // Initialize registration view to sections if opened default
   if(currentTab === 'checkin') renderCheckinSections();
 },1200);
 
