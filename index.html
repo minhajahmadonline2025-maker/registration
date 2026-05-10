@@ -82,6 +82,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 /* SECTION HEADING */
 .seclbl{font-size:10px;font-weight:900;color:var(--r400);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 7px;}
 
+/* BOX SELECTION GRID (NEW) */
+.grid-boxes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.box-btn { background: #fff; border: 2px solid var(--r200); border-radius: var(--rad); padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: var(--sh); display: flex; flex-direction: column; align-items: center; justify-content: center;}
+.box-btn:hover { border-color: var(--g); transform: translateY(-3px); box-shadow: var(--shm); background: #f0fdf4;}
+.box-title { font-size: 16px; font-weight: 800; color: var(--r800); }
+.box-sub { font-size: 12px; color: var(--r500); margin-top: 6px; font-weight: 600;}
+
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:300;display:none;align-items:center;justify-content:center;padding:14px;}
 .overlay.show{display:flex;}
@@ -101,25 +108,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 .flbl{font-size:10px;font-weight:900;color:var(--r500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:block;}
 .csv-fmt{background:var(--r50);border:1px solid var(--r200);border-radius:var(--rads);padding:9px 11px;font-size:11px;font-family:monospace;color:var(--r500);margin-bottom:11px;word-break:break-all;line-height:1.5;}
 
-/* ═══════════════════════════════════════
-   CANDIDATES TABLE
-═══════════════════════════════════════ */
+/* CANDIDATES TABLE */
 .reg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1.5px solid var(--r200);border-radius:var(--rad);background:#fff;box-shadow:var(--sh);}
 .reg-table{border-collapse:collapse;font-size:11px;white-space:nowrap;}
 .reg-table th,.reg-table td{border:1px solid var(--r200);padding:0;}
-
 .col-code{position:sticky;left:0;z-index:5;min-width:64px;width:64px;background:#fff;}
 .col-name{position:sticky;left:64px;z-index:5;min-width:130px;width:130px;background:#fff;}
-
 .th-house{text-align:center;font-size:10px;font-weight:900;color:#fff;padding:5px 6px;letter-spacing:.04em;}
 .th-cand{text-align:center;font-size:9px;font-weight:800;color:var(--r600);padding:4px 3px;min-width:90px;width:90px;border-top:none;background:var(--r50);}
 .th-code-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:center;}
 .th-name-hdr{background:#f0fdf4;font-size:10px;font-weight:900;color:var(--gd);padding:7px 8px;text-align:left;}
-
 .td-code{font-size:10px;font-weight:900;color:#4338ca;text-align:center;padding:5px 4px;background:#fafaf9;}
 .td-name{font-size:11px;font-weight:700;color:var(--r700);padding:5px 7px;text-align:left;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
 .td-cand{padding:3px 4px;text-align:center;vertical-align:middle;min-width:90px;width:90px;}
-
 .cand-cell{display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px;}
 .cand-chest{width:70px;border:1.5px solid var(--r200);border-radius:5px;padding:3px 5px;font-size:10px;font-weight:800;text-align:center;font-family:'Outfit',sans-serif;text-transform:uppercase;transition:border-color .13s;}
 .cand-chest:focus{border-color:var(--gm);outline:none;box-shadow:0 0 0 2px rgba(52,211,153,.15);}
@@ -128,14 +129,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 .cand-name{font-size:9px;font-weight:700;color:var(--r500);max-width:80px;overflow:hidden;text-overflow:ellipsis;height:12px;line-height:12px;}
 .cand-name.ok{color:var(--g);}
 .cand-name.no{color:#f87171;}
-
-.reg-table tbody tr:nth-child(even) .td-code,
-.reg-table tbody tr:nth-child(even) .td-name{background:#fafff8;}
+.reg-table tbody tr:nth-child(even) .td-code, .reg-table tbody tr:nth-child(even) .td-name{background:#fafff8;}
 .tr-section td{background:var(--r100);font-size:10px;font-weight:900;color:var(--r500);padding:4px 8px;text-transform:uppercase;letter-spacing:.07em;}
 
-/* ═══════════════════════════════════════
-   GPAY SUCCESS ANIMATION
-═══════════════════════════════════════ */
+/* GPAY SUCCESS ANIMATION */
 .success-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
 .success-overlay.show { opacity:1; pointer-events:all; }
 .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: #10b981; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
@@ -144,13 +141,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 @keyframes stroke { 100% { stroke-dashoffset: 0; } }
 @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
 @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 60px #10b981; } }
-
 .success-details { text-align: center; opacity: 0; animation: slideUp 0.5s ease 0.5s forwards; display:flex; flex-direction:column; align-items:center;}
 .success-title { font-size: 14px; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
 .success-name { font-size: 32px; font-weight: 900; color: #1f2937; line-height:1.2;}
 .success-meta { font-size: 20px; font-weight: 700; color: #6b7280; margin-top: 5px; }
 .success-prog { font-size: 18px; font-weight: 800; color: #065f46; margin-top: 20px; background: #d1fae5; padding: 10px 25px; border-radius: 99px; display: inline-block; border: 2px solid #34d399;}
-
 @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
 
 /* TOAST */
@@ -170,7 +165,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
 .reg-toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
 
 /* Custom styles for Scan Input & Camera */
-#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 12px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%;}
+#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 12px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius:var(--rads);}
 #scan-input::placeholder { color: #9ca3af; font-weight: 500; font-size: 15px;}
 #reader { width: 100%; max-width: 400px; border-radius: 12px; overflow: hidden; box-shadow: var(--shm); display: none; margin: 15px 0; border: none !important;}
 #reader video { border-radius: 12px; }
@@ -255,22 +250,41 @@ input:focus,select:focus,textarea:focus{border-color:var(--gm);box-shadow:0 0 0 
   </div>
 
   <div class="pg" id="pg-checkin">
-    <div class="frow">
-      <select id="chk-prog" onchange="renderCheckin()">
-        <option value="">Loading Programs...</option>
-      </select>
-    </div>
     
-    <div class="cam-container">
-      <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">📷 Start Camera Scanner</button>
-      <div id="reader"></div>
+    <div id="chk-step-sec">
+        <div class="seclbl" style="font-size: 14px; margin-bottom: 15px; color: var(--gd);">1. Select Section</div>
+        <div class="grid-boxes" id="chk-sec-boxes"></div>
     </div>
 
-    <div class="frow" style="margin-bottom: 20px;">
-      <input type="text" id="scan-input" placeholder="Type or Scan Chest No. Here..." oninput="handleScanner(this)" autocomplete="off">
+    <div id="chk-step-prog" style="display:none;">
+        <div class="abar" style="margin-bottom: 15px;">
+            <button class="btn btn-out" onclick="chkGoBack('sec')">🔙 Back to Sections</button>
+            <span class="cnt-lbl" id="chk-lbl-secname" style="font-size: 13px; color: var(--blue);">Section Name</span>
+        </div>
+        <div class="seclbl" style="font-size: 14px; margin-bottom: 15px; color: var(--gd);">2. Select Program</div>
+        <div class="grid-boxes" id="chk-prog-boxes"></div>
     </div>
-    
-    <div id="checkin-list"></div>
+
+    <div id="chk-step-scan" style="display:none;">
+        <div class="abar" style="margin-bottom: 15px;">
+            <button class="btn btn-out" onclick="chkGoBack('prog')">🔙 Back to Programs</button>
+            <span class="cnt-lbl" id="chk-lbl-progname" style="font-size: 13px; color: var(--blue);">Program Name</span>
+        </div>
+        
+        <input type="hidden" id="chk-prog-hidden">
+
+        <div class="cam-container">
+          <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">📷 Start Camera Scanner</button>
+          <div id="reader"></div>
+        </div>
+
+        <div class="frow" style="margin-bottom: 20px;">
+          <input type="text" id="scan-input" placeholder="Type or Scan Chest No. Here..." oninput="handleScanner(this)" autocomplete="off">
+        </div>
+        
+        <div id="checkin-list"></div>
+    </div>
+
   </div>
 
 </div>
@@ -453,7 +467,13 @@ window.switchTab=function(tab){
   
   if(tab==='register') renderRegister();
   if(tab==='checkin') {
-      renderCheckin();
+      // Show section select if no program is currently selected
+      if (!document.getElementById('chk-prog-hidden').value && document.getElementById('chk-step-scan').style.display !== 'block') {
+          renderCheckinSections();
+      } else if(document.getElementById('chk-step-scan').style.display === 'block') {
+          renderCheckin();
+          setTimeout(()=> document.getElementById('scan-input').focus(), 100);
+      }
   }
 };
 
@@ -491,6 +511,11 @@ function updateDynamicFilters() {
 
   populateDataLists();
   populateSelects();
+  
+  // Re-render checkin section if it's currently on the section step
+  if(currentTab === 'checkin' && document.getElementById('chk-step-sec').style.display === 'block') {
+      renderCheckinSections();
+  }
 }
 
 function populateDataLists() {
@@ -522,16 +547,6 @@ function populateSelects(){
       sh.innerHTML='<option value="">All Houses</option>'+HOUSES.map(h=>`<option value="${h}">${h}</option>`).join('');
       if([...sh.options].some(o=>o.value===curH)) sh.value=curH;
   }
-}
-
-function populateCheckinPrograms() {
-  const chkProg = document.getElementById('chk-prog');
-  if(!chkProg) return;
-  const cur = chkProg.value;
-  const progs = Object.values(programs).sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
-  chkProg.innerHTML = '<option value="">Select Program to Start Scanning...</option>' + 
-      progs.map(p => `<option value="${p.id}">${String(p.code||'')} - ${String(p.name||'')}</option>`).join('');
-  if([...chkProg.options].some(o=>o.value===cur)) chkProg.value=cur;
 }
 
 
@@ -946,12 +961,86 @@ window.clearRegs=async function(){
   }catch(e){setSyncState('err');toast('Failed','r');}
 };
 
-/* ══════════════════ REGISTRATION (CHECK-IN & SCANNER) ══════════════════ */
+/* ══════════════════ REGISTRATION VISUAL SELECTION & SCANNER ══════════════════ */
+
+/* STEP 1: Render Section Boxes */
+window.renderCheckinSections = function() {
+    document.getElementById('chk-step-sec').style.display = 'block';
+    document.getElementById('chk-step-prog').style.display = 'none';
+    document.getElementById('chk-step-scan').style.display = 'none';
+    document.getElementById('chk-prog-hidden').value = '';
+    
+    if(isScanning) toggleCamera();
+
+    const container = document.getElementById('chk-sec-boxes');
+    const activeSections = SECTIONS.filter(s => Object.values(programs).some(p => toTitle(p.section) === s));
+    
+    if(!activeSections.length) {
+        container.innerHTML = `<div class="empty" style="grid-column: 1 / -1;"><div class="empty-ico">📭</div><div class="empty-txt">No Sections Found</div><div class="empty-sub">Please add programs first.</div></div>`;
+        return;
+    }
+
+    container.innerHTML = activeSections.map(s => `
+        <div class="box-btn" onclick="chkSelectSec('${s}')">
+            <div class="box-title">${s}</div>
+            <div class="box-sub">${Object.values(programs).filter(p=>toTitle(p.section)===s).length} Programs</div>
+        </div>
+    `).join('');
+};
+
+/* STEP 2: Render Program Boxes for a Section */
+window.chkSelectSec = function(sec) {
+    document.getElementById('chk-step-sec').style.display = 'none';
+    document.getElementById('chk-step-prog').style.display = 'block';
+    document.getElementById('chk-step-scan').style.display = 'none';
+    document.getElementById('chk-prog-hidden').value = '';
+    
+    if(isScanning) toggleCamera();
+
+    document.getElementById('chk-lbl-secname').textContent = sec + ' Section';
+
+    const container = document.getElementById('chk-prog-boxes');
+    const secProgs = Object.values(programs)
+                      .filter(p => toTitle(p.section) === sec)
+                      .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
+    
+    container.innerHTML = secProgs.map(p => `
+        <div class="box-btn" onclick="chkSelectProg('${p.id}', '${String(p.code||'')} - ${String(p.name||'').replace(/'/g,"\\'")}')">
+            <div class="box-title" style="color:var(--blue); font-size:18px;">${String(p.code||'')}</div>
+            <div class="box-title" style="margin-top:5px; font-size:14px;">${String(p.name||'')}</div>
+        </div>
+    `).join('');
+};
+
+/* STEP 3: Open Scanner & List */
+window.chkSelectProg = function(pid, pName) {
+    document.getElementById('chk-step-prog').style.display = 'none';
+    document.getElementById('chk-step-scan').style.display = 'block';
+    
+    document.getElementById('chk-lbl-progname').textContent = pName;
+    document.getElementById('chk-prog-hidden').value = pid;
+    
+    renderCheckin();
+    setTimeout(() => document.getElementById('scan-input').focus(), 100);
+};
+
+/* Go Back Logic */
+window.chkGoBack = function(to) {
+    if(to === 'sec') {
+        renderCheckinSections();
+    } else if (to === 'prog') {
+        const pid = document.getElementById('chk-prog-hidden').value;
+        const prog = programs[pid];
+        if(prog) chkSelectSec(toTitle(prog.section));
+        else renderCheckinSections();
+    }
+};
+
 window.renderCheckin = function() {
-    const pid = document.getElementById('chk-prog').value;
+    const pid = document.getElementById('chk-prog-hidden').value;
     const list = document.getElementById('checkin-list');
     
-    if(!pid) { list.innerHTML = `<div class="empty"><div class="empty-ico">⚡</div><div class="empty-txt">Select a Program</div><div class="empty-sub">Choose a program above to start scanning Chest Numbers.</div></div>`; return; }
+    if(!pid) return;
 
     const programRegs = Object.values(regs).filter(r => r.programId === pid);
     
@@ -988,7 +1077,7 @@ let scanCooldown = false;
 window.toggleCamera = function() {
     const reader = document.getElementById('reader');
     const btn = document.getElementById('btn-start-scan');
-    const pid = document.getElementById('chk-prog').value;
+    const pid = document.getElementById('chk-prog-hidden').value;
 
     if(!pid) { toast("Select a program first!", "r"); return; }
 
@@ -1042,12 +1131,10 @@ window.handleScanner = async function(el, fromCamera = false) {
     let rawVal = el.value.trim();
     if(!rawVal) return;
 
-    // --- NEW LOGIC: Extract Chest No from URL if scanned as a full link ---
     if (rawVal.endsWith('/')) rawVal = rawVal.slice(0, -1);
     const val = rawVal.split('/').pop().toUpperCase();
-    // ----------------------------------------------------------------------
 
-    const pid = document.getElementById('chk-prog').value;
+    const pid = document.getElementById('chk-prog-hidden').value;
     if(!pid) { toast("Select program first!", "r"); el.value = ""; return; }
 
     const targetKey = Object.keys(regs).find(k => regs[k].programId === pid && String(regs[k].chestNo||'').toUpperCase() === val);
@@ -1056,14 +1143,13 @@ window.handleScanner = async function(el, fromCamera = false) {
         const regData = regs[targetKey];
         
         if(!regData.isRegistered) {
-            scanCooldown = true; // Lock scanner
-            if(isScanning) html5QrCode.pause(); // Pause camera feed
+            scanCooldown = true; 
+            if(isScanning) html5QrCode.pause(); 
 
             setSyncState('ing');
             try {
                 await setDoc(doc(db, 'registrations', targetKey), { isRegistered: true }, { merge: true });
                 
-                // Show GPay Style Success Animation
                 document.getElementById('sm-name').textContent = String(regData.name||'');
                 document.getElementById('sm-chest-house').textContent = `${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
                 document.getElementById('sm-prog').textContent = `${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
@@ -1071,12 +1157,11 @@ window.handleScanner = async function(el, fromCamera = false) {
                 const smModal = document.getElementById('success-modal');
                 smModal.classList.add('show');
                 
-                // Auto-hide and reset after 2 seconds
                 setTimeout(() => {
                     smModal.classList.remove('show');
                     el.value = "";
                     if(!fromCamera) el.focus();
-                    scanCooldown = false; // Unlock scanner
+                    scanCooldown = false; 
                     if(isScanning) html5QrCode.resume();
                 }, 2000);
 
@@ -1088,12 +1173,12 @@ window.handleScanner = async function(el, fromCamera = false) {
                 if(isScanning) html5QrCode.resume(); 
             }
         } else {
-            if(scanCooldown) return; // Prevent multiple toasts
+            if(scanCooldown) return; 
             toast(`${val} is Already Registered!`, 'b');
             el.value = "";
             if(fromCamera) {
                 scanCooldown = true;
-                setTimeout(() => { scanCooldown = false; }, 2000); // Wait 2s before rescanning
+                setTimeout(() => { scanCooldown = false; }, 2000); 
             }
         }
     } else {
@@ -1205,9 +1290,7 @@ function startListeners(){
     snap.forEach(d=>{programs[d.id]={...d.data(),id:d.id};});
     updateDynamicFilters();
     setSyncState('ok');updateHeader();renderPrograms();
-    populateCheckinPrograms();
     if(currentTab==='register') renderRegister();
-    if(currentTab==='checkin') renderCheckin();
   },e=>{setSyncState('err');console.error('programs',e);});
 
   onSnapshot(collection(db,'registrations'),snap=>{
@@ -1215,7 +1298,7 @@ function startListeners(){
     snap.forEach(d=>{regs[d.id]=d.data();});
     setSyncState('ok');
     if(currentTab==='register') renderRegister();
-    if(currentTab==='checkin') renderCheckin();
+    if(currentTab==='checkin' && document.getElementById('chk-step-scan').style.display === 'block') renderCheckin();
   },e=>{setSyncState('err');console.error('registrations',e);});
 }
 
@@ -1224,6 +1307,8 @@ startListeners();
 setTimeout(()=>{
   document.getElementById('loading').style.display='none';
   document.getElementById('app').style.display='block';
+  // Initialize registration view to sections if opened default
+  if(currentTab === 'checkin') renderCheckinSections();
 },1200);
 
 </script>
