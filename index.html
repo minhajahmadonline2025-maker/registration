@@ -359,7 +359,7 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     </div>
   </div>
 
-  <!-- SETTINGS TAB (CLEANED OF PASSWORD STUFF) -->
+  <!-- SETTINGS TAB -->
   <div class="pg" id="pg-settings">
     <div class="seclbl">Data Management</div>
     
@@ -1210,8 +1210,35 @@ window.handleScanner = async function(el, fromCamera = false) {
     let rawVal = el.value.trim();
     if(!rawVal) return;
 
-    if (rawVal.endsWith('/')) rawVal = rawVal.slice(0, -1);
-    const val = rawVal.split('/').pop().toUpperCase();
+    let extractedVal = rawVal;
+
+    // Check if the scanned text is a URL or contains an ID parameter
+    if (rawVal.includes('http') || rawVal.includes('?id=')) {
+        try {
+            // Try to parse the URL and grab the 'id' parameter
+            const urlString = rawVal.startsWith('http') ? rawVal : 'https://' + rawVal;
+            const url = new URL(urlString);
+            
+            if (url.searchParams.has('id')) {
+                extractedVal = url.searchParams.get('id');
+            } else {
+                // Fallback if URL doesn't have ?id= but has something at the end of the slash
+                extractedVal = url.pathname.split('/').filter(Boolean).pop() || extractedVal;
+            }
+        } catch (e) {
+            // Manual fallback if URL parsing fails
+            if (rawVal.includes('?id=')) {
+                extractedVal = rawVal.split('?id=')[1].split('&')[0];
+            }
+        }
+    } else if (rawVal.includes('/')) {
+        // Fallback for basic slashes (e.g., typing "a105/")
+        if (rawVal.endsWith('/')) rawVal = rawVal.slice(0, -1);
+        extractedVal = rawVal.split('/').pop();
+    }
+
+    // Capitalize the extracted ID (e.g., "a105" becomes "A105")
+    const val = extractedVal.toUpperCase();
 
     const pid = document.getElementById('chk-prog-hidden').value;
     if(!pid) { toast("Select program first!", "r"); el.value = ""; return; }
@@ -1253,7 +1280,7 @@ window.handleScanner = async function(el, fromCamera = false) {
             }
         } else {
             if(scanCooldown) return; 
-            toast(`${val} is Already Registered!`, 'g'); // Green is fine for neutral info
+            toast(`${val} is Already Registered!`, 'g');
             el.value = "";
             if(fromCamera) {
                 scanCooldown = true;
