@@ -206,10 +206,36 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 #reader { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--sh); display: none; margin: 16px 0; border: 1px solid var(--r200) !important; background: #000; }
 #reader video { border-radius: 12px; width: 100% !important; object-fit: cover; }
 #btn-start-scan { width: 100%; font-size: 14px; padding: 14px; margin-bottom: 8px; border-radius: 8px; box-shadow: var(--sh); }
-.cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 24px; }
+.cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 24px; position: relative; }
 .chk-status-badge { font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; }
 .chk-reg { background: var(--gl); color: var(--gd); }
 .chk-pend { background: #fee2e2; color: #991b1b; }
+
+/* SHORT SCAN FEEDBACK OVERLAY */
+.scan-feedback {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--red);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 14px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    box-shadow: var(--shl);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+.scan-feedback.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-15px);
+}
+.scan-feedback.ok { background: var(--g); }
 </style>
 </head>
 <body>
@@ -344,10 +370,16 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
         <input type="hidden" id="chk-prog-hidden">
 
         <div class="cam-container">
+          <!-- Added Camera Options Dropdown -->
+          <select id="cam-select" onchange="switchCamera()" class="btn-out" style="display:none; width:100%; margin-bottom: 8px; font-weight:700; height: 44px;"></select>
+          
           <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">
             <span class="material-symbols-rounded">photo_camera</span> Start Scanner
           </button>
           <div id="reader"></div>
+
+          <!-- Invalid/Feedback Quick Toast over scanner -->
+          <div id="scan-feedback" class="scan-feedback">INVALID CODE</div>
         </div>
 
         <div class="frow" style="margin-bottom: 30px;">
@@ -1156,11 +1188,31 @@ window.renderCheckin = function() {
 let html5QrCode;
 let isScanning = false;
 let scanCooldown = false; 
+let availableCameras = [];
+
+window.showFeedback = function(msg, isSuccess=false) {
+    const fb = document.getElementById('scan-feedback');
+    fb.textContent = msg;
+    fb.className = 'scan-feedback show ' + (isSuccess ? 'ok' : '');
+    setTimeout(() => { fb.classList.remove('show'); }, 1500);
+};
+
+window.switchCamera = function() {
+    if (isScanning && html5QrCode) {
+        html5QrCode.stop().then(() => {
+            isScanning = false;
+            window.toggleCamera(); // Restart with selected camera
+        }).catch(err => {
+            console.error("Failed to stop scanner for switch", err);
+        });
+    }
+};
 
 window.toggleCamera = function() {
     const reader = document.getElementById('reader');
     const btn = document.getElementById('btn-start-scan');
     const pid = document.getElementById('chk-prog-hidden').value;
+    const camSelect = document.getElementById('cam-select');
 
     if(!pid) { toast("Select a program first!", "r"); return; }
 
@@ -1181,8 +1233,14 @@ window.toggleCamera = function() {
         btn.innerHTML = `<span class="material-symbols-rounded">stop_circle</span> Stop Scanner`;
         btn.className = "btn btn-red";
 
+        // Determine specific camera configuration
+        let camConfig = { facingMode: "environment" };
+        if (camSelect.value) {
+            camConfig = camSelect.value;
+        }
+
         html5QrCode.start(
-            { facingMode: "environment" }, 
+            camConfig, 
             {
                 fps: 10,
                 qrbox: { width: 250, height: 250 }
@@ -1196,11 +1254,23 @@ window.toggleCamera = function() {
             (errorMessage) => { }
         ).then(() => {
             isScanning = true;
+            // Fetch cameras and populate dropdown if not done yet
+            if (availableCameras.length === 0) {
+                Html5Qrcode.getCameras().then(devices => {
+                    if (devices && devices.length > 0) {
+                        availableCameras = devices;
+                        camSelect.innerHTML = devices.map((d, i) => `<option value="${d.id}">${d.label || 'Camera Option ' + (i+1)}</option>`).join('');
+                        camSelect.style.display = 'block';
+                    }
+                }).catch(err => console.log("Camera list unavailable"));
+            } else {
+                camSelect.style.display = 'block';
+            }
         }).catch((err) => {
             reader.style.display = 'none';
             btn.innerHTML = `<span class="material-symbols-rounded">photo_camera</span> Start Scanner`;
             btn.className = "btn btn-green";
-            toast("Camera access denied", "r");
+            toast("Camera access denied or unavailable", "r");
         });
     }
 };
@@ -1215,33 +1285,27 @@ window.handleScanner = async function(el, fromCamera = false) {
     // Check if the scanned text is a URL or contains an ID parameter
     if (rawVal.includes('http') || rawVal.includes('?id=')) {
         try {
-            // Try to parse the URL and grab the 'id' parameter
             const urlString = rawVal.startsWith('http') ? rawVal : 'https://' + rawVal;
             const url = new URL(urlString);
-            
             if (url.searchParams.has('id')) {
                 extractedVal = url.searchParams.get('id');
             } else {
-                // Fallback if URL doesn't have ?id= but has something at the end of the slash
                 extractedVal = url.pathname.split('/').filter(Boolean).pop() || extractedVal;
             }
         } catch (e) {
-            // Manual fallback if URL parsing fails
             if (rawVal.includes('?id=')) {
                 extractedVal = rawVal.split('?id=')[1].split('&')[0];
             }
         }
     } else if (rawVal.includes('/')) {
-        // Fallback for basic slashes (e.g., typing "a105/")
         if (rawVal.endsWith('/')) rawVal = rawVal.slice(0, -1);
         extractedVal = rawVal.split('/').pop();
     }
 
-    // Capitalize the extracted ID (e.g., "a105" becomes "A105")
     const val = extractedVal.toUpperCase();
 
     const pid = document.getElementById('chk-prog-hidden').value;
-    if(!pid) { toast("Select program first!", "r"); el.value = ""; return; }
+    if(!pid) { showFeedback("SELECT PROGRAM FIRST!", false); el.value = ""; return; }
 
     const targetKey = Object.keys(regs).find(k => regs[k].programId === pid && String(regs[k].chestNo||'').toUpperCase() === val);
 
@@ -1273,28 +1337,28 @@ window.handleScanner = async function(el, fromCamera = false) {
 
             } catch(e) { 
                 setSyncState('err'); 
-                toast('Error saving!', 'r'); 
+                showFeedback("NETWORK ERROR!", false); 
                 el.value = ""; 
                 scanCooldown = false; 
                 if(isScanning) html5QrCode.resume(); 
             }
         } else {
             if(scanCooldown) return; 
-            toast(`${val} is Already Registered!`, 'g');
+            showFeedback(`ALREADY SCANNED: ${val}`, false);
             el.value = "";
             if(fromCamera) {
                 scanCooldown = true;
-                setTimeout(() => { scanCooldown = false; }, 2000); 
+                setTimeout(() => { scanCooldown = false; }, 1500); 
             }
         }
     } else {
         if(val.length >= 3) { 
              if(scanCooldown) return;
-             toast(`${val} Not Found!`, "r");
+             showFeedback(`INVALID CODE: ${val}`, false);
              el.value = "";
              if(fromCamera) {
                 scanCooldown = true;
-                setTimeout(() => { scanCooldown = false; }, 2000); 
+                setTimeout(() => { scanCooldown = false; }, 1500); 
              }
         }
     }
