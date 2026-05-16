@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title>MASLAC Arts Fest '26</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-<!-- Professional Icon Library -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
 <style>
@@ -203,7 +202,7 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 /* SCANNER UI */
 #scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 14px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius: 12px; letter-spacing: 1px;}
 #scan-input:focus { box-shadow: 0 0 0 4px rgba(16,185,129,0.15); }
-#reader { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--sh); display: none; margin: 16px 0; border: 1px solid var(--r200) !important; background: #000; }
+#reader { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--sh); display: none; margin: 16px 0 0 0; border: 1px solid var(--r200) !important; background: #000; }
 #reader video { border-radius: 12px; width: 100% !important; object-fit: cover; }
 #btn-start-scan { width: 100%; font-size: 14px; padding: 14px; margin-bottom: 8px; border-radius: 8px; box-shadow: var(--sh); }
 .cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 24px; position: relative; }
@@ -211,7 +210,7 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 .chk-reg { background: var(--gl); color: var(--gd); }
 .chk-pend { background: #fee2e2; color: #991b1b; }
 
-/* SHORT SCAN FEEDBACK OVERLAY */
+/* SCAN FEEDBACK OVERLAY */
 .scan-feedback {
     position: absolute;
     bottom: -45px;
@@ -231,11 +230,38 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     white-space: nowrap;
     letter-spacing: 0.5px;
 }
-.scan-feedback.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-15px);
-}
+.scan-feedback.show { opacity: 1; transform: translateX(-50%) translateY(-15px); }
 .scan-feedback.ok { background: var(--g); }
+
+/* ZOOM SLIDER STYLES */
+.zoom-container {
+    display: none; /* hidden until supported */
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 10px;
+    padding: 0 8px;
+}
+.zoom-container .material-symbols-rounded { font-size: 24px; color: var(--r800); }
+.zoom-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    background: var(--r800);
+    border-radius: 2px;
+    outline: none;
+}
+.zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--r800);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -7.5px; /* centers the dot */
+}
 </style>
 </head>
 <body>
@@ -287,7 +313,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     </button>
   </div>
 
-  <!-- STUDENTS TAB -->
   <div class="pg on" id="pg-students">
     <div class="abar">
       <button class="btn btn-green" onclick="openStudentModal()">
@@ -309,7 +334,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     <div id="stu-list"></div>
   </div>
 
-  <!-- PROGRAMS TAB -->
   <div class="pg" id="pg-programs">
     <div class="abar">
       <button class="btn btn-green" onclick="openProgramModal()">
@@ -326,7 +350,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     <div id="prog-list"></div>
   </div>
 
-  <!-- CANDIDATES TABLE TAB -->
   <div class="pg" id="pg-register">
     <div class="abar">
         <select id="reg-sec" onchange="renderRegister()" style="flex:1;"><option value="">All Sections</option></select>
@@ -340,7 +363,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     <div id="reg-area"></div>
   </div>
 
-  <!-- CHECK-IN / LIVE REGISTRATION TAB -->
   <div class="pg" id="pg-checkin">
     
     <div id="chk-step-sec">
@@ -370,15 +392,16 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
         <input type="hidden" id="chk-prog-hidden">
 
         <div class="cam-container">
-          <!-- Added Camera Options Dropdown -->
-          <select id="cam-select" onchange="switchCamera()" class="btn-out" style="display:none; width:100%; margin-bottom: 8px; font-weight:700; height: 44px;"></select>
-          
           <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">
             <span class="material-symbols-rounded">photo_camera</span> Start Scanner
           </button>
+          
           <div id="reader"></div>
 
-          <!-- Invalid/Feedback Quick Toast over scanner -->
+          <div class="zoom-container" id="zoom-container">
+             <span class="material-symbols-rounded">light_mode</span> <input type="range" class="zoom-slider" id="zoom-slider" min="1" max="5" value="1" step="0.1">
+             <span class="material-symbols-rounded" style="font-size: 28px;">light_mode</span> </div>
+
           <div id="scan-feedback" class="scan-feedback">INVALID CODE</div>
         </div>
 
@@ -391,7 +414,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     </div>
   </div>
 
-  <!-- SETTINGS TAB -->
   <div class="pg" id="pg-settings">
     <div class="seclbl">Data Management</div>
     
@@ -429,7 +451,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 
 </div>
 
-<!-- SUCCESS OVERLAY -->
 <div class="success-overlay" id="success-modal">
   <div class="checkmark-container">
     <span class="material-symbols-rounded icon-filled">check_circle</span>
@@ -444,12 +465,10 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 
 <div class="toasts" id="toasts"></div>
 
-<!-- DATALISTS FOR AUTOCOMPLETE -->
 <datalist id="class-list"></datalist>
 <datalist id="section-list"></datalist>
 <datalist id="house-list"></datalist>
 
-<!-- MODALS -->
 <div class="overlay" id="modal-student">
   <div class="modal">
     <div class="mhdr">
@@ -1188,7 +1207,6 @@ window.renderCheckin = function() {
 let html5QrCode;
 let isScanning = false;
 let scanCooldown = false; 
-let availableCameras = [];
 
 window.showFeedback = function(msg, isSuccess=false) {
     const fb = document.getElementById('scan-feedback');
@@ -1197,22 +1215,11 @@ window.showFeedback = function(msg, isSuccess=false) {
     setTimeout(() => { fb.classList.remove('show'); }, 1500);
 };
 
-window.switchCamera = function() {
-    if (isScanning && html5QrCode) {
-        html5QrCode.stop().then(() => {
-            isScanning = false;
-            window.toggleCamera(); // Restart with selected camera
-        }).catch(err => {
-            console.error("Failed to stop scanner for switch", err);
-        });
-    }
-};
-
 window.toggleCamera = function() {
     const reader = document.getElementById('reader');
     const btn = document.getElementById('btn-start-scan');
     const pid = document.getElementById('chk-prog-hidden').value;
-    const camSelect = document.getElementById('cam-select');
+    const zoomContainer = document.getElementById('zoom-container');
 
     if(!pid) { toast("Select a program first!", "r"); return; }
 
@@ -1220,6 +1227,7 @@ window.toggleCamera = function() {
         html5QrCode.stop().then(() => {
             isScanning = false;
             reader.style.display = 'none';
+            zoomContainer.style.display = 'none';
             btn.innerHTML = `<span class="material-symbols-rounded">photo_camera</span> Start Scanner`;
             btn.className = "btn btn-green";
         }).catch(err => {
@@ -1233,16 +1241,10 @@ window.toggleCamera = function() {
         btn.innerHTML = `<span class="material-symbols-rounded">stop_circle</span> Stop Scanner`;
         btn.className = "btn btn-red";
 
-        // Determine specific camera configuration
-        let camConfig = { facingMode: "environment" };
-        if (camSelect.value) {
-            camConfig = camSelect.value;
-        }
-
         html5QrCode.start(
-            camConfig, 
+            { facingMode: "environment" }, 
             {
-                fps: 10,
+                fps: 25, // INCREASED FOR BETTER PERFORMANCE
                 qrbox: { width: 250, height: 250 }
             },
             (decodedText, decodedResult) => {
@@ -1254,24 +1256,45 @@ window.toggleCamera = function() {
             (errorMessage) => { }
         ).then(() => {
             isScanning = true;
-            // Fetch cameras and populate dropdown if not done yet
-            if (availableCameras.length === 0) {
-                Html5Qrcode.getCameras().then(devices => {
-                    if (devices && devices.length > 0) {
-                        availableCameras = devices;
-                        camSelect.innerHTML = devices.map((d, i) => `<option value="${d.id}">${d.label || 'Camera Option ' + (i+1)}</option>`).join('');
-                        camSelect.style.display = 'block';
-                    }
-                }).catch(err => console.log("Camera list unavailable"));
-            } else {
-                camSelect.style.display = 'block';
-            }
+            setTimeout(window.setupZoomSlider, 500); // Initialize zoom slider after camera starts
         }).catch((err) => {
             reader.style.display = 'none';
+            zoomContainer.style.display = 'none';
             btn.innerHTML = `<span class="material-symbols-rounded">photo_camera</span> Start Scanner`;
             btn.className = "btn btn-green";
             toast("Camera access denied or unavailable", "r");
         });
+    }
+};
+
+/* ZOOM SLIDER SETUP */
+window.setupZoomSlider = function() {
+    const sliderContainer = document.getElementById('zoom-container');
+    const slider = document.getElementById('zoom-slider');
+
+    try {
+        if (html5QrCode && html5QrCode.getRunningTrackCameraCapabilities) {
+            const capabilities = html5QrCode.getRunningTrackCameraCapabilities();
+            if (capabilities && capabilities.zoom) {
+                slider.min = capabilities.zoom.min || 1;
+                slider.max = capabilities.zoom.max || 5;
+                slider.step = capabilities.zoom.step || 0.1;
+                slider.value = slider.min;
+                sliderContainer.style.display = 'flex';
+
+                slider.oninput = (e) => {
+                    const zoomValue = parseFloat(e.target.value);
+                    html5QrCode.applyVideoConstraints({
+                        advanced: [{ zoom: zoomValue }]
+                    });
+                };
+            } else {
+                sliderContainer.style.display = 'none';
+            }
+        }
+    } catch (err) {
+        console.log("Zoom not supported by this browser/device", err);
+        sliderContainer.style.display = 'none';
     }
 };
 
