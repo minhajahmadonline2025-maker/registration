@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>MASLAC Arts Fest '26</title>
+<title>KAMA Arts Fest '26</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
@@ -194,10 +194,14 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 .empty-ico { font-size: 48px; margin-bottom: 12px; color: var(--r300); }
 .empty-txt { font-weight: 700; font-size: 15px; color: var(--r500); }
 
-/* SPINNER */
-.spinner { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; gap: 16px; background: var(--r50); position: fixed; z-index: 999999; width: 100%; top: 0; left: 0; }
-.spin { width: 36px; height: 36px; border: 3px solid var(--r200); border-top-color: var(--g); border-radius: 50%; animation: sp 0.8s linear infinite; }
-@keyframes sp { to { transform: rotate(360deg); } }
+/* MODERN PROGRESS LOADING BAR */
+.spinner { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; background: #fff; position: fixed; z-index: 999999; width: 100%; top: 0; left: 0; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.loader-card { width: 85%; max-width: 320px; text-align: center; }
+.loader-logo { font-size: 32px; font-weight: 900; color: var(--g); letter-spacing: -0.5px; margin-bottom: 6px; }
+.loader-sub { font-size: 12px; color: var(--r500); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px; }
+.progress-bar-track { width: 100%; height: 6px; background: var(--r100); border-radius: 99px; overflow: hidden; position: relative; margin-bottom: 12px; }
+.progress-bar-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--g), var(--gm)); border-radius: 99px; transition: width 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); }
+.loader-status { font-size: 11px; color: var(--r400); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* SCANNER UI */
 #scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 14px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius: 12px; letter-spacing: 1px;}
@@ -267,16 +271,22 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 <body>
 
 <div class="spinner" id="loading">
-  <div class="spin"></div>
-  <div style="font-size: 13px; color: var(--r500); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Loading System...</div>
+  <div class="loader-card">
+    <div class="loader-logo">KAMA '26</div>
+    <div class="loader-sub">Sports Management</div>
+    <div class="progress-bar-track">
+       <div class="progress-bar-fill" id="pbar-fill"></div>
+    </div>
+    <div class="loader-status" id="pbar-status">Synchronizing Stream...</div>
+  </div>
 </div>
 
-<div id="app" style="display:none;">
+<div id="app" style="display:none; opacity: 0; transition: opacity 0.4s ease;">
 
   <div class="hdr">
     <div class="hdr-row">
       <div class="hdr-left">
-        <div class="hdr-title">MASLAC '26</div>
+        <div class="hdr-title">KAMA '26</div>
         <div class="hdr-sub">Sports Management</div>
       </div>
       <div class="hdr-right">
@@ -320,6 +330,9 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
       </button>
       <button class="btn btn-out" onclick="openStudentCSV()">
         <span class="material-symbols-rounded">upload</span> Import
+      </button>
+      <button class="btn btn-out" onclick="exportStudentsCSV()">
+        <span class="material-symbols-rounded">download</span> Export
       </button>
       <span class="cnt-lbl" id="stu-count"></span>
     </div>
@@ -563,16 +576,21 @@ const db  = getFirestore(app);
 /* ─── EXPLICIT SECTION ORDER ─── */
 const ORDERED_SECTIONS = ["Bidaya", "Ula", "Thaniya", "Thanawiyya", "Aliyah", "Kulliyah", "Kulliyah (General)"];
 
-/* ─── FULLY DYNAMIC DATA ─── */
+/* ─── STATIC EXPLICIT HOUSES & CODES ─── */
+const HOUSE_MAP = {
+  "Bosphorus": "#dc2626",  // Red
+  "Hormuz": "#eab308",     // Yellow
+  "Gibraltar": "#16a34a",  // Green
+  "Malacca": "#2563eb"     // Blue
+};
+
 let SECTIONS = [];
 let CLASSES  = [];
-let HOUSES   = [];
+let HOUSES   = ["Bosphorus", "Hormuz", "Gibraltar", "Malacca"];
 
-const COLORS = ['#2563eb', '#7c3aed', '#ea580c', '#16a34a', '#dc2626', '#059669', '#db2777', '#d97706', '#4f46e5', '#0891b2'];
 function getHouseColor(houseName) {
-  const idx = HOUSES.indexOf(toTitle(houseName));
-  if (idx === -1) return '#6b7280';
-  return COLORS[idx % COLORS.length];
+  const norm = toTitle(houseName);
+  return HOUSE_MAP[norm] || '#6b7280';
 }
 
 function toTitle(str) {
@@ -644,12 +662,10 @@ function updateHeader(){
 
 function updateDynamicFilters() {
   let sSet = new Set();
-  let hSet = new Set();
   let cSet = new Set();
 
   Object.values(students).forEach(s => {
     if(s.section) sSet.add(toTitle(s.section));
-    if(s.house) hSet.add(toTitle(s.house));
     if(s.class) cSet.add(String(s.class).trim());
   });
   Object.values(programs).forEach(p => {
@@ -665,7 +681,6 @@ function updateDynamicFilters() {
       return idxA - idxB;
   });
   
-  HOUSES = Array.from(hSet).sort();
   CLASSES = Array.from(cSet).sort((a,b)=> {
       const numA = parseInt(a); const numB = parseInt(b);
       if(!isNaN(numA) && !isNaN(numB)) return numA - numB;
@@ -792,7 +807,7 @@ window.clearStudents=async function(){
 
 window.exportStudentsCSV=function(){
   const rows=['ChestNo,Name,Class,Section,House',
-    ...Object.values(students).map(s=>`${s.chestNo},${s.name},${s.class},${s.section},${s.house}`)];
+    ...Object.values(students).map(s=>`"${s.chestNo}","${s.name}","${s.class || ''}","${s.section || ''}","${s.house || ''}"`)];
   dlCSV(rows.join('\n'),'students.csv');
 };
 
@@ -900,7 +915,7 @@ window.clearPrograms=async function(){
 
 window.exportProgramsCSV=function(){
   const rows=['Code,Name,Section,Type,CandidateLimit',
-    ...Object.values(programs).map(p=>`${p.code},${p.name},${p.section},${p.type},${p.candidateLimit}`)];
+    ...Object.values(programs).map(p=>`"${p.code}","${p.name}","${p.section}","${p.type}",${p.candidateLimit}`)];
   dlCSV(rows.join('\n'),'programs.csv');
 };
 window.openProgramCSV=function(){
@@ -1070,14 +1085,17 @@ window.onChestBlur=async function(el){
 };
 
 window.exportRegCSV=function(){
-  const rows=['ProgramCode,ChestNo,Slot,House,StudentName,IsRegistered'];
+  const rows=['ProgramCode,ChestNo,Slot,House,IsRegistered'];
   Object.entries(regs).forEach(([key,r])=>{
     const [pid,house,slot]=key.split('__');
     const p=programs[pid];
-    rows.push(`${p?p.code:''},${r.chestNo},${parseInt(slot)+1},${house},${r.name},${r.isRegistered||false}`);
+    if(p && r.chestNo){
+      rows.push(`"${p.code}","${r.chestNo}",${parseInt(slot)+1},"${house}","${r.isRegistered || false}"`);
+    }
   });
   dlCSV(rows.join('\n'),'candidates.csv');
 };
+
 window.openRegCSV=function(){
   csvMode='registrations';
   document.getElementById('csv-text').value='';
@@ -1244,7 +1262,7 @@ window.toggleCamera = function() {
         html5QrCode.start(
             { facingMode: "environment" }, 
             {
-                fps: 25, // INCREASED FOR BETTER PERFORMANCE
+                fps: 25, 
                 qrbox: { width: 250, height: 250 }
             },
             (decodedText, decodedResult) => {
@@ -1256,7 +1274,7 @@ window.toggleCamera = function() {
             (errorMessage) => { }
         ).then(() => {
             isScanning = true;
-            setTimeout(window.setupZoomSlider, 500); // Initialize zoom slider after camera starts
+            setTimeout(window.setupZoomSlider, 500); 
         }).catch((err) => {
             reader.style.display = 'none';
             zoomContainer.style.display = 'none';
@@ -1305,7 +1323,6 @@ window.handleScanner = async function(el, fromCamera = false) {
 
     let extractedVal = rawVal;
 
-    // Check if the scanned text is a URL or contains an ID parameter
     if (rawVal.includes('http') || rawVal.includes('?id=')) {
         try {
             const urlString = rawVal.startsWith('http') ? rawVal : 'https://' + rawVal;
@@ -1393,12 +1410,17 @@ window.onCSVFile=function(e){
   const r=new FileReader(); r.onload=ev=>document.getElementById('csv-text').value=ev.target.result; r.readAsText(file);
 };
 
+function cleanCsvCell(val) {
+  if(!val) return '';
+  return val.replace(/^["']|["']$/g, '').trim();
+}
+
 window.doCSVImport=async function(){
   const text=document.getElementById('csv-text').value.trim();
   if(!text){toast('Paste or upload a CSV first','r');return;}
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   if(lines.length<2){toast('Needs a header row + data rows','r');return;}
-  const rows=lines.slice(1).map(l=>l.split(',').map(c=>c.trim()));
+  const rows=lines.slice(1).map(l=>l.split(',').map(c=>cleanCsvCell(c)));
 
   setSyncState('ing');
   closeModal('modal-csv');
@@ -1414,7 +1436,7 @@ window.doCSVImport=async function(){
         const id=uid();
         batch.set(doc(db,'students',id),{id,
           chestNo:String(chestNo).toUpperCase(),name:String(name).toUpperCase(),
-          class:String(cls||'10').trim(),section:toTitle(section||'Thanawiyya'),house:toTitle(house||'Thasleem')});
+          class:String(cls||'10').trim(),section:toTitle(section||'Thanawiyya'),house:toTitle(house||'Gibraltar')});
         count++;
       });
     } else if(csvMode==='programs'){
@@ -1431,24 +1453,25 @@ window.doCSVImport=async function(){
       });
     } else if(csvMode==='registrations'){
       rows.forEach(r=>{
-        const [progCode,chestNo,slotStr]=r;
-        if(!progCode||!chestNo||!slotStr)return;
+        const [progCode,chestNo,slotStr,houseName,isRegStr]=r;
+        if(!progCode||!chestNo||!slotStr||!houseName)return;
         
-        const prog=Object.values(programs).find(p=>String(p.code||'').toUpperCase()===String(progCode).trim().toUpperCase());
-        if(!prog){return;}
+        const prog=Object.values(programs).find(p=>String(p.code||'').toUpperCase()===String(progCode).toUpperCase());
+        if(!prog) return;
         
-        const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===String(chestNo).trim().toUpperCase());
-        if(!stu){return;}
+        const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===String(chestNo).toUpperCase());
         
         const slot=parseInt(slotStr)-1;
-        const house=toTitle(stu.house); 
+        const house=toTitle(houseName); 
         const key=regKey(prog.id,house,slot);
         
         batch.set(doc(db,'registrations',key),{
-          programId:prog.id,house,slot,studentId:stu.id,
-          chestNo:stu.chestNo,name:stu.name,
+          programId:prog.id,house,slot,
+          studentId:stu ? stu.id : '',
+          chestNo:String(chestNo).toUpperCase(),
+          name:stu ? stu.name : 'Unknown Candidate',
           programCode:prog.code,programName:prog.name,
-          isRegistered: false, 
+          isRegistered: String(isRegStr).toLowerCase() === 'true', 
           registeredAt:serverTimestamp()});
         count++;
       });
@@ -1465,7 +1488,33 @@ function dlCSV(content,filename){
   a.click(); URL.revokeObjectURL(a.href);
 }
 
-/* ══════════════════ FIRESTORE LISTENERS ══════════════════ */
+/* ══════════════════ FIRESTORE LISTENERS & PROGRESS TRACKER ══════════════════ */
+let loadedStreams = { students: false, programs: false, registrations: false };
+
+function updateProgressBar(streamName) {
+  loadedStreams[streamName] = true;
+  const fill = document.getElementById('pbar-fill');
+  const status = document.getElementById('pbar-status');
+  
+  let totalLoaded = Object.values(loadedStreams).filter(Boolean).length;
+  let percent = Math.floor((totalLoaded / 3) * 100);
+  
+  if(fill) fill.style.width = percent + '%';
+  if(status) status.textContent = `Assembling Systems (${percent}%)`;
+  
+  if(totalLoaded === 3) {
+    setTimeout(() => {
+       const loadingEl = document.getElementById('loading');
+       const appEl = document.getElementById('app');
+       if(loadingEl) loadingEl.style.opacity = '0';
+       setTimeout(() => {
+          if(loadingEl) loadingEl.style.display = 'none';
+          if(appEl) { appEl.style.display = 'block'; setTimeout(()=> appEl.style.opacity = '1', 50); }
+       }, 400);
+    }, 500);
+  }
+}
+
 function startListeners(){
   onSnapshot(collection(db,'students'),snap=>{
     students={};
@@ -1473,6 +1522,7 @@ function startListeners(){
     updateDynamicFilters();
     setSyncState('ok');updateHeader();renderStudents();
     if(currentTab==='register') renderRegister();
+    updateProgressBar('students');
   },e=>{setSyncState('err');});
 
   onSnapshot(collection(db,'programs'),snap=>{
@@ -1481,6 +1531,7 @@ function startListeners(){
     updateDynamicFilters();
     setSyncState('ok');updateHeader();renderPrograms();
     if(currentTab==='register') renderRegister();
+    updateProgressBar('programs');
   },e=>{setSyncState('err');});
 
   onSnapshot(collection(db,'registrations'),snap=>{
@@ -1489,12 +1540,10 @@ function startListeners(){
     setSyncState('ok');
     if(currentTab==='register') renderRegister();
     if(currentTab==='checkin' && document.getElementById('chk-step-scan').style.display === 'block') renderCheckin();
+    updateProgressBar('registrations');
   },e=>{setSyncState('err');});
 }
 
-/* Bypass Loading and Start Direct */
-document.getElementById('loading').style.display='none';
-document.getElementById('app').style.display = 'block';
 startListeners();
 
 </script>
