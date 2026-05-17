@@ -372,6 +372,8 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
         <button class="btn btn-out btn-sm" onclick="exportRegCSV()">
           <span class="material-symbols-rounded" style="font-size:16px;">download</span> Export
         </button>
+        <!-- ADDED CANDIDATE COUNT -->
+        <span class="cnt-lbl" id="reg-count" style="margin-left: auto; color: var(--gd); background: var(--gl);"></span>
     </div>
     <div id="reg-area"></div>
   </div>
@@ -935,6 +937,11 @@ window.renderRegister=function(){
   progs.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
 
   const area=document.getElementById('reg-area');
+  
+  // Updates the specific Candidate Count 
+  const regCountSpan = document.getElementById('reg-count');
+  if(regCountSpan) regCountSpan.textContent = `${Object.keys(regs).length} Candidates`;
+
   if(!progs.length){
     area.innerHTML=`<div class="empty"><span class="material-symbols-rounded empty-ico">assignment_late</span><div class="empty-txt">No programs found</div></div>`;
     return;
@@ -1420,6 +1427,23 @@ window.doCSVImport=async function(){
   if(!text){toast('Paste or upload a CSV first','r');return;}
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   if(lines.length<2){toast('Needs a header row + data rows','r');return;}
+
+  // --- ADDED: STRICT HEADER VALIDATION TO PREVENT MIX-UPS ---
+  const header = lines[0].toLowerCase().replace(/\s+/g, '');
+  if (csvMode === 'students' && (header.includes('programcode') || header.includes('isregistered'))) {
+     toast('Error: You are pasting Candidates data into Students!', 'r'); 
+     return;
+  }
+  if (csvMode === 'programs' && (!header.includes('code') || !header.includes('limit'))) {
+     toast('Error: Invalid Programs CSV format!', 'r'); 
+     return;
+  }
+  if (csvMode === 'registrations' && !header.includes('programcode')) {
+     toast('Error: You are pasting Students/Programs into Candidates!', 'r'); 
+     return;
+  }
+  // ------------------------------------------------------------
+
   const rows=lines.slice(1).map(l=>l.split(',').map(c=>cleanCsvCell(c)));
 
   setSyncState('ing');
