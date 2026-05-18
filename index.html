@@ -31,6 +31,7 @@ body { font-family: 'Outfit', sans-serif; background: #f4f6f8; min-height: 100vh
 /* HEADER */
 .hdr { background: linear-gradient(135deg, #064e3b 0%, #059669 60%, #10b981 100%); padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shm); }
 .hdr-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.hdr-logo { height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 .hdr-title { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.4px; line-height: 1.1; }
 .hdr-sub { font-size: 12px; color: #a7f3d0; margin-top: 4px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
 .hdr-stats { font-size: 11px; color: #d1fae5; font-weight: 700; text-align: right; line-height: 1.5; margin-bottom: 4px; }
@@ -285,9 +286,12 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 
   <div class="hdr">
     <div class="hdr-row">
-      <div class="hdr-left">
-        <div class="hdr-title">KAMA '26</div>
-        <div class="hdr-sub">Sports Management</div>
+      <div class="hdr-left" style="display: flex; align-items: center; gap: 12px;">
+        <img src="kamapng.png" alt="Logo" class="hdr-logo">
+        <div>
+          <div class="hdr-title">KAMA '26</div>
+          <div class="hdr-sub">Sports Management</div>
+        </div>
       </div>
       <div class="hdr-right">
         <div class="hdr-stats" id="hdr-stats">0 Students · 0 Programs</div>
@@ -372,7 +376,6 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
         <button class="btn btn-out btn-sm" onclick="exportRegCSV()">
           <span class="material-symbols-rounded" style="font-size:16px;">download</span> Export
         </button>
-        <!-- ADDED CANDIDATE COUNT -->
         <span class="cnt-lbl" id="reg-count" style="margin-left: auto; color: var(--gd); background: var(--gl);"></span>
     </div>
     <div id="reg-area"></div>
