@@ -198,7 +198,8 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 /* MODERN PROGRESS LOADING BAR */
 .spinner { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; background: #fff; position: fixed; z-index: 999999; width: 100%; top: 0; left: 0; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .loader-card { width: 85%; max-width: 320px; text-align: center; }
-.loader-logo { font-size: 32px; font-weight: 900; color: var(--g); letter-spacing: -0.5px; margin-bottom: 6px; }
+.loader-img-logo { height: 80px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(5,150,105,0.15)); animation: pulseLogo 2s infinite ease-in-out; }
+@keyframes pulseLogo { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 .loader-sub { font-size: 12px; color: var(--r500); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px; }
 .progress-bar-track { width: 100%; height: 6px; background: var(--r100); border-radius: 99px; overflow: hidden; position: relative; margin-bottom: 12px; }
 .progress-bar-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--g), var(--gm)); border-radius: 99px; transition: width 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); }
@@ -273,7 +274,7 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 
 <div class="spinner" id="loading">
   <div class="loader-card">
-    <div class="loader-logo">KAMA '26</div>
+    <img src="kamapng.png" alt="KAMA '26 Logo" class="loader-img-logo">
     <div class="loader-sub">Sports Management</div>
     <div class="progress-bar-track">
        <div class="progress-bar-fill" id="pbar-fill"></div>
@@ -579,7 +580,7 @@ const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
 /* ─── EXPLICIT SECTION ORDER ─── */
-const ORDERED_SECTIONS = ["Bidaya", "Ula", "Thaniya", "Thanawiyya", "Aliyah", "Kulliyah", "Kulliyah (General)"];
+const ORDERED_SECTIONS = ["Bidayah", "Ula", "Thaniya", "Thanawiyyah", "Aliyah", "Kulliyah"];
 
 /* ─── STATIC EXPLICIT HOUSES & CODES ─── */
 const HOUSE_MAP = {
@@ -1431,7 +1432,6 @@ window.doCSVImport=async function(){
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   if(lines.length<2){toast('Needs a header row + data rows','r');return;}
 
-  // --- ADDED: STRICT HEADER VALIDATION TO PREVENT MIX-UPS ---
   const header = lines[0].toLowerCase().replace(/\s+/g, '');
   if (csvMode === 'students' && (header.includes('programcode') || header.includes('isregistered'))) {
      toast('Error: You are pasting Candidates data into Students!', 'r'); 
@@ -1445,7 +1445,6 @@ window.doCSVImport=async function(){
      toast('Error: You are pasting Students/Programs into Candidates!', 'r'); 
      return;
   }
-  // ------------------------------------------------------------
 
   const rows=lines.slice(1).map(l=>l.split(',').map(c=>cleanCsvCell(c)));
 
