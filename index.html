@@ -1369,10 +1369,28 @@ window.handleScanner = async function(el, fromCamera = false) {
 
             setSyncState('ing');
             try {
-                await setDoc(doc(db, 'registrations', targetKey), { isRegistered: true }, { merge: true });
+                // Check if it's a group program
+                const prog = programs[pid];
+                const isGroup = prog && prog.type === 'group';
+
+                if (isGroup) {
+                    // GROUP ITEM: Register everyone in the same program and same house
+                    const batch = writeBatch(db);
+                    Object.keys(regs).forEach(k => {
+                        if (regs[k].programId === pid && regs[k].house === regData.house) {
+                            batch.set(doc(db, 'registrations', k), { isRegistered: true }, { merge: true });
+                        }
+                    });
+                    await batch.commit();
+                } else {
+                    // INDIVIDUAL ITEM: Register only this specific candidate
+                    await setDoc(doc(db, 'registrations', targetKey), { isRegistered: true }, { merge: true });
+                }
                 
-                document.getElementById('sm-name').textContent = String(regData.name||'');
-                document.getElementById('sm-chest-house').textContent = `${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
+                // Update Success Modal UI dynamically based on Group/Individual
+                document.querySelector('.success-title').textContent = isGroup ? "Team Successfully Registered" : "Successfully Registered";
+                document.getElementById('sm-name').textContent = isGroup ? `${toTitle(regData.house)} Team` : String(regData.name||'');
+                document.getElementById('sm-chest-house').textContent = isGroup ? `Scanned by: ${String(regData.chestNo||'')}` : `${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
                 document.getElementById('sm-prog').textContent = `${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
                 
                 const smModal = document.getElementById('success-modal');
@@ -1384,6 +1402,8 @@ window.handleScanner = async function(el, fromCamera = false) {
                     if(!fromCamera) el.focus();
                     scanCooldown = false; 
                     if(isScanning) html5QrCode.resume();
+                    // Reset title for next scans
+                    document.querySelector('.success-title').textContent = "Successfully Registered";
                 }, 2000);
 
             } catch(e) { 
