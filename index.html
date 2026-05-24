@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>KAMA Arts Fest '26</title>
+<title>KAMA Arts Fest '26 - Scanner</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
@@ -12,8 +12,16 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 :root {
-  --g: #059669; --gd: #065f46; --gl: #d1fae5; --gm: #34d399;
-  --blue: #2563eb; --purple: #7c3aed; --orange: #ea580c; --teal: #16a34a; --red: #ef4444;
+  --pri: #61131c; 
+  --pri-d: #450c13; 
+  --sec: #dfba86; 
+  --sec-l: #fcf6ed;
+  
+  --success: #10b981;
+  --success-bg: #d1fae5;
+  --danger: #ef4444;
+  --danger-bg: #fee2e2;
+
   --r50: #f9fafb; --r100: #f3f4f6; --r200: #e5e7eb; --r300: #d1d5db; --r400: #9ca3af; 
   --r500: #6b7280; --r600: #4b5563; --r700: #374151; --r800: #1f2937;
   --rad: 14px; --rads: 8px;
@@ -27,153 +35,80 @@ body { font-family: 'Outfit', sans-serif; background: #f4f6f8; min-height: 100vh
 .material-symbols-rounded { font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24; font-size: 20px; display: inline-flex; align-items: center; justify-content: center; }
 .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24; }
 
-.hdr { background: linear-gradient(135deg, #064e3b 0%, #059669 60%, #10b981 100%); padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shm); }
+.hdr { background: linear-gradient(135deg, var(--pri-d) 0%, var(--pri) 60%, #871e2a 100%); padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shm); }
 .hdr-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 .hdr-title { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.4px; line-height: 1.1; }
-.hdr-sub { font-size: 12px; color: #a7f3d0; margin-top: 4px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
-.hdr-stats { font-size: 11px; color: #d1fae5; font-weight: 700; text-align: right; line-height: 1.5; margin-bottom: 4px; }
+.hdr-sub { font-size: 12px; color: var(--sec); margin-top: 4px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
 
-.sync-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; }
-.sync-ok { background: rgba(6, 78, 39, 0.55); color: #6ee7b7; border: 1.5px solid rgba(16, 185, 129, 0.4); }
+.sync-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; margin-top: 8px;}
+.sync-ok { background: rgba(0, 0, 0, 0.25); color: var(--sec); border: 1.5px solid rgba(223, 186, 134, 0.4); }
 .sync-ing { background: rgba(120, 53, 15, 0.4); color: #fcd34d; border: 1.5px solid rgba(245, 158, 11, 0.4); }
 .sync-err { background: rgba(127, 29, 29, 0.4); color: #fca5a5; border: 1.5px solid rgba(239, 68, 68, 0.4); }
 .sync-dot { width: 6px; height: 6px; border-radius: 50%; }
-.sd-ok { background: #6ee7b7; animation: pulse 2s infinite; }
+.sd-ok { background: var(--sec); animation: pulse 2s infinite; }
 .sd-ing { background: #fcd34d; animation: pulse 0.8s infinite; }
 .sd-err { background: #f87171; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-.house-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
-.hbadge { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 800; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.5px; }
-
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--r200); display: flex; z-index: 200; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -4px 15px rgba(0,0,0,0.04); }
-.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 2px; color: var(--r400); border: none; background: none; cursor: pointer; transition: all 0.2s ease; }
-.nav-icon { font-size: 24px; margin-bottom: 4px; transition: transform 0.2s, color 0.2s;}
-.nav-text { font-size: 10px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; }
-.nav-item:hover { color: var(--r600); }
-.nav-item.on { color: var(--g); }
-.nav-item.on .nav-icon { font-variation-settings: 'FILL' 1, 'wght' 600; transform: translateY(-2px); }
-
-.pg { padding: 20px 16px 100px; display: none; animation: fadeIn 0.3s ease; }
+.pg { padding: 20px 16px; display: none; animation: fadeIn 0.2s ease; }
 .pg.on { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: var(--rads); cursor: pointer; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; padding: 10px 16px; transition: all 0.2s ease; min-height: 42px; text-transform: uppercase; letter-spacing: 0.5px;}
 .btn .material-symbols-rounded { font-size: 18px; }
-.btn-green { background: var(--g); color: #fff; box-shadow: 0 2px 4px rgba(5,150,105,0.15); } .btn-green:hover { background: #047857; transform: translateY(-1px); }
-.btn-blue { background: var(--blue); color: #fff; box-shadow: 0 2px 4px rgba(37,99,235,0.15); } .btn-blue:hover { background: #1d4ed8; transform: translateY(-1px); }
+.btn-primary { background: var(--pri); color: #fff; box-shadow: 0 2px 4px rgba(97, 19, 28, 0.15); } .btn-primary:hover { background: var(--pri-d); transform: translateY(-1px); }
 .btn-out { background: #fff; color: var(--r700); border: 1.5px solid var(--r200); box-shadow: var(--sh); } .btn-out:hover { background: var(--r50); border-color: var(--r300); }
 .btn-red { background: #fef2f2; color: #dc2626; border: 1.5px solid #fecaca; } .btn-red:hover { background: #fee2e2; }
 .btn-sm { padding: 6px 12px; font-size: 12px; min-height: 34px; }
-.btn-purple { background: #f5f3ff; color: #6d28d9; border: 1.5px solid #ddd6fe; } .btn-purple:hover { background: #ede9fe; }
 
 .abar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-.cnt-lbl { margin-left: auto; font-size: 12px; color: var(--r600); font-weight: 800; background: var(--r200); padding: 4px 10px; border-radius: 6px; }
-.frow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-.frow > * { flex: 1; min-width: 140px; }
+.cnt-lbl { margin-left: auto; font-size: 12px; color: var(--pri); font-weight: 800; background: var(--sec-l); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--sec); }
 
-.input-wrap { position: relative; width: 100%; display: flex; align-items: center; }
-.input-wrap .material-symbols-rounded { position: absolute; left: 12px; color: var(--r400); font-size: 20px; pointer-events: none; }
-.input-wrap input { padding-left: 38px; }
-
-input, select, textarea { font-family: 'Outfit', sans-serif; font-size: 15px; border: 1.5px solid var(--r200); border-radius: var(--rads); padding: 10px 14px; width: 100%; outline: none; background: #fff; color: var(--r800); transition: all 0.2s; min-height: 44px; font-weight: 500; }
-input:focus, select:focus, textarea:focus { border-color: var(--gm); box-shadow: 0 0 0 3px rgba(52,211,153,0.15); }
+input { font-family: 'Outfit', sans-serif; font-size: 15px; border: 1.5px solid var(--r200); border-radius: var(--rads); padding: 10px 14px; width: 100%; outline: none; background: #fff; color: var(--r800); transition: all 0.2s; min-height: 44px; font-weight: 500; }
+input:focus { border-color: var(--sec); box-shadow: 0 0 0 3px rgba(223, 186, 134, 0.2); }
 input::placeholder { color: var(--r400); font-weight: 400; }
-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 
 .card { background: #fff; border: 1px solid var(--r100); border-radius: var(--rad); padding: 14px; display: flex; align-items: center; gap: 14px; box-shadow: var(--sh); margin-bottom: 12px; transition: transform 0.2s, box-shadow 0.2s; }
-.card:hover { transform: translateY(-2px); box-shadow: var(--shm); border-color: var(--r200); }
 .chest { border-radius: 8px; padding: 6px 4px; font-size: 14px; font-weight: 800; color: #fff; min-width: 60px; text-align: center; letter-spacing: 0.5px; }
 .cinfo { flex: 1; min-width: 0; }
 .cname { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--r800); margin-bottom: 2px;}
 .cmeta { font-size: 12px; color: var(--r500); font-weight: 600; display: flex; align-items: center; gap: 6px;}
-.cacts { display: flex; gap: 6px; flex-shrink: 0; }
-.ibtn { width: 36px; height: 36px; border: 1px solid transparent; border-radius: 8px; background: var(--r50); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--r600); }
-.ibtn:hover { background: var(--r200); color: var(--r800); border-color: var(--r300); }
-.ibtn.delete:hover { background: #fee2e2; color: #dc2626; border-color: #fecaca; }
 
-.pcode { background: #eff6ff; color: #1d4ed8; border-radius: 8px; padding: 6px; font-size: 13px; font-weight: 800; min-width: 65px; text-align: center; border: 1px solid #bfdbfe; }
-.ptyp { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-.ptyp-i { background: #dbeafe; color: #1e40af; } 
-.ptyp-g { background: #f3e8ff; color: #6b21a8; }
-
-.seclbl { font-size: 12px; font-weight: 800; color: var(--r500); text-transform: uppercase; letter-spacing: 0.1em; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+.seclbl { font-size: 12px; font-weight: 800; color: var(--pri); text-transform: uppercase; letter-spacing: 0.1em; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
 .seclbl::after { content: ''; flex: 1; height: 1px; background: var(--r200); }
 
 .list-boxes { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-bottom: 25px; }
 .full-box-btn { background: #fff; border: 1.5px solid var(--r200); border-radius: var(--rad); padding: 18px 20px; cursor: pointer; transition: all 0.2s ease; box-shadow: var(--sh); display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .full-box-btn:active { transform: scale(0.98); background: var(--r50); }
-.full-box-btn:hover { border-color: var(--g); box-shadow: var(--shm); }
+.full-box-btn:hover { border-color: var(--pri); box-shadow: var(--shm); }
 .full-box-btn .material-symbols-rounded { color: var(--r400); transition: transform 0.2s; }
-.full-box-btn:hover .material-symbols-rounded { transform: translateX(4px); color: var(--g); }
+.full-box-btn:hover .material-symbols-rounded { transform: translateX(4px); color: var(--pri); }
 .box-text-wrap { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
 .box-title { font-size: 17px; font-weight: 800; color: var(--r800); margin-bottom: 4px; }
 .box-sub { font-size: 12px; color: var(--r500); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
 
 .prog-box-btn { background: #fff; border: 1.5px solid var(--r200); border-radius: 12px; padding: 14px 16px; cursor: pointer; box-shadow: var(--sh); display: flex; align-items: center; gap: 12px; transition: all 0.2s; width: 100%; }
 .prog-box-btn:active { transform: scale(0.98); background: #f8fafc; }
-.prog-box-btn:hover { border-color: var(--blue); }
-.prog-box-btn .p-code { font-size: 14px; font-weight: 800; color: var(--blue); background: #eff6ff; padding: 4px 8px; border-radius: 6px; flex-shrink: 0; }
+.prog-box-btn:hover { border-color: var(--pri); }
+.prog-box-btn .p-code { font-size: 14px; font-weight: 800; color: var(--pri); background: var(--sec-l); padding: 4px 8px; border-radius: 6px; flex-shrink: 0; }
 .prog-box-btn .p-name { font-size: 15px; font-weight: 700; color: var(--r800); line-height: 1.3; }
 
-.overlay { position: fixed; inset: 0; background: rgba(17, 24, 39, 0.6); z-index: 300; display: none; align-items: flex-end; justify-content: center; padding: 0; backdrop-filter: blur(4px); }
-.overlay.show { display: flex; animation: fadeInModal 0.2s ease forwards; }
-.modal { background: #fff; border-radius: 20px 20px 0 0; box-shadow: var(--shl); width: 100%; max-width: 500px; display: flex; flex-direction: column; max-height: 85vh; animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-@keyframes slideUpModal { from { transform: translateY(100%); } to { transform: translateY(0); } }
-@keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-
-.mhdr { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--r100); }
-.mtitle { font-size: 18px; font-weight: 800; color: var(--r800); }
-.mclose { background: var(--r100); border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--r600); transition: background 0.2s; }
-.mclose:hover { background: var(--r200); color: var(--r800); }
-.mbody { overflow-y: auto; flex: 1; padding: 20px; }
-.mfoot { padding: 16px 20px; border-top: 1px solid var(--r100); display: flex; gap: 12px; background: var(--r50); }
-.mfoot button { flex: 1; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-.mcancl { background: #fff; color: var(--r700); border: 1.5px solid var(--r200); }
-.mcancl:hover { background: var(--r100); }
-.msave { background: var(--g); color: #fff; border: 1.5px solid var(--g); box-shadow: 0 4px 6px rgba(5,150,105,0.2); }
-.msave:hover { background: #047857; }
-.mdanger { background: var(--red); color: #fff; border: 1.5px solid var(--red); }
-.mdanger:hover { background: #dc2626; }
-
-.fld { margin-bottom: 16px; }
-.flbl { font-size: 11px; font-weight: 800; color: var(--r500); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
-
-.reg-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1.5px solid var(--r200); border-radius: var(--rad); background: #fff; box-shadow: var(--sh); width: 100%; display: block; position: relative; padding-bottom: 5px; }
-.reg-table { border-collapse: separate; border-spacing: 0; font-size: 12px; white-space: nowrap; width: max-content; min-width: 100%; }
-.reg-table th, .reg-table td { border-bottom: 1px solid var(--r200); border-right: 1px solid var(--r200); padding: 0; }
-.col-code { position: sticky; left: 0; z-index: 10; min-width: 55px; width: 55px; background: #fff; }
-.col-name { position: sticky; left: 55px; z-index: 10; min-width: 120px; max-width: 120px; background: #fff; box-shadow: 4px 0 8px -2px rgba(0,0,0,0.05); overflow: hidden; text-overflow: ellipsis; }
-.reg-table thead .col-code, .reg-table thead .col-name { z-index: 15; background: #f8fafc; }
-.th-house { text-align: center; font-size: 11px; font-weight: 800; color: #fff; padding: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
-.th-cand { text-align: center; font-size: 10px; font-weight: 800; color: var(--r600); padding: 6px; min-width: 90px; background: var(--r50); }
-.th-code-hdr, .th-name-hdr { background: #f8fafc; font-size: 11px; font-weight: 800; color: var(--r700); padding: 10px; text-align: left; text-transform: uppercase; }
-.td-code { font-size: 11px; font-weight: 800; color: #3b82f6; text-align: center; padding: 8px; background: #f8fafc; }
-.td-name { font-size: 12px; font-weight: 700; color: var(--r800); padding: 8px; text-align: left; overflow: hidden; text-overflow: ellipsis; }
-.td-cand { padding: 4px; text-align: center; vertical-align: middle; }
-.cand-cell { display: flex; flex-direction: column; gap: 4px; align-items: center; padding: 6px; }
-.cand-chest { width: 75px; border: 1.5px solid var(--r200); border-radius: 6px; padding: 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: 'Outfit'; text-transform: uppercase; min-height: 34px; transition: border-color 0.2s; }
-.cand-chest:focus { border-color: var(--g); box-shadow: 0 0 0 2px rgba(16,185,129,0.1); }
-.cand-chest.filled { border-color: var(--g); background: #f0fdf4; color: #065f46; font-weight: 800; }
-.cand-chest.err { border-color: #f87171; background: #fef2f2; color: #dc2626; }
-.tr-section td { background: var(--r50); font-size: 10px; font-weight: 800; color: var(--r600); padding: 8px 10px; text-transform: uppercase; letter-spacing: 0.1em; }
-
-.success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(5px); }
+.success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; backdrop-filter: blur(5px); }
 .success-overlay.show { opacity: 1; pointer-events: all; }
-.checkmark-container { width: 100px; height: 100px; border-radius: 50%; background: var(--gl); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.checkmark-container .material-symbols-rounded { font-size: 60px; color: var(--g); }
-.success-details { text-align: center; opacity: 0; animation: slideUp 0.4s ease 0.2s forwards; display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
-.success-title { font-size: 14px; font-weight: 800; color: var(--g); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.checkmark-container { width: 100px; height: 100px; border-radius: 50%; background: var(--success-bg); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.checkmark-container .material-symbols-rounded { font-size: 60px; color: var(--success); }
+.success-details { text-align: center; opacity: 0; animation: slideUp 0.3s ease 0.15s forwards; display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
+.success-title { font-size: 14px; font-weight: 800; color: var(--success); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
 .success-name { font-size: 32px; font-weight: 900; color: var(--r800); line-height: 1.1; margin-bottom: 8px; }
 .success-meta { font-size: 18px; font-weight: 700; color: var(--r500); }
-.success-prog { font-size: 14px; font-weight: 800; color: var(--gd); margin-top: 24px; background: var(--gl); padding: 10px 24px; border-radius: 8px; border: 1.5px solid var(--g); width: 100%; }
+.success-prog { font-size: 14px; font-weight: 800; color: var(--pri); margin-top: 24px; background: var(--sec-l); padding: 10px 24px; border-radius: 8px; border: 1.5px solid var(--sec); width: 100%; }
 @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
 @keyframes scaleIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
 .toasts { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; width: 90%; max-width: 360px; }
 .toast { padding: 12px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; color: #fff; box-shadow: var(--shl); animation: tup 0.3s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; display: flex; align-items: center; gap: 8px; }
-.tg { background: var(--r800); } .tr { background: var(--red); color: white; }
+.tg { background: var(--r800); } .tr { background: var(--danger); color: white; }
 .toast .material-symbols-rounded { font-size: 18px; }
 @keyframes tup { from { opacity: 0; transform: translateY(-15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
@@ -181,94 +116,37 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
 .empty-ico { font-size: 48px; margin-bottom: 12px; color: var(--r300); }
 .empty-txt { font-weight: 700; font-size: 15px; color: var(--r500); }
 
-.spinner { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; background: #fff; position: fixed; z-index: 999999; width: 100%; top: 0; left: 0; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.spinner { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; background: #fff; position: fixed; z-index: 999999; width: 100%; top: 0; left: 0; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .loader-card { width: 85%; max-width: 320px; text-align: center; }
-.loader-img-logo { height: 80px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(5,150,105,0.15)); animation: pulseLogo 2s infinite ease-in-out; }
+.loader-img-logo { height: 80px; width: auto; max-width: 100%; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); animation: pulseLogo 1.5s infinite ease-in-out; }
 @keyframes pulseLogo { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 .loader-sub { font-size: 12px; color: var(--r500); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px; }
 .progress-bar-track { width: 100%; height: 6px; background: var(--r100); border-radius: 99px; overflow: hidden; position: relative; margin-bottom: 12px; }
-.progress-bar-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--g), var(--gm)); border-radius: 99px; transition: width 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); }
+.progress-bar-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--pri), var(--pri-d)); border-radius: 99px; transition: width 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); }
 .loader-status { font-size: 11px; color: var(--r400); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 14px; border: 2px solid var(--g); box-shadow: var(--shm); width: 100%; border-radius: 12px; letter-spacing: 1px;}
-#scan-input:focus { box-shadow: 0 0 0 4px rgba(16,185,129,0.15); }
+#scan-input { font-size: 18px; font-weight: 800; text-align: center; padding: 14px; border: 2px solid var(--sec); box-shadow: var(--shm); border-radius: 12px; letter-spacing: 1px;}
 #reader { width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--sh); display: none; margin: 16px 0 0 0; border: 1px solid var(--r200) !important; background: #000; }
 #reader video { border-radius: 12px; width: 100% !important; object-fit: cover; }
 #btn-start-scan { width: 100%; font-size: 14px; padding: 14px; margin-bottom: 8px; border-radius: 8px; box-shadow: var(--sh); }
 .cam-container { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 24px; position: relative; }
 .chk-status-badge { font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; }
-.chk-reg { background: var(--gl); color: var(--gd); }
-.chk-pend { background: #fee2e2; color: #991b1b; }
+.chk-reg { background: var(--success-bg); color: var(--success); border: 1px solid #a7f3d0; }
+.chk-pend { background: var(--sec-l); color: var(--pri); border: 1px solid var(--sec); }
 
 .scan-feedback {
     position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%);
-    background: var(--red); color: #fff; padding: 10px 20px; border-radius: 8px;
+    background: var(--danger); color: #fff; padding: 10px 20px; border-radius: 8px;
     font-weight: 800; font-size: 14px; z-index: 100; opacity: 0; pointer-events: none;
     transition: all 0.2s ease; box-shadow: var(--shl); white-space: nowrap; letter-spacing: 0.5px;
 }
 .scan-feedback.show { opacity: 1; transform: translateX(-50%) translateY(-15px); }
-.scan-feedback.ok { background: var(--g); }
+.scan-feedback.ok { background: var(--success); }
 
 .zoom-container { display: none; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-top: 14px; margin-bottom: 10px; padding: 0 8px; }
 .zoom-container .material-symbols-rounded { font-size: 24px; color: var(--r800); }
 .zoom-slider { -webkit-appearance: none; width: 100%; height: 3px; background: var(--r800); border-radius: 2px; outline: none; }
-.zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--r800); border-radius: 50%; cursor: pointer; margin-top: -7.5px; }
-
-/* ═══ ADMIN PANEL STYLES ═══ */
-.admin-section { margin-bottom: 24px; }
-.admin-prog-card { background: #fff; border: 1.5px solid var(--r200); border-radius: var(--rad); padding: 16px; margin-bottom: 12px; box-shadow: var(--sh); transition: all 0.2s; }
-.admin-prog-card.disabled-prog { border-color: #fecaca; background: #fff5f5; opacity: 0.85; }
-.admin-prog-header { display: flex; align-items: center; gap: 12px; }
-.admin-prog-info { flex: 1; min-width: 0; }
-.admin-prog-name { font-weight: 800; font-size: 15px; color: var(--r800); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.admin-prog-meta { font-size: 12px; color: var(--r500); font-weight: 600; margin-top: 2px; }
-.admin-prog-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-
-/* TOGGLE SWITCH */
-.toggle-wrap { display: flex; align-items: center; gap: 8px; }
-.toggle-lbl { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-.toggle-lbl.on-lbl { color: var(--g); }
-.toggle-lbl.off-lbl { color: var(--red); }
-.toggle { position: relative; width: 48px; height: 26px; }
-.toggle input { opacity: 0; width: 0; height: 0; }
-.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e7eb; transition: .3s; border-radius: 26px; }
-.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-input:checked + .toggle-slider { background-color: var(--g); }
-input:checked + .toggle-slider:before { transform: translateX(22px); }
-
-/* CANDIDATE CHIPS in admin */
-.cand-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--r100); }
-.cand-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 99px; font-size: 11px; font-weight: 800; }
-.cand-chip.registered { background: var(--gl); color: var(--gd); border: 1px solid #86efac; }
-.cand-chip.pending { background: #fff7ed; color: #92400e; border: 1px solid #fed7aa; }
-.cand-chip .chip-cancel { background: none; border: none; cursor: pointer; color: inherit; display: flex; align-items: center; opacity: 0.6; transition: opacity 0.2s; padding: 0; }
-.cand-chip .chip-cancel:hover { opacity: 1; }
-.cand-chip .chip-cancel .material-symbols-rounded { font-size: 14px; }
-.house-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-.bulk-cancel-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-
-/* Admin filter bar */
-.admin-filter { background: #fff; border: 1.5px solid var(--r200); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; box-shadow: var(--sh); }
-.admin-filter-title { font-size: 11px; font-weight: 800; color: var(--r500); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
-.filter-chips-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-chip { padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 800; border: 1.5px solid var(--r200); background: #fff; color: var(--r600); cursor: pointer; transition: all 0.2s; }
-.filter-chip.active { background: var(--r800); color: #fff; border-color: var(--r800); }
-.filter-chip:hover:not(.active) { border-color: var(--r500); }
-
-/* Admin stats row */
-.admin-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.astat { background: #fff; border: 1px solid var(--r200); border-radius: 10px; padding: 12px; text-align: center; box-shadow: var(--sh); }
-.astat-num { font-size: 22px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
-.astat-lbl { font-size: 10px; font-weight: 800; color: var(--r500); text-transform: uppercase; letter-spacing: 0.5px; }
-.astat.green .astat-num { color: var(--g); }
-.astat.red .astat-num { color: var(--red); }
-.astat.blue .astat-num { color: var(--blue); }
-
-/* Confirm modal for bulk cancel */
-.confirm-list { max-height: 200px; overflow-y: auto; border: 1px solid var(--r200); border-radius: 8px; margin: 12px 0; }
-.confirm-list-item { padding: 8px 12px; border-bottom: 1px solid var(--r100); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-.confirm-list-item:last-child { border-bottom: none; }
+.zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--pri); border-radius: 50%; cursor: pointer; margin-top: -7.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 </style>
 </head>
 <body>
@@ -276,15 +154,15 @@ input:checked + .toggle-slider:before { transform: translateX(22px); }
 <div class="spinner" id="loading">
   <div class="loader-card">
     <img src="kamapng.png" alt="KAMA '26 Logo" class="loader-img-logo">
-    <div class="loader-sub">Sports Management</div>
+    <div class="loader-sub">Scanner Portal</div>
     <div class="progress-bar-track">
        <div class="progress-bar-fill" id="pbar-fill"></div>
     </div>
-    <div class="loader-status" id="pbar-status">Synchronizing Stream...</div>
+    <div class="loader-status" id="pbar-status">Synchronizing Data...</div>
   </div>
 </div>
 
-<div id="app" style="display:none; opacity: 0; transition: opacity 0.4s ease;">
+<div id="app" style="display:none; opacity: 0; transition: opacity 0.3s ease;">
 
   <div class="hdr">
     <div class="hdr-row">
@@ -292,126 +170,46 @@ input:checked + .toggle-slider:before { transform: translateX(22px); }
         <img src="kamapng.png" alt="Logo" class="hdr-logo">
         <div>
           <div class="hdr-title">KAMA '26</div>
-          <div class="hdr-sub">Sports Management</div>
+          <div class="hdr-sub">Check-in Scanner</div>
         </div>
       </div>
-      <div class="hdr-right">
-        <div class="hdr-stats" id="hdr-stats">0 Students · 0 Programs</div>
+      <div class="hdr-right" style="text-align: right;">
         <div class="sync-pill sync-ok" id="sync-pill">
           <span class="sync-dot sd-ok" id="sync-dot"></span>
           <span id="sync-txt">Live</span>
         </div>
       </div>
     </div>
-    <div class="house-badges" id="house-badges"></div>
   </div>
 
-  <div class="bottom-nav">
-    <button class="nav-item on" onclick="switchTab('students', this)">
-      <span class="material-symbols-rounded nav-icon">group</span>
-      <span class="nav-text">Students</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('programs', this)">
-      <span class="material-symbols-rounded nav-icon">emoji_events</span>
-      <span class="nav-text">Programs</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('register', this)">
-      <span class="material-symbols-rounded nav-icon">list_alt</span>
-      <span class="nav-text">Candidates</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('checkin', this)">
-      <span class="material-symbols-rounded nav-icon">how_to_reg</span>
-      <span class="nav-text">Register</span>
-    </button>
-    <button class="nav-item" onclick="switchTab('admin', this)">
-      <span class="material-symbols-rounded nav-icon">admin_panel_settings</span>
-      <span class="nav-text">Admin</span>
-    </button>
-  </div>
-
-  <!-- STUDENTS PAGE -->
-  <div class="pg on" id="pg-students">
-    <div class="abar">
-      <button class="btn btn-green" onclick="openStudentModal()">
-        <span class="material-symbols-rounded">person_add</span> Add Student
-      </button>
-      <button class="btn btn-out" onclick="openStudentCSV()">
-        <span class="material-symbols-rounded">upload</span> Import
-      </button>
-      <button class="btn btn-out" onclick="exportStudentsCSV()">
-        <span class="material-symbols-rounded">download</span> Export
-      </button>
-      <span class="cnt-lbl" id="stu-count"></span>
-    </div>
-    <div class="frow">
-      <div class="input-wrap">
-        <span class="material-symbols-rounded">search</span>
-        <input type="text" id="stu-search" placeholder="Search name or chest no..." oninput="renderStudents()">
-      </div>
-      <select id="stu-sec" onchange="renderStudents()"><option value="">All Sections</option></select>
-      <select id="stu-house" onchange="renderStudents()"><option value="">All Houses</option></select>
-    </div>
-    <div id="stu-list"></div>
-  </div>
-
-  <!-- PROGRAMS PAGE -->
-  <div class="pg" id="pg-programs">
-    <div class="abar">
-      <button class="btn btn-green" onclick="openProgramModal()">
-        <span class="material-symbols-rounded">add_circle</span> Add Program
-      </button>
-      <button class="btn btn-out" onclick="openProgramCSV()">
-        <span class="material-symbols-rounded">upload</span> Import
-      </button>
-      <span class="cnt-lbl" id="prog-count"></span>
-    </div>
-    <div class="frow">
-      <select id="prog-sec" onchange="renderPrograms()"><option value="">All Sections</option></select>
-    </div>
-    <div id="prog-list"></div>
-  </div>
-
-  <!-- CANDIDATES TABLE PAGE -->
-  <div class="pg" id="pg-register">
-    <div class="abar">
-        <select id="reg-sec" onchange="renderRegister()" style="flex:1;"><option value="">All Sections</option></select>
-        <button class="btn btn-out btn-sm" onclick="openRegCSV()">
-          <span class="material-symbols-rounded" style="font-size:16px;">upload</span> Import
-        </button>
-        <button class="btn btn-out btn-sm" onclick="exportRegCSV()">
-          <span class="material-symbols-rounded" style="font-size:16px;">download</span> Export
-        </button>
-        <span class="cnt-lbl" id="reg-count" style="margin-left: auto; color: var(--gd); background: var(--gl);"></span>
-    </div>
-    <div id="reg-area"></div>
-  </div>
-
-  <!-- CHECKIN / SCANNER PAGE -->
-  <div class="pg" id="pg-checkin">
+  <div class="pg on" id="pg-checkin">
     <div id="chk-step-sec">
         <div class="seclbl">1. Select Section</div>
         <div class="list-boxes" id="chk-sec-boxes"></div>
     </div>
+    
     <div id="chk-step-prog" style="display:none;">
         <div class="abar" style="margin-bottom: 24px;">
             <button class="btn btn-out btn-sm" style="border-radius: 99px;" onclick="chkGoBack('sec')">
               <span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Back
             </button>
-            <span class="cnt-lbl" id="chk-lbl-secname" style="color: var(--gd); background: var(--gl);">Section Name</span>
+            <span class="cnt-lbl" id="chk-lbl-secname">Section Name</span>
         </div>
         <div class="seclbl">2. Select Program</div>
         <div class="list-boxes" id="chk-prog-boxes"></div>
     </div>
+    
     <div id="chk-step-scan" style="display:none;">
         <div class="abar" style="margin-bottom: 24px;">
             <button class="btn btn-out btn-sm" style="border-radius: 99px;" onclick="chkGoBack('prog')">
               <span class="material-symbols-rounded" style="font-size:18px;">arrow_back</span> Back
             </button>
-            <span class="cnt-lbl" id="chk-lbl-progname" style="color: var(--gd); background: var(--gl); max-width:65%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Program Name</span>
+            <span class="cnt-lbl" id="chk-lbl-progname" style="max-width:65%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Program Name</span>
         </div>
         <input type="hidden" id="chk-prog-hidden">
+        
         <div class="cam-container">
-          <button class="btn btn-green" id="btn-start-scan" onclick="toggleCamera()">
+          <button class="btn btn-primary" id="btn-start-scan" onclick="toggleCamera()">
             <span class="material-symbols-rounded">photo_camera</span> Start Scanner
           </button>
           <div id="reader"></div>
@@ -422,96 +220,21 @@ input:checked + .toggle-slider:before { transform: translateX(22px); }
           </div>
           <div id="scan-feedback" class="scan-feedback">INVALID CODE</div>
         </div>
-        <div class="frow" style="margin-bottom: 30px;">
-          <input type="text" id="scan-input" placeholder="Type or Scan Chest No..." oninput="handleScanner(this)" autocomplete="off">
-        </div>
+        
+        <form onsubmit="event.preventDefault(); handleScanner(document.getElementById('scan-input'), false);" style="display: flex; gap: 8px; margin-bottom: 30px; width: 100%;">
+          <input type="text" id="scan-input" placeholder="Type Chest No. & Press Enter" autocomplete="off" style="flex: 1;" oninput="this.value = this.value.toUpperCase()">
+          <button type="submit" class="btn btn-primary" style="padding: 0 18px; border-radius: 12px;">
+             <span class="material-symbols-rounded">check</span>
+          </button>
+        </form>
+        
         <div class="seclbl">Candidates List</div>
         <div id="checkin-list"></div>
     </div>
   </div>
 
-  <!-- ═══════════════ ADMIN PAGE ═══════════════ -->
-  <div class="pg" id="pg-admin">
-    
-    <!-- Stats Summary -->
-    <div class="admin-stats" id="admin-stats-row">
-      <div class="astat green">
-        <div class="astat-num" id="astat-on">0</div>
-        <div class="astat-lbl">Active</div>
-      </div>
-      <div class="astat red">
-        <div class="astat-num" id="astat-off">0</div>
-        <div class="astat-lbl">Disabled</div>
-      </div>
-      <div class="astat blue">
-        <div class="astat-num" id="astat-reg">0</div>
-        <div class="astat-lbl">Registered</div>
-      </div>
-    </div>
-
-    <!-- Section Filter -->
-    <div class="admin-filter">
-      <div class="admin-filter-title">Filter by Section</div>
-      <div class="filter-chips-row" id="admin-sec-chips">
-        <div class="filter-chip active" onclick="adminFilterSec('', this)">All</div>
-      </div>
-    </div>
-
-    <!-- Bulk Actions -->
-    <div class="seclbl">Bulk Actions</div>
-    <div class="bulk-cancel-bar" style="margin-bottom: 20px;">
-      <button class="btn btn-out btn-sm" onclick="adminBulkToggleAll(true)">
-        <span class="material-symbols-rounded" style="font-size:16px;">toggle_on</span> Enable All
-      </button>
-      <button class="btn btn-out btn-sm" onclick="adminBulkToggleAll(false)">
-        <span class="material-symbols-rounded" style="font-size:16px;">toggle_off</span> Disable All
-      </button>
-      <button class="btn btn-red btn-sm" onclick="openBulkCancelModal()">
-        <span class="material-symbols-rounded" style="font-size:16px;">cancel</span> Bulk Cancel
-      </button>
-    </div>
-
-    <div class="seclbl">Programs</div>
-    <div id="admin-prog-list"></div>
-  </div>
-
-  <!-- SETTINGS PAGE -->
-  <div class="pg" id="pg-settings">
-    <div class="seclbl">Data Management</div>
-    <div class="card" style="flex-direction:column; align-items:flex-start; padding:20px; margin-bottom:16px;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <span class="material-symbols-rounded icon-filled" style="color:var(--g);">cloud_download</span>
-          <div style="font-weight:800; font-size:16px; color:var(--r800);">Export All Data</div>
-        </div>
-        <div style="font-size:13px; color:var(--r500); margin-bottom:16px; line-height:1.4;">
-            Download all current system records to your device as CSV files.
-        </div>
-        <div style="display:flex; gap:10px; width:100%; flex-wrap:wrap;">
-            <button class="btn btn-out btn-sm" style="flex:1;" onclick="exportStudentsCSV()">Students</button>
-            <button class="btn btn-out btn-sm" style="flex:1;" onclick="exportProgramsCSV()">Programs</button>
-            <button class="btn btn-out btn-sm" style="flex:1;" onclick="exportRegCSV()">Candidates</button>
-        </div>
-    </div>
-    <div class="seclbl" style="color: var(--red);">Danger Zone</div>
-    <div class="card" style="flex-direction:column; align-items:flex-start; padding:20px; border-color:#fecaca; background:#fff5f5;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <span class="material-symbols-rounded icon-filled" style="color:var(--red);">delete_forever</span>
-          <div style="font-weight:800; font-size:16px; color:#991b1b;">Clear Database</div>
-        </div>
-        <div style="font-size:13px; color:#b91c1c; margin-bottom:16px; line-height:1.4;">
-            Warning: These actions are irreversible and will permanently delete records.
-        </div>
-        <div style="display:flex; gap:10px; width:100%; flex-wrap:wrap;">
-            <button class="btn btn-red btn-sm" style="flex:1;" onclick="clearStudents()">Clear Students</button>
-            <button class="btn btn-red btn-sm" style="flex:1;" onclick="clearPrograms()">Clear Programs</button>
-            <button class="btn btn-red btn-sm" style="flex:1;" onclick="clearRegs()">Clear Candidates</button>
-        </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- SUCCESS MODAL -->
 <div class="success-overlay" id="success-modal">
   <div class="checkmark-container">
     <span class="material-symbols-rounded icon-filled">check_circle</span>
@@ -526,129 +249,9 @@ input:checked + .toggle-slider:before { transform: translateX(22px); }
 
 <div class="toasts" id="toasts"></div>
 
-<datalist id="class-list"></datalist>
-<datalist id="section-list"></datalist>
-<datalist id="house-list"></datalist>
-
-<!-- STUDENT MODAL -->
-<div class="overlay" id="modal-student">
-  <div class="modal">
-    <div class="mhdr">
-      <span class="mtitle" id="stu-modal-title">Add Student</span>
-      <button class="mclose" onclick="closeModal('modal-student')"><span class="material-symbols-rounded">close</span></button>
-    </div>
-    <div class="mbody">
-      <input type="hidden" id="stu-id">
-      <div class="fld"><label class="flbl">Chest No</label><input type="text" id="stu-chest" placeholder="e.g. D102"></div>
-      <div class="fld"><label class="flbl">Full Name</label><input type="text" id="stu-name" placeholder="Student name"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <div class="fld"><label class="flbl">Class</label><input type="text" id="stu-class-input" list="class-list" placeholder="Class"></div>
-        <div class="fld"><label class="flbl">Section</label><input type="text" id="stu-section-input" list="section-list" placeholder="Section"></div>
-      </div>
-      <div class="fld"><label class="flbl">House</label><input type="text" id="stu-house-input" list="house-list" placeholder="Enter house..."></div>
-    </div>
-    <div class="mfoot">
-      <button class="mcancl" onclick="closeModal('modal-student')">Cancel</button>
-      <button class="msave" onclick="saveStudent()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- PROGRAM MODAL -->
-<div class="overlay" id="modal-program">
-  <div class="modal">
-    <div class="mhdr">
-      <span class="mtitle" id="prog-modal-title">Add Program</span>
-      <button class="mclose" onclick="closeModal('modal-program')"><span class="material-symbols-rounded">close</span></button>
-    </div>
-    <div class="mbody">
-      <input type="hidden" id="prog-id">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <div class="fld"><label class="flbl">Code</label><input type="text" id="prog-code" placeholder="ATH001"></div>
-        <div class="fld"><label class="flbl">Section</label><input type="text" id="prog-section-input" list="section-list" placeholder="Section"></div>
-      </div>
-      <div class="fld"><label class="flbl">Program Name</label><input type="text" id="prog-name" placeholder="Event Name"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <div class="fld"><label class="flbl">Type</label>
-          <select id="prog-type">
-            <option value="individual">Individual</option>
-            <option value="group">Group</option>
-          </select>
-        </div>
-        <div class="fld"><label class="flbl">Limit / House</label><input type="number" id="prog-limit" min="1" value="3"></div>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="mcancl" onclick="closeModal('modal-program')">Cancel</button>
-      <button class="msave" onclick="saveProgram()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- CSV MODAL -->
-<div class="overlay" id="modal-csv">
-  <div class="modal">
-    <div class="mhdr">
-      <span class="mtitle" id="csv-modal-title">Import CSV</span>
-      <button class="mclose" onclick="closeModal('modal-csv')"><span class="material-symbols-rounded">close</span></button>
-    </div>
-    <div class="mbody">
-      <div class="fld"><label class="flbl">Upload .csv File</label>
-        <input type="file" id="csv-file" accept=".csv,.txt" onchange="onCSVFile(event)" style="padding: 8px;">
-      </div>
-      <div class="fld"><label class="flbl">Or Paste Data</label>
-        <textarea id="csv-text" rows="8" placeholder="Paste CSV rows here…"></textarea>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="mcancl" onclick="closeModal('modal-csv')">Cancel</button>
-      <button class="msave" onclick="doCSVImport()">Import</button>
-    </div>
-  </div>
-</div>
-
-<!-- BULK CANCEL MODAL -->
-<div class="overlay" id="modal-bulk-cancel">
-  <div class="modal">
-    <div class="mhdr">
-      <span class="mtitle">Bulk Cancel Registrations</span>
-      <button class="mclose" onclick="closeModal('modal-bulk-cancel')"><span class="material-symbols-rounded">close</span></button>
-    </div>
-    <div class="mbody">
-      <div style="font-size:13px; color:var(--r600); margin-bottom:16px; line-height:1.5; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:12px;">
-        <span class="material-symbols-rounded icon-filled" style="color:#f97316; font-size:16px; vertical-align:middle;">warning</span>
-        Registration cancel ചെയ്യുന്നത് <b>isRegistered</b> field false ആക്കും. Candidate list-ൽ നിന്ന് remove ആകില്ല.
-      </div>
-      <div class="fld">
-        <label class="flbl">Cancel By</label>
-        <select id="bulk-cancel-type" onchange="renderBulkCancelPreview()">
-          <option value="program">Specific Program</option>
-          <option value="house">Specific House</option>
-          <option value="section">Specific Section</option>
-          <option value="all">All Registrations</option>
-        </select>
-      </div>
-      <div class="fld" id="bulk-cancel-target-wrap">
-        <label class="flbl" id="bulk-cancel-target-lbl">Select Program</label>
-        <select id="bulk-cancel-target" onchange="renderBulkCancelPreview()"></select>
-      </div>
-      <div class="fld">
-        <label class="flbl">Preview (<span id="bulk-preview-count">0</span> registrations)</label>
-        <div class="confirm-list" id="bulk-cancel-preview"></div>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="mcancl" onclick="closeModal('modal-bulk-cancel')">Cancel</button>
-      <button class="mdanger" onclick="doBulkCancel()">
-        <span class="material-symbols-rounded" style="font-size:18px;">cancel</span> Confirm Cancel
-      </button>
-    </div>
-  </div>
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, writeBatch, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyDwRDCGHQEuZ09zkHm-TUVJHH2r2Mx15c8",
@@ -673,7 +276,6 @@ const HOUSE_MAP = {
 };
 
 let SECTIONS = [];
-let CLASSES  = [];
 let HOUSES   = ["Bosphorus", "Hormuz", "Gibraltar", "Malacca"];
 
 function getHouseColor(houseName) {
@@ -686,13 +288,8 @@ function toTitle(str) {
   return String(str).trim().split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 }
 
-let students = {};   
 let programs = {};   
 let regs = {};       
-
-let adminSecFilter = '';
-
-function uid(){ return Math.random().toString(36).slice(2,9)+Date.now().toString(36); }
 
 function setSyncState(s){
   const pill=document.getElementById('sync-pill');
@@ -712,50 +309,9 @@ function toast(msg, type='g') {
   document.getElementById('toasts').appendChild(d);
   setTimeout(() => d.remove(), 3000);
 }
-window.toast = toast;
-
-let currentTab='students';
-window.switchTab = function(tab, el){
-  if (isScanning && tab !== 'checkin') {
-      window.toggleCamera(); 
-  }
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('on'));
-  if(el) el.classList.add('on');
-  else document.querySelector(`.nav-item[onclick*="${tab}"]`).classList.add('on');
-
-  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
-  document.getElementById('pg-'+tab).classList.add('on');
-  currentTab=tab;
-  
-  if(tab==='register') renderRegister();
-  if(tab==='admin') renderAdminPanel();
-  if(tab==='checkin') {
-      if (!document.getElementById('chk-prog-hidden').value && document.getElementById('chk-step-scan').style.display !== 'block') {
-          renderCheckinSections();
-      } else if(document.getElementById('chk-step-scan').style.display === 'block') {
-          renderCheckin();
-      }
-  }
-};
-
-window.closeModal=id=>document.getElementById(id).classList.remove('show');
-function openModal(id){document.getElementById(id).classList.add('show');}
-
-function updateHeader(){
-  const ns=Object.keys(students).length, np=Object.keys(programs).length;
-  document.getElementById('hdr-stats').textContent=`${ns} Students · ${np} Programs`;
-  const bc=document.getElementById('house-badges');
-  bc.innerHTML=HOUSES.map((h)=>`<span class="hbadge" style="background-color:${getHouseColor(h)}e6;border-color:${getHouseColor(h)}">${h}</span>`).join('');
-}
 
 function updateDynamicFilters() {
   let sSet = new Set();
-  let cSet = new Set();
-
-  Object.values(students).forEach(s => {
-    if(s.section) sSet.add(toTitle(s.section));
-    if(s.class) cSet.add(String(s.class).trim());
-  });
   Object.values(programs).forEach(p => {
     if(p.section) sSet.add(toTitle(p.section));
   });
@@ -769,365 +325,11 @@ function updateDynamicFilters() {
       return idxA - idxB;
   });
   
-  CLASSES = Array.from(cSet).sort((a,b)=> {
-      const numA = parseInt(a); const numB = parseInt(b);
-      if(!isNaN(numA) && !isNaN(numB)) return numA - numB;
-      return a.localeCompare(b);
-  });
-
-  populateDataLists();
-  populateSelects();
-  
-  if(currentTab === 'checkin' && document.getElementById('chk-step-sec').style.display !== 'none') {
+  if(document.getElementById('chk-step-sec').style.display !== 'none') {
       renderCheckinSections();
   }
-  if(currentTab === 'admin') renderAdminPanel();
 }
 
-function populateDataLists() {
-    const dSec = document.getElementById('section-list');
-    if(dSec) dSec.innerHTML = SECTIONS.map(s => `<option value="${s}">`).join('');
-    const dHouse = document.getElementById('house-list');
-    if(dHouse) dHouse.innerHTML = HOUSES.map(h => `<option value="${h}">`).join('');
-    const dClass = document.getElementById('class-list');
-    if(dClass) dClass.innerHTML = CLASSES.map(c => `<option value="${c}">`).join('');
-}
-
-function populateSelects(){
-  ['stu-sec','prog-sec','reg-sec'].forEach(id=>{
-    const el=document.getElementById(id); if(!el)return;
-    const cur=el.value;
-    el.innerHTML='<option value="">All Sections</option>'+SECTIONS.map(s=>`<option value="${s}">${s}</option>`).join('');
-    if([...el.options].some(o=>o.value===cur)) el.value=cur;
-  });
-  const sh=document.getElementById('stu-house');
-  if(sh) {
-      const curH=sh.value;
-      sh.innerHTML='<option value="">All Houses</option>'+HOUSES.map(h=>`<option value="${h}">${h}</option>`).join('');
-      if([...sh.options].some(o=>o.value===curH)) sh.value=curH;
-  }
-}
-
-/* ══════════════════ STUDENTS ══════════════════ */
-window.renderStudents=function(){
-  const search=String(document.getElementById('stu-search').value||'').toLowerCase().trim();
-  const sec=String(document.getElementById('stu-sec').value||'').toLowerCase().trim();
-  const house=String(document.getElementById('stu-house').value||'').toLowerCase().trim();
-  let arr=Object.values(students);
-  if(search) arr=arr.filter(s=>String(s.name||'').toLowerCase().includes(search)||String(s.chestNo||'').toLowerCase().includes(search));
-  if(sec)    arr=arr.filter(s=>toTitle(s.section).toLowerCase() === sec);
-  if(house)  arr=arr.filter(s=>toTitle(s.house).toLowerCase() === house);
-  arr.sort((a,b)=>String(a.chestNo||'').localeCompare(String(b.chestNo||'')));
-  document.getElementById('stu-count').textContent=`${arr.length} Students`;
-  const list=document.getElementById('stu-list');
-  if(!arr.length){list.innerHTML=`<div class="empty"><span class="material-symbols-rounded empty-ico">person_off</span><div class="empty-txt">No students found</div></div>`;return;}
-  list.innerHTML=arr.map(s=>{
-    const hColor = getHouseColor(s.house);
-    return `<div class="card">
-      <div class="chest" style="background:${hColor}">${String(s.chestNo||'')}</div>
-      <div class="cinfo">
-        <div class="cname">${String(s.name||'')}</div>
-        <div class="cmeta">Class ${String(s.class||'')} &middot; ${toTitle(s.section)} &middot; <span style="color:${hColor};font-weight:800">${toTitle(s.house)}</span></div>
-      </div>
-      <div class="cacts">
-        <button class="ibtn" onclick="editStudent('${s.id}')"><span class="material-symbols-rounded" style="font-size:18px;">edit</span></button>
-        <button class="ibtn delete" onclick="deleteStudent('${s.id}')"><span class="material-symbols-rounded" style="font-size:18px;">delete</span></button>
-      </div>
-    </div>`
-  }).join('');
-};
-
-window.openStudentModal=function(id=null){
-  document.getElementById('stu-modal-title').textContent=id?'Edit Student':'Add Student';
-  const s=id?students[id]:null;
-  document.getElementById('stu-id').value=id||'';
-  document.getElementById('stu-chest').value=s?s.chestNo:'';
-  document.getElementById('stu-name').value=s?s.name:'';
-  document.getElementById('stu-class-input').value=s?String(s.class):'';
-  document.getElementById('stu-section-input').value=s?toTitle(s.section):'';
-  document.getElementById('stu-house-input').value=s?toTitle(s.house):'';
-  openModal('modal-student');
-};
-window.editStudent=id=>openStudentModal(id);
-
-window.saveStudent=async function(){
-  const id=document.getElementById('stu-id').value||uid();
-  const chestNo=document.getElementById('stu-chest').value.trim().toUpperCase();
-  const name=document.getElementById('stu-name').value.trim().toUpperCase();
-  const cls=document.getElementById('stu-class-input').value.trim();
-  const sec=toTitle(document.getElementById('stu-section-input').value);
-  const house=toTitle(document.getElementById('stu-house-input').value);
-  if(!chestNo||!name){toast('Chest No and Name required','r');return;}
-  if(!house){toast('House is required','r');return;}
-  const obj={id,chestNo,name,class:cls,section:sec,house:house,createdAt:serverTimestamp()};
-  setSyncState('ing');
-  try{
-    await setDoc(doc(db,'students',id),obj);
-    closeModal('modal-student'); toast('Student saved','g');
-  }catch(e){setSyncState('err');toast('Save failed','r');}
-};
-
-window.deleteStudent=async function(id){
-  if(!confirm('Delete this student?'))return;
-  setSyncState('ing');
-  try{await deleteDoc(doc(db,'students',id));toast('Deleted','g');}
-  catch(e){setSyncState('err');toast('Delete failed','r');}
-};
-
-window.clearStudents=async function(){
-  if(!confirm('Delete ALL students?'))return;
-  setSyncState('ing');
-  try{
-    const batch=writeBatch(db);
-    Object.keys(students).forEach(id=>batch.delete(doc(db,'students',id)));
-    await batch.commit();toast('All students cleared','g');
-  }catch(e){setSyncState('err');toast('Failed','r');}
-};
-
-window.exportStudentsCSV=function(){
-  const rows=['ChestNo,Name,Class,Section,House',
-    ...Object.values(students).map(s=>`"${s.chestNo}","${s.name}","${s.class||''}","${s.section||''}","${s.house||''}"`)];
-  dlCSV(rows.join('\n'),'students.csv');
-};
-
-let csvMode='';
-window.openStudentCSV=function(){csvMode='students';document.getElementById('csv-text').value='';document.getElementById('csv-file').value='';openModal('modal-csv');};
-
-/* ══════════════════ PROGRAMS ══════════════════ */
-window.renderPrograms=function(){
-  const secFilter=String(document.getElementById('prog-sec').value||'').toLowerCase().trim();
-  let arr=Object.values(programs);
-  if(secFilter) arr=arr.filter(p=>toTitle(p.section).toLowerCase()===secFilter);
-  arr.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
-  document.getElementById('prog-count').textContent=`${arr.length} Programs`;
-  const grouped={};
-  arr.forEach(p=>{ const pSec=toTitle(p.section||'Other'); if(!grouped[pSec]) grouped[pSec]=[]; grouped[pSec].push(p); });
-  const list=document.getElementById('prog-list');
-  if(!arr.length){list.innerHTML=`<div class="empty"><span class="material-symbols-rounded empty-ico">event_busy</span><div class="empty-txt">No programs found</div></div>`;return;}
-  let html='';
-  SECTIONS.forEach(secName=>{
-    if(grouped[secName]&&grouped[secName].length>0){
-      html+=`<div class="seclbl">${secName} Section</div>${grouped[secName].map(p=>{
-        const safeType=String(p.type||'individual').trim();
-        const ptypChar=safeType.charAt(0).toLowerCase()||'i';
-        return `<div class="card">
-          <div class="pcode">${String(p.code||'')}</div>
-          <div class="cinfo">
-            <div class="cname">${String(p.name||'')}</div>
-            <div class="cmeta"><span class="ptyp ptyp-${ptypChar}">${safeType}</span> &middot; Limit <b>${p.candidateLimit||3}</b>/house</div>
-          </div>
-          <div class="cacts">
-            <button class="ibtn" onclick="editProgram('${p.id}')"><span class="material-symbols-rounded" style="font-size:18px;">edit</span></button>
-            <button class="ibtn delete" onclick="deleteProgram('${p.id}')"><span class="material-symbols-rounded" style="font-size:18px;">delete</span></button>
-          </div>
-        </div>`;
-      }).join('')}`;
-    }
-  });
-  list.innerHTML=html;
-};
-
-window.openProgramModal=function(id=null){
-  document.getElementById('prog-modal-title').textContent=id?'Edit Program':'Add Program';
-  const p=id?programs[id]:null;
-  document.getElementById('prog-id').value=id||'';
-  document.getElementById('prog-code').value=p?p.code:'';
-  document.getElementById('prog-name').value=p?p.name:'';
-  document.getElementById('prog-section-input').value=p?toTitle(p.section):'';
-  document.getElementById('prog-type').value=p?p.type:'individual';
-  document.getElementById('prog-limit').value=p?p.candidateLimit:3;
-  openModal('modal-program');
-};
-window.editProgram=id=>openProgramModal(id);
-
-window.saveProgram=async function(){
-  const id=document.getElementById('prog-id').value||uid();
-  const code=document.getElementById('prog-code').value.trim().toUpperCase();
-  const name=document.getElementById('prog-name').value.trim().toUpperCase();
-  const sec=toTitle(document.getElementById('prog-section-input').value);
-  if(!code||!name){toast('Code and Name required','r');return;}
-  const obj={id,code,name,section:sec,type:document.getElementById('prog-type').value,candidateLimit:parseInt(document.getElementById('prog-limit').value)||1};
-  setSyncState('ing');
-  try{await setDoc(doc(db,'programs',id),obj);closeModal('modal-program');toast('Program saved','g');}
-  catch(e){setSyncState('err');toast('Save failed','r');}
-};
-
-window.deleteProgram=async function(id){
-  if(!confirm('Delete program?'))return;
-  setSyncState('ing');
-  try{await deleteDoc(doc(db,'programs',id));toast('Deleted','g');}
-  catch(e){setSyncState('err');toast('Failed','r');}
-};
-
-window.clearPrograms=async function(){
-  if(!confirm('Delete ALL programs?'))return;
-  setSyncState('ing');
-  try{
-    const batch=writeBatch(db);
-    Object.keys(programs).forEach(id=>batch.delete(doc(db,'programs',id)));
-    await batch.commit();toast('All programs cleared','g');
-  }catch(e){setSyncState('err');toast('Failed','r');}
-};
-
-window.exportProgramsCSV=function(){
-  const rows=['Code,Name,Section,Type,CandidateLimit',
-    ...Object.values(programs).map(p=>`"${p.code}","${p.name}","${p.section}","${p.type}",${p.candidateLimit}`)];
-  dlCSV(rows.join('\n'),'programs.csv');
-};
-window.openProgramCSV=function(){csvMode='programs';document.getElementById('csv-text').value='';document.getElementById('csv-file').value='';openModal('modal-csv');};
-
-/* ══════════════════ CANDIDATES TABLE ══════════════════ */
-function regKey(pid,house,slot){return `${pid}__${house}__${slot}`;}
-
-window.renderRegister=function(){
-  const secFilter=String(document.getElementById('reg-sec').value||'').toLowerCase().trim();
-  let progs=Object.values(programs);
-
-  // Only show programs where registration is enabled (not disabled)
-  progs = progs.filter(p => p.registrationEnabled !== false);
-
-  if(secFilter) progs=progs.filter(p=>toTitle(p.section).toLowerCase()===secFilter);
-  progs.sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
-
-  const area=document.getElementById('reg-area');
-  const regCountSpan=document.getElementById('reg-count');
-  if(regCountSpan) regCountSpan.textContent=`${Object.keys(regs).length} Candidates`;
-
-  if(!progs.length){
-    area.innerHTML=`<div class="empty"><span class="material-symbols-rounded empty-ico">assignment_late</span><div class="empty-txt">No active programs found</div></div>`;
-    return;
-  }
-
-  let houseHeaderCols='';
-  let candHeaderCols='';
-  HOUSES.forEach(house=>{
-    const maxL=Math.max(...progs.map(p=>p.candidateLimit||1));
-    const hColor=getHouseColor(house);
-    houseHeaderCols+=`<th class="th-house" colspan="${maxL}" style="background:${hColor};border-color:${hColor}">${house}</th>`;
-    for(let s=0;s<maxL;s++) candHeaderCols+=`<th class="th-cand" style="color:${hColor}">C${s+1}</th>`;
-  });
-
-  const bySection={};
-  progs.forEach(p=>{ const pSec=toTitle(p.section||'Other'); if(!bySection[pSec]) bySection[pSec]=[]; bySection[pSec].push(p); });
-  const maxLimit=Math.max(...progs.map(p=>p.candidateLimit||1));
-
-  let rows='';
-  SECTIONS.forEach(sec=>{
-    const secProgs=bySection[sec];
-    if(secProgs&&secProgs.length>0){
-      if(Object.keys(bySection).length>1) rows+=`<tr class="tr-section"><td colspan="${2+HOUSES.length*maxLimit}">${sec} Section</td></tr>`;
-      secProgs.forEach(p=>{
-        let tds='';
-        HOUSES.forEach(house=>{
-          for(let slot=0;slot<maxLimit;slot++){
-            if(slot<(p.candidateLimit||1)){
-              const key=regKey(p.id,house,slot);
-              const reg=regs[key];
-              const chestVal=reg?String(reg.chestNo||''):'';
-              const nameVal=reg?String(reg.name||''):'';
-              const nameClass=reg?'cand-name ok':'cand-name';
-              tds+=`<td class="td-cand"><div class="cand-cell">
-                <input class="cand-chest${reg?' filled':''}" type="text" maxlength="8"
-                  placeholder="Chest" value="${chestVal}"
-                  data-pid="${p.id}" data-house="${house}" data-slot="${slot}"
-                  oninput="onChestInput(this)" onblur="onChestBlur(this)">
-                <span class="${nameClass}" id="cname-${p.id}-${house}-${slot}">${nameVal}</span>
-              </div></td>`;
-            } else {
-              tds+=`<td style="background:#f9fafb;border:1px solid var(--r200)"></td>`;
-            }
-          }
-        });
-        rows+=`<tr>
-          <td class="td-code col-code">${String(p.code||'')}</td>
-          <td class="td-name col-name" title="${String(p.name||'')}">${String(p.name||'')}</td>
-          ${tds}
-        </tr>`;
-      });
-    }
-  });
-
-  area.innerHTML=`<div class="reg-wrap"><table class="reg-table">
-    <thead>
-      <tr>
-        <th class="th-code-hdr col-code" rowspan="2">Code</th>
-        <th class="th-name-hdr col-name" rowspan="2">Program</th>
-        ${houseHeaderCols}
-      </tr>
-      <tr>${candHeaderCols}</tr>
-    </thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
-};
-
-window.onChestInput=function(el){
-  const val=el.value.trim().toUpperCase(); el.value=val;
-  const pid=el.dataset.pid, house=el.dataset.house, slot=parseInt(el.dataset.slot);
-  const nameEl=document.getElementById(`cname-${pid}-${house}-${slot}`);
-  if(!val){el.className='cand-chest';if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}return;}
-  const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===val);
-  if(stu){el.className='cand-chest filled';if(nameEl){nameEl.textContent=String(stu.name||'');nameEl.className='cand-name ok';}}
-  else{el.className='cand-chest err';if(nameEl){nameEl.textContent='Not found';nameEl.className='cand-name no';}}
-};
-
-window.onChestBlur=async function(el){
-  const val=el.value.trim().toUpperCase();
-  const pid=el.dataset.pid,house=el.dataset.house,slot=parseInt(el.dataset.slot);
-  const key=regKey(pid,house,slot);
-  const nameEl=document.getElementById(`cname-${pid}-${house}-${slot}`);
-  if(!val){
-    if(regs[key]){setSyncState('ing');try{await deleteDoc(doc(db,'registrations',key));toast('Slot cleared','g');}catch(e){setSyncState('err');toast('Failed','r');}}
-    return;
-  }
-  const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===val);
-  if(!stu){toast('Chest No not found','r');return;}
-  const alreadyKey=Object.keys(regs).find(k=>{
-    if(k===key)return false;
-    const [kpid]=k.split('__');
-    return kpid===pid&&regs[k].studentId===stu.id;
-  });
-  if(alreadyKey){
-    const [,kh,ks]=alreadyKey.split('__');
-    toast(`${stu.name} already in ${kh} C${parseInt(ks)+1}`,'r');
-    el.value='';el.className='cand-chest';
-    if(nameEl){nameEl.textContent='';nameEl.className='cand-name';}
-    return;
-  }
-  const prog=programs[pid];
-  setSyncState('ing');
-  try{
-    await setDoc(doc(db,'registrations',key),{
-      programId:pid,house,slot,studentId:stu.id,
-      chestNo:stu.chestNo,name:stu.name,
-      programCode:prog?prog.code:'',programName:prog?prog.name:'',
-      isRegistered:false,registeredAt:serverTimestamp()
-    });
-    toast(`${stu.name} → ${house} C${slot+1}`,'g');
-  }catch(e){setSyncState('err');toast('Save failed','r');}
-};
-
-window.exportRegCSV=function(){
-  const rows=['ProgramCode,ChestNo,Slot,House,IsRegistered'];
-  Object.entries(regs).forEach(([key,r])=>{
-    const [pid,house,slot]=key.split('__');
-    const p=programs[pid];
-    if(p&&r.chestNo) rows.push(`"${p.code}","${r.chestNo}",${parseInt(slot)+1},"${house}","${r.isRegistered||false}"`);
-  });
-  dlCSV(rows.join('\n'),'candidates.csv');
-};
-
-window.openRegCSV=function(){csvMode='registrations';document.getElementById('csv-text').value='';document.getElementById('csv-file').value='';openModal('modal-csv');};
-window.clearRegs=async function(){
-  if(!confirm('Clear ALL candidates?'))return;
-  setSyncState('ing');
-  try{
-    const batch=writeBatch(db);
-    Object.keys(regs).forEach(k=>batch.delete(doc(db,'registrations',k)));
-    await batch.commit();toast('All candidates cleared','g');
-  }catch(e){setSyncState('err');toast('Failed','r');}
-};
-
-/* ══════════════════ CHECKIN / SCANNER ══════════════════ */
 window.renderCheckinSections=function(){
   document.getElementById('chk-step-sec').style.display='block';
   document.getElementById('chk-step-prog').style.display='none';
@@ -1135,7 +337,7 @@ window.renderCheckinSections=function(){
   document.getElementById('chk-prog-hidden').value='';
   if(isScanning) toggleCamera();
   const container=document.getElementById('chk-sec-boxes');
-  // Only show sections that have ENABLED programs
+  
   const activeSections=SECTIONS.filter(s=>Object.values(programs).some(p=>toTitle(p.section)===s && p.registrationEnabled!==false));
   if(!activeSections.length){
     container.innerHTML=`<div class="empty"><span class="material-symbols-rounded empty-ico">inbox</span><div class="empty-txt">No Active Sections</div></div>`;
@@ -1160,7 +362,7 @@ window.chkSelectSec=function(sec){
   if(isScanning) toggleCamera();
   document.getElementById('chk-lbl-secname').textContent=sec+' Section';
   const container=document.getElementById('chk-prog-boxes');
-  // Only enabled programs
+  
   const secProgs=Object.values(programs)
     .filter(p=>toTitle(p.section)===sec && p.registrationEnabled!==false)
     .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')));
@@ -1208,7 +410,8 @@ window.renderCheckin=function(){
     const icon=r.isRegistered?'check_circle':'pending';
     const badgeClass=r.isRegistered?'chk-reg':'chk-pend';
     const badgeText=r.isRegistered?'REGISTERED':'PENDING';
-    return `<div class="card" style="border-left: 6px solid ${r.isRegistered?'#10b981':'#ef4444'}">
+    const bdrColor=r.isRegistered?'var(--success)':'var(--sec)';
+    return `<div class="card" style="border-left: 6px solid ${bdrColor}">
       <div class="chest" style="background:${hColor}">${String(r.chestNo||'')}</div>
       <div class="cinfo">
         <div class="cname">${String(r.name||'')}</div>
@@ -1221,264 +424,6 @@ window.renderCheckin=function(){
   }).join('');
 };
 
-/* ═══════════════════════════════════════
-   ADMIN PANEL — REGISTRATION CONTROL
-═══════════════════════════════════════ */
-
-window.adminFilterSec = function(sec, chipEl) {
-  adminSecFilter = sec;
-  document.querySelectorAll('#admin-sec-chips .filter-chip').forEach(c => c.classList.remove('active'));
-  if(chipEl) chipEl.classList.add('active');
-  renderAdminProgList();
-};
-
-window.renderAdminPanel = function() {
-  // Update section filter chips
-  const chipsEl = document.getElementById('admin-sec-chips');
-  chipsEl.innerHTML = `<div class="filter-chip ${adminSecFilter===''?'active':''}" onclick="adminFilterSec('', this)">All</div>` +
-    SECTIONS.map(s => `<div class="filter-chip ${adminSecFilter===s?'active':''}" onclick="adminFilterSec('${s}', this)">${s}</div>`).join('');
-
-  // Stats
-  const allProgs = Object.values(programs);
-  const onCount = allProgs.filter(p => p.registrationEnabled !== false).length;
-  const offCount = allProgs.filter(p => p.registrationEnabled === false).length;
-  const regCount = Object.values(regs).filter(r => r.isRegistered === true).length;
-  document.getElementById('astat-on').textContent = onCount;
-  document.getElementById('astat-off').textContent = offCount;
-  document.getElementById('astat-reg').textContent = regCount;
-
-  renderAdminProgList();
-};
-
-function renderAdminProgList() {
-  let progs = Object.values(programs);
-  if(adminSecFilter) progs = progs.filter(p => toTitle(p.section) === adminSecFilter);
-  progs.sort((a,b) => String(a.code||'').localeCompare(String(b.code||'')));
-
-  const list = document.getElementById('admin-prog-list');
-  if(!progs.length) {
-    list.innerHTML = `<div class="empty"><span class="material-symbols-rounded empty-ico">event_busy</span><div class="empty-txt">No programs found</div></div>`;
-    return;
-  }
-
-  const grouped = {};
-  progs.forEach(p => {
-    const sec = toTitle(p.section || 'Other');
-    if(!grouped[sec]) grouped[sec] = [];
-    grouped[sec].push(p);
-  });
-
-  let html = '';
-  SECTIONS.forEach(sec => {
-    if(grouped[sec] && grouped[sec].length > 0) {
-      html += `<div class="seclbl">${sec} Section</div>`;
-      grouped[sec].forEach(p => {
-        const isEnabled = p.registrationEnabled !== false;
-        const progRegs = Object.values(regs).filter(r => r.programId === p.id);
-        const registeredCount = progRegs.filter(r => r.isRegistered).length;
-        const pendingCount = progRegs.filter(r => !r.isRegistered).length;
-
-        // Build candidate chips
-        let chipsHtml = '';
-        if(progRegs.length > 0) {
-          chipsHtml = `<div class="cand-chips">`;
-          progRegs.sort((a,b) => String(a.house||'').localeCompare(String(b.house||'')))
-            .forEach(r => {
-              const hColor = getHouseColor(r.house);
-              const chipClass = r.isRegistered ? 'registered' : 'pending';
-              chipsHtml += `<div class="cand-chip ${chipClass}">
-                <span class="house-dot" style="background:${hColor}"></span>
-                ${String(r.chestNo||'')} ${String(r.name||'')}
-                <button class="chip-cancel" onclick="cancelSingleReg('${p.id}','${r.house}',${r.slot})" title="Cancel Registration">
-                  <span class="material-symbols-rounded">close</span>
-                </button>
-              </div>`;
-            });
-          chipsHtml += `</div>`;
-          // Add cancel-all-for-program button
-          if(registeredCount > 0) {
-            chipsHtml += `<div class="bulk-cancel-bar">
-              <button class="btn btn-red btn-sm" onclick="cancelAllForProgram('${p.id}')">
-                <span class="material-symbols-rounded" style="font-size:15px;">cancel</span> Cancel All Registered (${registeredCount})
-              </button>
-            </div>`;
-          }
-        }
-
-        html += `<div class="admin-prog-card ${!isEnabled ? 'disabled-prog' : ''}">
-          <div class="admin-prog-header">
-            <div class="pcode" style="font-size:13px;">${String(p.code||'')}</div>
-            <div class="admin-prog-info">
-              <div class="admin-prog-name">${String(p.name||'')}</div>
-              <div class="admin-prog-meta">
-                ${toTitle(p.section)} &middot; 
-                <span style="color:var(--g); font-weight:800;">${registeredCount} reg</span>
-                ${pendingCount > 0 ? ` &middot; <span style="color:#f97316; font-weight:800;">${pendingCount} pending</span>` : ''}
-              </div>
-            </div>
-            <div class="admin-prog-actions">
-              <div class="toggle-wrap">
-                <span class="toggle-lbl ${isEnabled?'on-lbl':'off-lbl'}" id="tlbl-${p.id}">${isEnabled?'ON':'OFF'}</span>
-                <label class="toggle">
-                  <input type="checkbox" ${isEnabled?'checked':''} onchange="toggleProgramReg('${p.id}', this.checked)">
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-          ${chipsHtml}
-        </div>`;
-      });
-    }
-  });
-  list.innerHTML = html;
-}
-
-/* Toggle registration ON/OFF for a program */
-window.toggleProgramReg = async function(pid, enabled) {
-  setSyncState('ing');
-  try {
-    await setDoc(doc(db, 'programs', pid), { registrationEnabled: enabled }, { merge: true });
-    const lbl = document.getElementById(`tlbl-${pid}`);
-    if(lbl) { lbl.textContent = enabled ? 'ON' : 'OFF'; lbl.className = `toggle-lbl ${enabled?'on-lbl':'off-lbl'}`; }
-    toast(`Registration ${enabled ? 'enabled' : 'disabled'}`, 'g');
-  } catch(e) {
-    setSyncState('err'); toast('Failed to update', 'r');
-  }
-};
-
-/* Cancel a single registration (set isRegistered = false) */
-window.cancelSingleReg = async function(pid, house, slot) {
-  const key = regKey(pid, house, slot);
-  const reg = regs[key];
-  if(!reg) { toast('Registration not found', 'r'); return; }
-  if(!reg.isRegistered) { toast('Already not registered', 'r'); return; }
-  if(!confirm(`Cancel registration for ${reg.name} (${reg.chestNo})?`)) return;
-  setSyncState('ing');
-  try {
-    await setDoc(doc(db, 'registrations', key), { isRegistered: false }, { merge: true });
-    toast(`${reg.name} registration cancelled`, 'g');
-  } catch(e) { setSyncState('err'); toast('Failed', 'r'); }
-};
-
-/* Cancel all registered candidates for a single program */
-window.cancelAllForProgram = async function(pid) {
-  const prog = programs[pid];
-  const progRegs = Object.values(regs).filter(r => r.programId === pid && r.isRegistered === true);
-  if(progRegs.length === 0) { toast('No registered candidates', 'r'); return; }
-  if(!confirm(`Cancel all ${progRegs.length} registrations for "${prog ? prog.name : pid}"?`)) return;
-  setSyncState('ing');
-  try {
-    const batch = writeBatch(db);
-    Object.keys(regs).forEach(k => {
-      if(regs[k].programId === pid && regs[k].isRegistered === true) {
-        batch.set(doc(db, 'registrations', k), { isRegistered: false }, { merge: true });
-      }
-    });
-    await batch.commit();
-    toast(`All registrations cancelled for ${prog ? prog.code : pid}`, 'g');
-  } catch(e) { setSyncState('err'); toast('Failed', 'r'); }
-};
-
-/* Enable/Disable ALL programs */
-window.adminBulkToggleAll = async function(enable) {
-  const progs = Object.values(programs);
-  if(!progs.length) { toast('No programs', 'r'); return; }
-  let filtered = progs;
-  if(adminSecFilter) filtered = progs.filter(p => toTitle(p.section) === adminSecFilter);
-  const label = adminSecFilter ? adminSecFilter : 'all';
-  if(!confirm(`${enable ? 'Enable' : 'Disable'} registration for ${label} programs (${filtered.length})?`)) return;
-  setSyncState('ing');
-  try {
-    const batch = writeBatch(db);
-    filtered.forEach(p => batch.set(doc(db, 'programs', p.id), { registrationEnabled: enable }, { merge: true }));
-    await batch.commit();
-    toast(`${filtered.length} programs ${enable ? 'enabled' : 'disabled'}`, 'g');
-  } catch(e) { setSyncState('err'); toast('Failed', 'r'); }
-};
-
-/* Bulk Cancel Modal */
-window.openBulkCancelModal = function() {
-  renderBulkCancelPreview();
-  openModal('modal-bulk-cancel');
-};
-
-window.renderBulkCancelPreview = function() {
-  const type = document.getElementById('bulk-cancel-type').value;
-  const targetWrap = document.getElementById('bulk-cancel-target-wrap');
-  const targetEl = document.getElementById('bulk-cancel-target');
-  const targetLbl = document.getElementById('bulk-cancel-target-lbl');
-
-  if(type === 'all') {
-    targetWrap.style.display = 'none';
-  } else {
-    targetWrap.style.display = 'block';
-    if(type === 'program') {
-      targetLbl.textContent = 'Select Program';
-      targetEl.innerHTML = Object.values(programs).sort((a,b)=>String(a.code||'').localeCompare(String(b.code||'')))
-        .map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
-    } else if(type === 'house') {
-      targetLbl.textContent = 'Select House';
-      targetEl.innerHTML = HOUSES.map(h => `<option value="${h}">${h}</option>`).join('');
-    } else if(type === 'section') {
-      targetLbl.textContent = 'Select Section';
-      targetEl.innerHTML = SECTIONS.map(s => `<option value="${s}">${s}</option>`).join('');
-    }
-  }
-
-  // Build preview
-  let toCancel = Object.values(regs).filter(r => r.isRegistered === true);
-  if(type === 'program') {
-    const targetVal = targetEl ? targetEl.value : '';
-    toCancel = toCancel.filter(r => r.programId === targetVal);
-  } else if(type === 'house') {
-    const targetVal = targetEl ? targetEl.value : '';
-    toCancel = toCancel.filter(r => toTitle(r.house) === targetVal);
-  } else if(type === 'section') {
-    const targetVal = targetEl ? targetEl.value : '';
-    toCancel = toCancel.filter(r => {
-      const prog = programs[r.programId];
-      return prog && toTitle(prog.section) === targetVal;
-    });
-  }
-
-  document.getElementById('bulk-preview-count').textContent = toCancel.length;
-  const previewEl = document.getElementById('bulk-cancel-preview');
-  if(!toCancel.length) {
-    previewEl.innerHTML = `<div class="confirm-list-item" style="color:var(--r400);">No registered candidates match this filter.</div>`;
-  } else {
-    previewEl.innerHTML = toCancel.slice(0, 30).map(r => {
-      const hColor = getHouseColor(r.house);
-      return `<div class="confirm-list-item">
-        <span style="width:8px;height:8px;border-radius:50%;background:${hColor};flex-shrink:0;display:inline-block;"></span>
-        <b>${r.chestNo}</b> ${r.name} — ${r.programCode}
-      </div>`;
-    }).join('') + (toCancel.length > 30 ? `<div class="confirm-list-item" style="color:var(--r400);">...and ${toCancel.length-30} more</div>` : '');
-  }
-};
-
-window.doBulkCancel = async function() {
-  const type = document.getElementById('bulk-cancel-type').value;
-  const targetEl = document.getElementById('bulk-cancel-target');
-  const targetVal = targetEl ? targetEl.value : '';
-
-  let keys = Object.keys(regs).filter(k => regs[k].isRegistered === true);
-  if(type === 'program') keys = keys.filter(k => regs[k].programId === targetVal);
-  else if(type === 'house') keys = keys.filter(k => toTitle(regs[k].house) === targetVal);
-  else if(type === 'section') keys = keys.filter(k => { const prog = programs[regs[k].programId]; return prog && toTitle(prog.section) === targetVal; });
-
-  if(!keys.length) { toast('No registered candidates to cancel', 'r'); return; }
-
-  setSyncState('ing');
-  try {
-    const batch = writeBatch(db);
-    keys.forEach(k => batch.set(doc(db, 'registrations', k), { isRegistered: false }, { merge: true }));
-    await batch.commit();
-    closeModal('modal-bulk-cancel');
-    toast(`${keys.length} registrations cancelled`, 'g');
-  } catch(e) { setSyncState('err'); toast('Bulk cancel failed', 'r'); }
-};
-
 /* CAMERA SCANNER */
 let html5QrCode;
 let isScanning = false;
@@ -1488,7 +433,7 @@ window.showFeedback=function(msg,isSuccess=false){
   const fb=document.getElementById('scan-feedback');
   fb.textContent=msg;
   fb.className='scan-feedback show '+(isSuccess?'ok':'');
-  setTimeout(()=>{fb.classList.remove('show');},1500);
+  setTimeout(()=>{fb.classList.remove('show');},1200);
 };
 
 window.toggleCamera=function(){
@@ -1501,7 +446,7 @@ window.toggleCamera=function(){
     html5QrCode.stop().then(()=>{
       isScanning=false;reader.style.display='none';zoomContainer.style.display='none';
       btn.innerHTML=`<span class="material-symbols-rounded">photo_camera</span> Start Scanner`;
-      btn.className="btn btn-green";
+      btn.className="btn btn-primary";
     }).catch(err=>console.error("Failed to stop scanner",err));
   } else {
     if(!html5QrCode) html5QrCode=new Html5Qrcode("reader");
@@ -1522,7 +467,7 @@ window.toggleCamera=function(){
     .catch((err)=>{
       reader.style.display='none';zoomContainer.style.display='none';
       btn.innerHTML=`<span class="material-symbols-rounded">photo_camera</span> Start Scanner`;
-      btn.className="btn btn-green";
+      btn.className="btn btn-primary";
       toast("Camera access denied or unavailable","r");
     });
   }
@@ -1563,119 +508,82 @@ window.handleScanner=async function(el,fromCamera=false){
   const pid=document.getElementById('chk-prog-hidden').value;
   if(!pid){showFeedback("SELECT PROGRAM FIRST!",false);el.value="";return;}
   const targetKey=Object.keys(regs).find(k=>regs[k].programId===pid&&String(regs[k].chestNo||'').toUpperCase()===val);
+  
   if(targetKey){
     const regData=regs[targetKey];
     if(!regData.isRegistered){
       scanCooldown=true;
       if(isScanning)html5QrCode.pause();
+      
+      // OPTIMISTIC UI UPDATE (Zero Lag Popup)
+      regs[targetKey].isRegistered = true; 
+      
+      const prog=programs[pid];
+      const isGroup=prog&&prog.type==='group';
+      
+      document.querySelector('.success-title').textContent=isGroup?"Team Successfully Registered":"Successfully Registered";
+      document.getElementById('sm-name').textContent=isGroup?`${toTitle(regData.house)} Team`:String(regData.name||'');
+      document.getElementById('sm-chest-house').textContent=isGroup?`Scanned by: ${String(regData.chestNo||'')}`:`${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
+      document.getElementById('sm-prog').textContent=`${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
+      
+      const smModal=document.getElementById('success-modal');
+      smModal.classList.add('show');
+
+      // Hide modal quickly
+      setTimeout(()=>{
+        smModal.classList.remove('show');
+        el.value="";
+        if(!fromCamera)el.focus();
+        scanCooldown=false;
+        if(isScanning)html5QrCode.resume();
+        document.querySelector('.success-title').textContent="Successfully Registered";
+      }, 1200);
+
+      // FIREBASE UPDATE IN BACKGROUND
       setSyncState('ing');
       try{
-        const prog=programs[pid];
-        const isGroup=prog&&prog.type==='group';
         if(isGroup){
           const batch=writeBatch(db);
           Object.keys(regs).forEach(k=>{
-            if(regs[k].programId===pid&&regs[k].house===regData.house)
+            if(regs[k].programId===pid&&regs[k].house===regData.house) {
               batch.set(doc(db,'registrations',k),{isRegistered:true},{merge:true});
+              regs[k].isRegistered = true; // Local optimistic update for group
+            }
           });
           await batch.commit();
         } else {
           await setDoc(doc(db,'registrations',targetKey),{isRegistered:true},{merge:true});
         }
-        document.querySelector('.success-title').textContent=isGroup?"Team Successfully Registered":"Successfully Registered";
-        document.getElementById('sm-name').textContent=isGroup?`${toTitle(regData.house)} Team`:String(regData.name||'');
-        document.getElementById('sm-chest-house').textContent=isGroup?`Scanned by: ${String(regData.chestNo||'')}`:`${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
-        document.getElementById('sm-prog').textContent=`${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
-        const smModal=document.getElementById('success-modal');
-        smModal.classList.add('show');
-        setTimeout(()=>{
-          smModal.classList.remove('show');el.value="";
-          if(!fromCamera)el.focus();
-          scanCooldown=false;
-          if(isScanning)html5QrCode.resume();
-          document.querySelector('.success-title').textContent="Successfully Registered";
-        },2000);
-      }catch(e){setSyncState('err');showFeedback("NETWORK ERROR!",false);el.value="";scanCooldown=false;if(isScanning)html5QrCode.resume();}
+      }catch(e){
+        setSyncState('err');
+        regs[targetKey].isRegistered = false; // Revert if network error
+        toast("Network Error! Failed to save.",'r');
+      }
+
     } else {
       if(scanCooldown)return;
       showFeedback(`ALREADY SCANNED: ${val}`,false);el.value="";
-      if(fromCamera){scanCooldown=true;setTimeout(()=>{scanCooldown=false;},1500);}
+      if(fromCamera){scanCooldown=true;setTimeout(()=>{scanCooldown=false;},1200);}
     }
   } else {
-    if(val.length>=3){
-      if(scanCooldown)return;
-      showFeedback(`INVALID CODE: ${val}`,false);el.value="";
-      if(fromCamera){scanCooldown=true;setTimeout(()=>{scanCooldown=false;},1500);}
-    }
+    if(scanCooldown)return;
+    showFeedback(`INVALID CODE: ${val}`,false);el.value="";
+    if(fromCamera){scanCooldown=true;setTimeout(()=>{scanCooldown=false;},1200);}
   }
 };
 
-/* CSV HELPERS */
-window.onCSVFile=function(e){
-  const file=e.target.files[0];if(!file)return;
-  const r=new FileReader();r.onload=ev=>document.getElementById('csv-text').value=ev.target.result;r.readAsText(file);
-};
-
-function cleanCsvCell(val){if(!val)return '';return val.replace(/^["']|["']$/g,'').trim();}
-
-window.doCSVImport=async function(){
-  const text=document.getElementById('csv-text').value.trim();
-  if(!text){toast('Paste or upload a CSV first','r');return;}
-  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
-  if(lines.length<2){toast('Needs a header row + data rows','r');return;}
-  const header=lines[0].toLowerCase().replace(/\s+/g,'');
-  if(csvMode==='students'&&(header.includes('programcode')||header.includes('isregistered'))){toast('Error: Wrong data type!','r');return;}
-  if(csvMode==='programs'&&(!header.includes('code')||!header.includes('limit'))){toast('Error: Invalid Programs CSV!','r');return;}
-  if(csvMode==='registrations'&&!header.includes('programcode')){toast('Error: Wrong data type!','r');return;}
-  const rows=lines.slice(1).map(l=>l.split(',').map(c=>cleanCsvCell(c)));
-  setSyncState('ing');closeModal('modal-csv');
-  try{
-    const batch=writeBatch(db);let count=0;
-    if(csvMode==='students'){
-      rows.forEach(r=>{
-        const [chestNo,name,cls,section,house]=r;if(!chestNo||!name)return;
-        const id=uid();
-        batch.set(doc(db,'students',id),{id,chestNo:String(chestNo).toUpperCase(),name:String(name).toUpperCase(),class:String(cls||'10').trim(),section:toTitle(section||'Thanawiyya'),house:toTitle(house||'Gibraltar')});
-        count++;
-      });
-    } else if(csvMode==='programs'){
-      rows.forEach(r=>{
-        const [code,name,section,type,limitStr]=r;if(!code||!name)return;
-        const id=uid();
-        batch.set(doc(db,'programs',id),{id,code:String(code||'').toUpperCase().trim(),name:String(name||'').toUpperCase().trim(),section:toTitle(section||'Thanawiyya'),type:String(type||'individual').toLowerCase().trim(),candidateLimit:parseInt(limitStr)||3});
-        count++;
-      });
-    } else if(csvMode==='registrations'){
-      rows.forEach(r=>{
-        const [progCode,chestNo,slotStr,houseName,isRegStr]=r;if(!progCode||!chestNo||!slotStr||!houseName)return;
-        const prog=Object.values(programs).find(p=>String(p.code||'').toUpperCase()===String(progCode).toUpperCase());if(!prog)return;
-        const stu=Object.values(students).find(s=>String(s.chestNo||'').toUpperCase()===String(chestNo).toUpperCase());
-        const slot=parseInt(slotStr)-1;const house=toTitle(houseName);const key=regKey(prog.id,house,slot);
-        batch.set(doc(db,'registrations',key),{programId:prog.id,house,slot,studentId:stu?stu.id:'',chestNo:String(chestNo).toUpperCase(),name:stu?stu.name:'Unknown Candidate',programCode:prog.code,programName:prog.name,isRegistered:String(isRegStr).toLowerCase()==='true',registeredAt:serverTimestamp()});
-        count++;
-      });
-    }
-    await batch.commit();toast(`${count} rows imported!`,'g');
-  }catch(e){setSyncState('err');toast('Import failed','r');}
-};
-
-function dlCSV(content,filename){
-  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([content],{type:'text/csv'})),download:filename});
-  a.click();URL.revokeObjectURL(a.href);
-}
-
 /* FIRESTORE LISTENERS */
-let loadedStreams={students:false,programs:false,registrations:false};
+let loadedStreams={programs:false,registrations:false};
 
 function updateProgressBar(streamName){
   loadedStreams[streamName]=true;
   const fill=document.getElementById('pbar-fill');
   const status=document.getElementById('pbar-status');
   let totalLoaded=Object.values(loadedStreams).filter(Boolean).length;
-  let percent=Math.floor((totalLoaded/3)*100);
+  let percent=Math.floor((totalLoaded/2)*100);
   if(fill)fill.style.width=percent+'%';
   if(status)status.textContent=`Assembling Systems (${percent}%)`;
-  if(totalLoaded===3){
+  if(totalLoaded===2){
     setTimeout(()=>{
       const loadingEl=document.getElementById('loading');
       const appEl=document.getElementById('app');
@@ -1683,26 +591,16 @@ function updateProgressBar(streamName){
       setTimeout(()=>{
         if(loadingEl)loadingEl.style.display='none';
         if(appEl){appEl.style.display='block';setTimeout(()=>appEl.style.opacity='1',50);}
-      },400);
-    },500);
+      },300);
+    },400);
   }
 }
 
 function startListeners(){
-  onSnapshot(collection(db,'students'),snap=>{
-    students={};
-    snap.forEach(d=>{students[d.id]={...d.data(),id:d.id};});
-    updateDynamicFilters();setSyncState('ok');updateHeader();renderStudents();
-    if(currentTab==='register')renderRegister();
-    updateProgressBar('students');
-  },e=>{setSyncState('err');});
-
   onSnapshot(collection(db,'programs'),snap=>{
     programs={};
     snap.forEach(d=>{programs[d.id]={...d.data(),id:d.id};});
-    updateDynamicFilters();setSyncState('ok');updateHeader();renderPrograms();
-    if(currentTab==='register')renderRegister();
-    if(currentTab==='admin')renderAdminPanel();
+    updateDynamicFilters();setSyncState('ok');
     updateProgressBar('programs');
   },e=>{setSyncState('err');});
 
@@ -1710,9 +608,7 @@ function startListeners(){
     regs={};
     snap.forEach(d=>{regs[d.id]=d.data();});
     setSyncState('ok');
-    if(currentTab==='register')renderRegister();
-    if(currentTab==='checkin'&&document.getElementById('chk-step-scan').style.display==='block')renderCheckin();
-    if(currentTab==='admin')renderAdminPanel();
+    if(document.getElementById('chk-step-scan').style.display==='block')renderCheckin();
     updateProgressBar('registrations');
   },e=>{setSyncState('err');});
 }
