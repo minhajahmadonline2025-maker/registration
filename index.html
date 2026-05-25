@@ -100,6 +100,11 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 .checkmark-container .material-symbols-rounded { font-size: 60px; color: var(--success); }
 .success-details { text-align: center; opacity: 0; animation: slideUp 0.3s ease 0.15s forwards; display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
 .success-title { font-size: 14px; font-weight: 800; color: var(--success); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+/* CODE LETTER HIGHLIGHT CLASSES */
+.success-code-letter { font-size: 70px; font-weight: 900; color: var(--pri); line-height: 1; margin: 4px 0 16px 0; text-shadow: 0 4px 10px rgba(97, 19, 28, 0.15); }
+.success-code-lbl { font-size: 14px; font-weight: 800; color: var(--r500); text-transform: uppercase; letter-spacing: 2px; margin-top: 16px; }
+
 .success-name { font-size: 32px; font-weight: 900; color: var(--r800); line-height: 1.1; margin-bottom: 8px; }
 .success-meta { font-size: 18px; font-weight: 700; color: var(--r500); }
 .success-prog { font-size: 14px; font-weight: 800; color: var(--pri); margin-top: 24px; background: var(--sec-l); padding: 10px 24px; border-radius: 8px; border: 1.5px solid var(--sec); width: 100%; }
@@ -241,6 +246,8 @@ input::placeholder { color: var(--r400); font-weight: 400; }
   </div>
   <div class="success-details">
     <div class="success-title">Successfully Registered</div>
+    <div class="success-code-lbl" id="sm-code-lbl">CODE LETTER</div>
+    <div class="success-code-letter" id="sm-code-letter">-</div>
     <div class="success-name" id="sm-name">STUDENT NAME</div>
     <div class="success-meta" id="sm-chest-house">CHEST NO · HOUSE</div>
     <div class="success-prog" id="sm-prog">CODE - PROGRAM</div>
@@ -515,13 +522,25 @@ window.handleScanner=async function(el,fromCamera=false){
       scanCooldown=true;
       if(isScanning)html5QrCode.pause();
       
-      // OPTIMISTIC UI UPDATE (Zero Lag Popup)
+      // OPTIMISTIC UI UPDATE
       regs[targetKey].isRegistered = true; 
       
       const prog=programs[pid];
       const isGroup=prog&&prog.type==='group';
       
       document.querySelector('.success-title').textContent=isGroup?"Team Successfully Registered":"Successfully Registered";
+      
+      // CODE LETTER INJECTION
+      const cLetter = regData.codeLetter || '-';
+      document.getElementById('sm-code-letter').textContent = cLetter;
+      if(!regData.codeLetter) {
+          document.getElementById('sm-code-lbl').style.display = 'none';
+          document.getElementById('sm-code-letter').style.display = 'none';
+      } else {
+          document.getElementById('sm-code-lbl').style.display = 'block';
+          document.getElementById('sm-code-letter').style.display = 'block';
+      }
+
       document.getElementById('sm-name').textContent=isGroup?`${toTitle(regData.house)} Team`:String(regData.name||'');
       document.getElementById('sm-chest-house').textContent=isGroup?`Scanned by: ${String(regData.chestNo||'')}`:`${String(regData.chestNo||'')} · ${toTitle(regData.house)}`;
       document.getElementById('sm-prog').textContent=`${String(regData.programCode||'')} - ${String(regData.programName||'')}`;
@@ -529,7 +548,7 @@ window.handleScanner=async function(el,fromCamera=false){
       const smModal=document.getElementById('success-modal');
       smModal.classList.add('show');
 
-      // Hide modal quickly
+      // Hide modal after 2.5 seconds to give time to see the code letter
       setTimeout(()=>{
         smModal.classList.remove('show');
         el.value="";
@@ -537,7 +556,7 @@ window.handleScanner=async function(el,fromCamera=false){
         scanCooldown=false;
         if(isScanning)html5QrCode.resume();
         document.querySelector('.success-title').textContent="Successfully Registered";
-      }, 1200);
+      }, 2500);
 
       // FIREBASE UPDATE IN BACKGROUND
       setSyncState('ing');
@@ -547,7 +566,7 @@ window.handleScanner=async function(el,fromCamera=false){
           Object.keys(regs).forEach(k=>{
             if(regs[k].programId===pid&&regs[k].house===regData.house) {
               batch.set(doc(db,'registrations',k),{isRegistered:true},{merge:true});
-              regs[k].isRegistered = true; // Local optimistic update for group
+              regs[k].isRegistered = true; 
             }
           });
           await batch.commit();
@@ -556,7 +575,7 @@ window.handleScanner=async function(el,fromCamera=false){
         }
       }catch(e){
         setSyncState('err');
-        regs[targetKey].isRegistered = false; // Revert if network error
+        regs[targetKey].isRegistered = false; 
         toast("Network Error! Failed to save.",'r');
       }
 
@@ -606,7 +625,7 @@ function startListeners(){
 
   onSnapshot(collection(db,'registrations'),snap=>{
     regs={};
-    snap.forEach(d=>{regs[d.id]=d.data();});
+    snap.forEach(d=>{regs[d.id]={...d.data(), id:d.id};});
     setSyncState('ok');
     if(document.getElementById('chk-step-scan').style.display==='block')renderCheckin();
     updateProgressBar('registrations');
