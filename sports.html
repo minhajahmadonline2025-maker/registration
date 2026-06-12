@@ -153,29 +153,7 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 .zoom-slider { -webkit-appearance: none; width: 100%; height: 3px; background: var(--r800); border-radius: 2px; outline: none; }
 .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--pri); border-radius: 50%; cursor: pointer; margin-top: -7.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 </style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KAMA '26 Admin Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Outfit', sans-serif; background: #f4f6f8; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-    .logo { height: 80px; margin-bottom: 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-    .title { font-size: 28px; font-weight: 900; color: #61131c; margin-bottom: 8px; text-align: center; }
-    .subtitle { font-size: 14px; color: #4b5563; font-weight: 600; margin-bottom: 40px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 900px; }
-    .box { background: #fff; border: 2px solid #e5e7eb; border-radius: 20px; padding: 30px 20px; text-align: center; cursor: pointer; text-decoration: none; color: inherit; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-    .box:hover { transform: translateY(-5px); border-color: #dfba86; box-shadow: 0 12px 20px rgba(0,0,0,0.08); }
-    .box-icon { font-size: 48px; color: #61131c; margin-bottom: 16px; display: inline-block; transition: color 0.3s; }
-    .box-title { font-size: 20px; font-weight: 800; color: #1f2937; margin-bottom: 8px; }
-    .box-desc { font-size: 13px; color: #6b7280; font-weight: 500; line-height: 1.4; }
-    
-    /* Hover Colors */
-    .sports-box:hover .box-icon { color: #ea580c; }
-    .stage-box:hover .box-icon { color: #7c3aed; }
-    .nonstage-box:hover .box-icon { color: #16a34a; }
-  </style>
+
 </head>
 <body>
 
@@ -354,11 +332,7 @@ function updateDynamicFilters() {
       if(idxA === idxB) return a.localeCompare(b);
       return idxA - idxB;
   });
-  <img src="kamapng.png" alt="KAMA Logo" class="logo" onerror="this.style.display='none'">
-  <h1 class="title">KAMA Arts Fest '26</h1>
-  <div class="subtitle">Central Admin Hub</div>
-
-  if(document.getElementById('chk-step-sec').style.display !== 'none') {
+   if(document.getElementById('chk-step-sec').style.display !== 'none') {
       renderCheckinSections();
   }
 }
@@ -659,23 +633,6 @@ function startListeners(){
 }
 
 startListeners();
-  <div class="grid">
-    <a href="sports.html" class="box sports-box">
-      <span class="material-symbols-rounded box-icon">sports_soccer</span>
-      <div class="box-title">Sports Admin</div>
-      <div class="box-desc">Manage sports candidates, programs, and judgement sheets.</div>
-    </a>
-    <a href="stage.html" class="box stage-box">
-      <span class="material-symbols-rounded box-icon">theater_comedy</span>
-      <div class="box-title">Stage Admin</div>
-      <div class="box-desc">Manage stage events, slots, and batch printing.</div>
-    </a>
-    <a href="nonstage.html" class="box nonstage-box">
-      <span class="material-symbols-rounded box-icon">draw</span>
-      <div class="box-title">Non-Stage Admin</div>
-      <div class="box-desc">Manage non-stage events, literature, and registrations.</div>
-    </a>
-  </div>
 
 </script>
 </body>
