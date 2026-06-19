@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>KAMA Arts Fest '26 - Non-Stage Scanner</title>
+<title>KAMA Arts Fest '26 - Stage Scanner</title>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
@@ -159,7 +159,7 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 <div class="spinner" id="loading">
   <div class="loader-card">
     <img src="kamapng.png" alt="KAMA '26 Logo" class="loader-img-logo">
-    <div class="loader-sub">Non-Stage Scanner Portal</div>
+    <div class="loader-sub">Stage Scanner Portal</div>
     <div class="progress-bar-track">
        <div class="progress-bar-fill" id="pbar-fill"></div>
     </div>
@@ -175,7 +175,7 @@ input::placeholder { color: var(--r400); font-weight: 400; }
         <img src="kamapng.png" alt="Logo" class="hdr-logo">
         <div>
           <div class="hdr-title">KAMA '26</div>
-          <div class="hdr-sub">Non-Stage Check-in Scanner</div>
+          <div class="hdr-sub">Stage Check-in Scanner</div>
         </div>
       </div>
       <div class="hdr-right" style="text-align: right;">
@@ -260,13 +260,15 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// Stage Admin Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyA_vTf6pXP6A19_sKVbdI2D-TfUkvWRQ_4",
-  authDomain: "nonstage-ad2ba.firebaseapp.com",
-  projectId: "nonstage-ad2ba",
-  storageBucket: "nonstage-ad2ba.firebasestorage.app",
-  messagingSenderId: "317081991361",
-  appId: "1:317081991361:web:722a13b00aa21dfea03c40"
+  apiKey: "AIzaSyDTHYMRYcLw7S39zzQ7t2NEDs7PdVK8d-0",
+  authDomain: "stage-daa6a.firebaseapp.com",
+  projectId: "stage-daa6a",
+  storageBucket: "stage-daa6a.firebasestorage.app",
+  messagingSenderId: "138171637501",
+  appId: "1:138171637501:web:469b5f60dd22effaa6e894",
+  measurementId: "G-3EP2LEDEKT"
 };
 
 const app = initializeApp(firebaseConfig);
