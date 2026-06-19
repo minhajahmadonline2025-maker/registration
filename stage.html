@@ -72,7 +72,7 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 .card { background: #fff; border: 1px solid var(--r100); border-radius: var(--rad); padding: 14px; display: flex; align-items: center; gap: 14px; box-shadow: var(--sh); margin-bottom: 12px; transition: transform 0.2s, box-shadow 0.2s; }
 .chest { border-radius: 8px; padding: 6px 4px; font-size: 14px; font-weight: 800; color: #fff; min-width: 60px; text-align: center; letter-spacing: 0.5px; }
 .cinfo { flex: 1; min-width: 0; }
-.cname { font-weight: 800; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--r800); margin-bottom: 2px;}
+.cname { font-weight: 800; font-size: 15px; color: var(--r800); margin-bottom: 4px; line-height: 1.3; word-break: break-word; }
 .cmeta { font-size: 12px; color: var(--r500); font-weight: 600; display: flex; align-items: center; gap: 6px;}
 
 .seclbl { font-size: 12px; font-weight: 800; color: var(--pri); text-transform: uppercase; letter-spacing: 0.1em; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
@@ -441,11 +441,15 @@ window.renderCheckin=function(){
     const badgeClass=r.isRegistered?'chk-reg':'chk-pend';
     const badgeText=r.isRegistered?'REGISTERED':'PENDING';
     const bdrColor=r.isRegistered?'var(--success)':'var(--sec)';
+    
+    // Code letter highlight cheythu kanikanulla UI element
+    const cLetter = r.codeLetter ? `<span style="font-weight:900; color:var(--pri); background:var(--sec-l); padding: 2px 6px; border-radius:4px; border: 1px solid var(--sec); margin-right: 4px;">${r.codeLetter}</span>` : '';
+
     return `<div class="card" style="border-left: 6px solid ${bdrColor}">
       <div class="chest" style="background:${hColor}">${String(r.chestNo||'')}</div>
       <div class="cinfo">
         <div class="cname">${String(r.name||'')}</div>
-        <div class="cmeta">${toTitle(r.house)} &middot; Slot ${r.slot+1}</div>
+        <div class="cmeta">${cLetter} ${toTitle(r.house)} &middot; Slot ${r.slot+1}</div>
       </div>
       <div class="chk-status-badge ${badgeClass}">
         <span class="material-symbols-rounded" style="font-size:14px;">${icon}</span> ${badgeText}
