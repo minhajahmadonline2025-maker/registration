@@ -260,13 +260,15 @@ input::placeholder { color: var(--r400); font-weight: 400; }
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// Stage Admin Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyDTHYMRYcLw7S39zzQ7t2NEDs7PdVK8d-0",
   authDomain: "stage-daa6a.firebaseapp.com",
   projectId: "stage-daa6a",
   storageBucket: "stage-daa6a.firebasestorage.app",
   messagingSenderId: "138171637501",
-  appId: "1:138171637501:web:469b5f60dd22effaa6e894"
+  appId: "1:138171637501:web:469b5f60dd22effaa6e894",
+  measurementId: "G-3EP2LEDEKT"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -644,4 +646,20 @@ function startListeners(){
   },e=>{setSyncState('err');});
 
   onSnapshot(collection(db,'registrations'),snap=>{
-    regs
+    regs={};
+    snap.forEach(d=>{regs[d.id]={...d.data(), id:d.id};});
+    setSyncState('ok');
+    if(document.getElementById('chk-step-scan').style.display==='block') renderCheckin();
+    if(document.getElementById('chk-step-prog').style.display==='block') {
+         const secName = document.getElementById('chk-lbl-secname').textContent.replace(' Section', '');
+         chkSelectSec(secName); // Live updating of programs completion status
+    }
+    updateProgressBar('registrations');
+  },e=>{setSyncState('err');});
+}
+
+startListeners();
+
+</script>
+</body>
+</html>
